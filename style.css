@@ -441,3 +441,134 @@ body{
     font-size:10px;
     color:#cbd5e1;
 }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f6f3f2;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.form-container {
+    background-color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;   
+    padding: 30px;
+    gap: 30px;
+}
+
+.logo-wrapper {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-title {
+    text-align: center;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1px;
+    gap: 10px;
+}
+
+#sign {
+    font-size: 9px;
+    text-align: center;
+    color: #99A5B5;
+ 
+}
+.form {
+    display: flex;
+    flex-direction: column; 
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    align-self: flex-start;
+    font-size: 10px;
+    font-weight: 400;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.form-group input {
+    display: inline-block;
+    width: 300px;
+    height: 40px;
+    border: 2px solid #999;
+    border-radius: 10px;
+}
+
+
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.btn-org {
+    width: 300px;
+    height: 40px;
+    text-align: center;
+    background-color: #1F3A5F;
+    border-radius: 15px;
+    color: white;
+    font-size: 15px;  
+}
+
+.link  {
+    display: flex;
+    gap: 20px;
+}
+
+.link a {
+    display: inline-block;
+    justify-content: space-around;
+    text-decoration: none;  
+    color: #8190A5;  
+    border-right: 1px solid #8190A5;
+    font-size: 10px;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.link a:last-child  {
+    border-right: none;
+}
+
+
+.acc {
+    display: flex;
+    color: #8190A5;  
+    font-size: 10px;   
+
+}
+
+.acc a {
+    text-decoration: none;
+    color:#1F3A5F ;
+    font-size: 10px;
+    
+}
+
