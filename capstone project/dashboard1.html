@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dashboard1.css">
+    <script src="https://kit.fontawesome.com/241f3a0b37.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main-container">
+        <aside class="sidebar">
+            <img class="logo" src="images/aidloop logo with dark background.png" alt="logo">
+            <nav class="sidebar-nav">
+                <ul>
+                    <a class="active" href="">
+                        <li> <i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-circle-plus fa-lg"></i> Create Events</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-regular fa-calendar fa-lg"></i> Events</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-user-group fa-lg"></i> Volunteers</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-user-graduate fa-lg"></i> Certificates</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-building-user fa-lg"></i> Profile</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> logout</li>
+                    </a>
+                </ul>
+
+            </nav>
+
+        </aside>
+        <main class="main-content">
+            
+                <header class="header">
+                    <h1>Welcome Back</h1>
+                    <div class="header-btn">
+                        <button class="create-btn">create event</button>
+                        <a href=""> <i class="fa-regular fa-bell fa-2xl"></i> </a>
+                        <a href=""> <i class="fa-regular fa-circle-user fa-2xl"></i> </a>
+
+                    </div>
+
+                </header>
+
+
+
+                <div class="Dashboard">
+                    <h2>Dashboard</h2>
+                </div>
+            
+
+
+
+            <section class="first-section">
+                
+                <div class="card">
+                    <h3 >80</h3>
+                    <p class="under-card"> <i id="fontawesome" class="fa-regular fa-calendar fa-lg"></i>  total events</p>
+                </div>
+                <div class="card">
+                    <h3>42</h3>
+                    <p class="under-card"> <i  id="fontawesome" class="fa-regular fa-clock fa-lg"></i>  upcoming events</p>
+                </div>
+                <div class="card">
+                    <h3>17</h3>
+                    <p class="under-card"> <i id="fontawesome"  class="fa-regular fa-circle-check fa-lg"></i>  completed events</p>
+                </div>
+                <div class="card">
+                    <h3>324</h3>
+                    <p class="under-card"> <i  id="fontawesome" class="fa-regular fa-circle-check fa-lg"></i>  total volunteers</p>
+                </div>
+
+            </section>
+
+             <div class="recent-event"> 
+                <h2>Recent Events</h2>
+            </div>
+
+            <section class="second-section">
+               
+                <table>
+                    <thead class="table-head">
+                        <tr>
+                            <th>event name</th>
+                            <th>location</th>
+                            <th> date</th>
+                            <th> volunteers</th>
+                            <th> status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Beach Cleanup</td>
+                            <td>Lekki waterfront</td>
+                            <td> june 15,2026</td>
+                            <td> 19/35</td>
+                            <td class="status upcoming"> upcoming</td>
+                            <td>...</td>
+                        </tr>
+                        <tr>
+                            <td>Food distribution</td>
+                            <td>coastal Road EYC.</td>
+                            <td> june 23, 2026</td>
+                            <td> 19/35</td>
+                            <td class="status published"> published</td>
+                            <td>...</td>
+                        </tr>
+                        <tr>
+                            <td>Food distribution</td>
+                            <td>coastal Road EYC.</td>
+                            <td>june 23, 2026</td>
+                            <td> 19/35</td>
+                            <td class="status draft"> Draft</td>
+                            <td>...</td>
+                        </tr>
+                        <tr>
+                            <td>Food distribution</td>
+                            <td>coastal Road EYC.</td>
+                            <td> june 23, 2026</td>
+                            <td> 19/35</td>
+                            <td class="status completed"> Completed</td>
+                            <td>...</td>
+                        </tr>
+                        <tr>
+                            <td>Food distribution</td>
+                            <td>coastal Road EYC.</td>
+                            <td> june 23, 2026</td>
+                            <td> 19/35</td>
+                            <td class="status completed"> completed</td>
+                            <td>...</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+
+
+
+
+
+
+    </div>
+
+</body>
+
+</html>
