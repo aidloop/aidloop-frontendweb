@@ -1,0 +1,228 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    width: 200px;
+    height: 150px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+      
+}
+
+.header-container {
+    text-align: center;
+    border-bottom: 1px solid #1F3A5F;
+}
+
+h1 {
+    text-align: center;
+}
+
+#cr-org {
+    font-size: 10px;
+    color: #6B7C93;
+    padding: 10px;
+   
+}
+
+.title-header {
+    background-color: #6B7C93;
+    padding: 10px;
+    width: 300px;
+    height: 40px;
+    text-align: center;
+    color: white;
+    justify-self: center;
+    align-self: center;
+    border-radius: 3px;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+@media (max-width:608px) {
+    .form {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.form-group {
+    display: flex;
+    gap:2px ;
+    flex-direction: column;
+    padding: 0 40px;
+}
+
+.form-group label {
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 250px;
+    height: 25px;
+    padding-left: 10px;
+}
+
+
+.geo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+
+}
+
+.select-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 400px;
+
+}
+
+@media (max-width:608px) {
+    .select-group {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.select {
+    display: flex;
+    flex-direction: column;
+}
+
+.select label {
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.select input {
+    width: 300px;
+    height: 25px;
+}
+
+.org-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.details-group {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+@media (max-width:608px) {
+    .details-group {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+.org-d {
+    display: flex;
+    flex-direction: column;
+}
+
+.org-d label {
+    font-size: 10px;
+    font-weight: 500;
+}
+
+@media (max-width:608px) {
+    .org-d label {
+        align-self: center ;
+    }
+}
+
+.org-d textarea {
+    width: 600px;
+    height: 100px;
+}
+
+@media (max-width:608px) {
+    .org-d textarea {
+        width: 300px ;
+        height: 100px;
+        align-self: center;
+    }
+}
+
+.org-d input {
+    width: 400px;
+
+}
+
+@media (max-width:608px) {
+    .org-d input {
+        width: 300px ;
+        align-self: center;
+    }
+}
+
+.org-d p {
+    font-size: 10px;
+    margin-top: 10px;
+}
+
+@media (max-width:608px) {
+    .org-d p {
+       align-self: center;
+    }
+}
+
+.btn-container {
+        display: block;
+        align-items: center;
+}
+
+
+.btn-sign {
+    width: 700px;
+    height: 40px;
+    background-color: #1F3A5F;
+    color: white;
+    border: none;
+    border-radius: 3px;
+}
+
+@media (max-width:608px) {
+    .btn-sign {
+        width: 300px ;
+    }
+}
+
+.btn-container p {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn-container a {
+    text-decoration: none;
+}

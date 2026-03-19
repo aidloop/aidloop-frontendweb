@@ -6,7 +6,7 @@
 
 body {
     background-color: #f6f3f2;
-    font-family: sans-serif;
+    font-family: "Poppins", sans-serif;
     display: flex;
     justify-content: center;
     height: 100vh;
@@ -72,9 +72,41 @@ body {
     height: 40px;
     border: 2px solid #999;
     border-radius: 10px;
+    cursor: pointer;
+}
+
+.phone-container {
+    display: flex;
+    flex-direction: column;
+ 
+    
 }
 
 
+.phone-container label {
+    align-self: flex-start;
+    font-size: 10px;
+    font-weight: 400;
+    color: black;
+    margin-bottom: 10px;
+    position: relative;
+
+}
+
+.phone-container input {
+    display: inline-block;
+    width: 300px;
+    height: 40px;
+    border: 2px solid #999;
+    border-radius: 10px;
+    cursor: pointer;   
+    
+}
+
+ .phone-container i {
+    position: absolute;
+    align-self: flex-end;
+}
 
 .btn-container {
     display: flex;
@@ -91,8 +123,17 @@ body {
     background-color: #1F3A5F;
     border-radius: 15px;
     color: white;
-    font-size: 15px;  
+    font-size: 15px; 
+    border: none; 
 }
+
+.btn-org:hover {
+    background-color: #fff;
+    color: black;
+    border: 2px solid #1F3A5F ;
+}
+
+
 
 .link  {
     display: flex;
