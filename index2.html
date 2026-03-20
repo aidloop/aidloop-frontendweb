@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizers Account</title>
+    <link rel="stylesheet" href="style2.css">
+    <script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="logo-wrapper"><img src="logo aidloop.png" alt="aidloop"></div>
+    <div class="container">
+        <div class="header-container">
+            <h1>Sign Up</h1>
+            <p id="cr-org">Create an Organizers account to start hosting volunteer events on Aidloop </p>
+
+        </div>
+        <div class="title-header">Organization Information</div>
+
+        <div class="form-container" autocomplete="on">          
+            <form action="login" class="form" id="form">
+                <div class="form-group">
+                    <label for="name">Organization Name</label>
+                    <input type="name" id="name" placeholder="Your organization name here">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Your email address here">
+                </div>
+                 <div class="form-group">
+                    <label for="Phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" placeholder ="e.g., 08012345678 or +2348012345678" 
+            pattern= "^(0[789][01]\d{8}|\+234[789][01]\d{8})$" required>
+                    <div id="message" class="error-message"></div>
+                </div>               
+    
+            </form>
+        
+        </div>
+        <div class="geo-info">
+            <div class="title-header">Location</div>
+            <div class="select-group">
+                <div class="select">
+                    <label for="state">State</label>
+                <select name="state" id="state" style="width: 150px; height: 25px; border: 1px solid #6B7C93; border-radius: 3px; padding-left: 10px" required>
+                    <option value="" >--Select a State--</option>                 
+                </select>
+                </div>
+                <div class="select">
+                    <label for="city">City</label>
+                <select name="city" id="city" style="width: 150px; height: 25px; border: 1px solid #6B7C93; border-radius: 3px; padding-left: 10px ;" required>
+                    <option value="">--Select a City--</option>
+                </select> 
+                </div>                   
+            </div>
+        </div>
+
+        <div class="org-details">
+            <div class="title-header">Organization details</div>
+           <div class="details-group">
+             <div class="org-d">
+                <label for="About">About the Organization</label>
+                <textarea name="text" id="text" placeholder="Briefly describe your organization and the type of volunteer activities you organize" rows="5" cols="33">
+            </textarea>
+            </div>
+            <div class="org-d">
+                <label for="org-social media">Organization Social Media Link</label>
+                <input type="link" placeholder="https//instagram.com/yourorganization">
+                <p>Provide a link to your organizations Social media page</p>
+            </div>
+           </div>
+            </div>
+    
+
+   <div class="btn-container">
+     <button type="submit" onclick ="signup()" class="btn-sign">Sign Up</button>
+     <p>Already have an account? <a href="index.html">Login</a></p>
+   </div>
+
+    </div>
+    <script src="script2.js"></script>
+</body>
+</html>

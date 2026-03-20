@@ -5,40 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aid Loop Organizational login </title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    
 </head>
 <body>
     <div class="form-container">
         <div class="logo-wrapper"><img src="logo aidloop.png" alt=""></div>
     <div class="form-title">
-        <h3>Organizer Login</h3>
+        <h3>Welcome back to AidLoop</h3>
          <p id="sign">Sign in to access your organizers dashboard, manage <br> volunteer events, and track participant activity </p>
     </div>
    
 
     
-    <form action="login" class="form">
+    <form action="login" class="form" id="loginForm">
+        <!-- Email Validation (Built-in) -->
         <div class="form-group">
             <label for="text">Email Address</label>
-            <input type="text" name="Email" placeholder="you@example.com" style="font-size: 8px; color: #8190A5; padding-left: 10px;"> 
+            <input type="email" id="email" placeholder="you@example.com" style="font-size: 8px; color: #8190A5; padding-left: 10px;"> 
         </div>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" placeholder="Your password here" style="font-size: 8px; color: #8190A5; padding-left: 10px;">
-            
+        <div class="phone-container">
+            <!-- Phone Validation (Pattern: 10 digits) -->
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" placeholder="1234567890" pattern="[0-9]{10}" required>
+            <i class="ph ph-eye-slash"></i>
         </div>
     </form>
     <div class="btn-container">
-        <button class="btn-org">Log in</button> <br>
+        <button onclick="login()" class="btn-org">Log in</button> <br>
+        <div id="message" class="error-message"></div>
 
         <div class="link"><a href="#">Forgot Password</a>
-        <a href="#">Register Organization</a></div>
+        <a href="index2.html">Create Organization account</a></div>
 
-        <div class="acc"><p>Don't have an account? </p><a href="#" class="link">Register Organization</a></div>
+        <div class="acc"><p>Don't have an account? </p><a href="index2.html" class="link">Register Organization</a></div>
     </div>
     </div>
 
-    
-    
+    <script src="script.js"></script>
 </body>
 </html>
