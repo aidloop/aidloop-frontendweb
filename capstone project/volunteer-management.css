@@ -1,0 +1,305 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: "Poppins", sans-serif;
+    font-weight: 400px;
+    font-size: 14px;
+}
+.main-container{
+    display: flex;
+}
+.sidebar{
+    width:200px;
+   min-height:100vh; /* full screen height */
+    background:#1f3a5f;
+    color:#ffffff;
+    padding:0 20px 20px 20px;
+   position: fixed;
+    top: 0;
+    left: 0;
+     overflow-y: auto; /* in case content is taller than screen */
+    z-index: 100;
+
+    
+
+}
+.sidebar a:hover li {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding-left: 16px;
+    transition: all 0.2s ease;
+}
+
+.sidebar a.active li {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    border-left: 3px solid #ffffff;
+    padding-left: 13px; /* 16px - 3px border to keep alignment */
+}
+
+.logo{
+    margin-top: 0;
+    margin-bottom:30px;
+    padding: 0 0px 24px;
+    height: 130px;
+    width: 150px;
+    object-fit: cover;
+}
+ .sidebar a {
+      list-style: none;
+      text-decoration: none;
+      color: #ffffff;
+      
+    }
+    .sidebar li{
+    padding:12px;
+    margin-bottom:5px;
+    cursor:pointer;
+}
+.main-content{
+    flex:1; /* take remaining width */
+    
+    background:#ffffff;
+    margin-left: 200px;
+}
+.header {
+    display:flex;
+    justify-content:space-between; /* pushes items apart */
+    align-items:center;
+    margin-bottom:30px;
+    background-color: #f7f8f9;
+    color: #1f3a5f;
+    width: 100%;
+    padding: 16px 24px;
+    position: sticky;          /* ← stays at top when scrolling */
+    top: 0;
+    z-index: 99;   
+}
+.header h1 {
+    
+    font-weight: 600;
+    margin: 0; /* ← remove default h1 margin that can push things off */
+}
+
+
+.header-btn{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+      
+}
+header button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+header a{
+    color: #1f3a5f;
+}
+.create-btn{
+    width: 120px;
+    height: 35px;
+    border-radius: 10px;
+    background-color: #1f3a5f;
+    color: #ffffff;
+    padding: 10px;
+}
+.Dashboard{
+    color: #1f3a5f;
+    margin-left: 5px;
+    margin-bottom: 40px;
+}
+.first-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* ← tabs on left, search on right */
+    padding: 12px 16px;
+    margin-bottom: 50px;
+    padding: 5px 3px 50px 5px;
+    border-bottom: 1px solid rgba(107, 124, 147, 0.3);
+   
+}
+
+/* --- TABS --- */
+.first-part {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.tab {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(107, 124, 147, 1);
+    cursor: pointer;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    margin: 0;
+}
+
+.tab.active-tab {
+    color: #057df2;                  /* ← blue like in the image */
+    border-bottom: 2px solid #057df2; /* ← blue underline on active */
+}
+.first-part .tab:hover{
+     color: #057df2;                  /* ← blue like in the image */
+    border-bottom: 2px solid #057df2;
+    
+}
+
+/* --- SEARCH BOX --- */
+.second-part {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    border: 1px solid rgba(107, 124, 147, 0.4);
+    border-radius: 6px;
+    overflow: hidden;        /* ← keeps button inside the border */
+    background: white;
+}
+
+input {
+    border: none;
+    outline: none;
+    padding: 12px 18px;
+    font-size: 13px;
+    width: 220px;
+    color: #1e2d4a;
+}
+
+input::placeholder {
+    color: rgba(107, 124, 147, 0.7);
+    font-size: 12px;
+}
+
+.search-btn {
+    background:  #f7f8f9;     /* ← blue button like in the image */
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    color:  #057df2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn:hover {
+    background: #0369d1;
+}
+
+
+
+.second-section{
+    background:white;
+    border: 1px solid rgba(107, 124, 147, 0.5);
+    border-radius:10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    overflow: hidden;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout: fixed;
+    margin-top:0px;
+         
+        
+}
+th, td{
+    padding:16px 12px;
+    text-align:center;
+    vertical-align: middle;
+    border-bottom:1px solid rgba(107, 124, 147, 0.5);
+    width: 100%;
+     overflow: hidden;
+     text-overflow: ellipsis;
+    white-space: nowrap;
+    
+}
+tbody tr{
+    border-bottom: 1px solid rgba(107, 124, 147, 0.5); 
+}
+thead tr {
+    border-bottom: 1px solid rgba(107, 124, 147, 0.5);
+    
+    background: #d9d9d9;
+    border-bottom: 2px solid rgba(107, 124, 147, 1);
+
+
+}
+tbody tr:last-child {
+    border-bottom: none;
+}
+.table-image{
+     height: 38px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%; /* ← makes it circular */
+    vertical-align: middle;   
+    min-width: 40px;
+}
+tbody td:first-child {
+    text-align: left;
+    vertical-align: middle; /* ← keeps everything centered vertically */
+}
+thead th:first-child,
+tbody td:first-child {
+    text-align: center;        /* ← gives enough room for image + name */
+    padding-left: 20px;  /* ← same padding on both so they line up */
+}
+thead th:last-child,
+tbody td:last-child {
+    text-align: center;
+    width: 50%;
+}
+thead th:nth-child(4),
+tbody td:nth-child(4) {
+    width: 100%;  /* Status */
+}
+tbody td:first-child {
+    text-align: center;
+    padding-left: px;
+    vertical-align: middle;
+}
+
+
+
+.status{
+    padding:10px 2px;
+    border-radius:5px;
+    color: #f7f8f9;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 400;
+
+    
+}
+.name-cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.upcoming{
+    background:#ffb347;
+}
+
+.completed{
+    background:#057df2;
+}
+
+.published{
+    background:#2e8b57;
+}
+.draft{
+    background:#6b7c93;
+}

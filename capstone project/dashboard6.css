@@ -1,0 +1,366 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400px;
+    font-size: 14px;
+}
+
+.main-container {
+    display: flex;
+}
+
+.sidebar {
+    width: 200px;
+    min-height: 100vh;
+    /* full screen height */
+    background: #1f3a5f;
+    color: #ffffff;
+    padding: 0 20px 20px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    /* in case content is taller than screen */
+    z-index: 100;
+
+
+
+}
+
+.sidebar a:hover li {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding-left: 16px;
+    transition: all 0.2s ease;
+}
+
+.sidebar a.active li {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    border-left: 3px solid #ffffff;
+    padding-left: 13px;
+    /* 16px - 3px border to keep alignment */
+}
+
+.logo {
+    margin-top: 0;
+    margin-bottom: 30px;
+    padding: 0 0px 24px;
+    height: 130px;
+    width: 150px;
+    object-fit: cover;
+}
+
+.sidebar a {
+    list-style: none;
+    text-decoration: none;
+    color: #ffffff;
+
+}
+
+.sidebar li {
+    padding: 12px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.main-content {
+    flex: 1;
+    /* take remaining width */
+
+    background: #ffffff;
+    margin-left: 200px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    /* pushes items apart */
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #f7f8f9;
+    color: #1f3a5f;
+    width: 100%;
+    padding: 16px 24px;
+    position: sticky;
+    /* ← stays at top when scrolling */
+    top: 0;
+    z-index: 99;
+    margin-bottom: 70px;
+}
+
+.header h1 {
+
+    font-weight: 600;
+    margin: 0;
+    /* ← remove default h1 margin that can push things off */
+}
+
+
+.header-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    
+
+
+}
+
+header button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.create-btn {
+    width: 120px;
+    height: 35px;
+    border-radius: 10px;
+    background-color: #1f3a5f;
+    color: #ffffff;
+    padding: 10px;
+    cursor: pointer;
+}
+.font-awesome{
+    color: #ffffff;
+}
+
+
+
+.first-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #f7f8f9;
+    padding: 50px 50px;
+    border-radius: 20px;
+    width: fit-content;
+    margin: 0 auto;
+    
+
+}
+
+
+.first-part {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+}
+.AL{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.AL h1{
+    color: #ffffff;
+    background-color: #1f3a5f;
+    display: flex;
+    justify-content: center;
+    padding: 25px 18px;
+    border-radius: 10px;
+
+
+}
+.AL p{
+     background-color: #e6f9f0;
+    color: #1F3A5F;
+    padding: 7px 16px;
+    border-radius: 15px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.AL  p::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background-color: #28a745;
+    border-radius: 50%;  /* makes it a circle */
+    display: inline-block;
+}
+.Aidloop-foundation{
+    color: #1f3a5f;
+}
+
+/* Make second-part a simple row: verified | contact grid */
+.second-part {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom:70px ;
+}
+
+/* Group the two rows of contact info together */
+.second-part1,
+.second-part2 {
+    display: flex;
+    gap: 30px;
+    margin-left: 230px;
+}
+
+/* Each contact box looks like a pill/card */
+.box{
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 200px;
+    height: 70px;
+    background: #E3E3E3;
+    color:#2A2A2A ;
+      display: flex;
+    flex-direction: row;  /* icon and text side by side */
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    
+}
+.box i {
+    display: inline;
+}
+
+
+/* Stack the two rows vertically */
+.contact-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.second-section{
+    
+    
+    background-color: #F7F8F9;
+    padding: 40px 50px;
+    border-radius: 20px;
+    width: fit-content;
+    margin-top: 40px;
+    margin-left: 190px;
+    margin-bottom: 40px;
+    
+}
+.second-section-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.second-section-header{
+    color: #1F3A5F;
+    
+    
+   
+}
+
+.second-section-text{
+    background-color: rgba(5, 125, 242, 0.19);
+    color: #2A2A2A;
+    text-align: center;
+    padding: 50px;
+    border-radius: 10px;
+
+}
+.second-section-text{
+    display: flex;
+    gap: 5px;
+    
+  
+}
+
+/* Makes the 3 cards sit in a row and centers them on the page */
+.third-section {
+    display: flex;
+    justify-content: center;  /* centers cards horizontally */
+    align-items: center;
+    gap: 100px;                /* space between each card */
+    padding: 40px;
+}
+
+/* Each card — image on left, text on right */
+.card {
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 20px;
+    width: 180px;
+    display: flex;
+    flex-direction: row;      /* image and text sit side by side */
+    align-items: flex-start;  /* aligns them to the top */
+    gap: 12px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.08);  /* soft shadow */
+}
+
+/* The colored box behind the icon */
+.card-image {
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e8f4ff; /* change this per card if needed */
+}
+
+.card-image img {
+    width: 25px;
+    height: 25px;
+}
+
+/* The text column on the right */
+.card-text {
+    display: flex;
+    flex-direction: column;   /* stacks title, number, arrow vertically */
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+/* The big number like 24, 318, 157 */
+.card-text > p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1f3a5f;
+    margin: 4px 0;
+}
+
+/* The arrow + number + "this month" row */
+.arrow-up {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 4px;
+    background-color: #e8f5ee;  /* light green background */
+    border-radius: 6px;
+    padding: 2px 6px;
+}
+.arrow-up-text{
+
+}
+
+.arrow-up img {
+    width: 12px;
+    height: 12px;
+}
+
+/* Overrides the big number style for the small text inside arrow-up */
+.arrow-up p {
+    font-size: 11px !important;
+    font-weight: normal !important;
+    color: #28a745 !important;  /* green color */
+    margin: 0 !important;
+}
+
+
+

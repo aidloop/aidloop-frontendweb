@@ -192,7 +192,6 @@ header a {
     flex-direction: column;
     gap: 28px;
 }
-
 .list-under-upcoming p {
     display: flex;
     align-items: center;
@@ -213,7 +212,7 @@ header a {
 }
 .event-description{
    padding-left: 13px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 .second-section div{
     padding: 20px 20px 20px 20px;
@@ -272,7 +271,7 @@ header a {
     align-items: center;
     justify-content: space-between; /* ← tabs on left, search on right */
     padding: 12px 16px;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
     margin-left: 13px;
     margin-right: 13px;
     padding: 5px 3px 50px 5px;
@@ -329,17 +328,13 @@ input::placeholder {
     background: #0369d1;
 }
 .fifth-section img{
-     /* display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    text-align: center; */
-    height: 320px;
-    width: 500px;
+
+    height: 300px;
+    width: 450px;
     object-fit: cover;
     border-radius: 10px;
-    /* margin-left: 300px; */
-    margin-bottom:30px ;
+    
+    margin-bottom:40px ;
 }
 .final-image{
     display: flex;
