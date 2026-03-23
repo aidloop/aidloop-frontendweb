@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Event</title>
+
+  <link rel="stylesheet" href="../assets/css/shared.css" />
+  <link rel="stylesheet" href="create-event.css" />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+</head>
+
+<body>
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+   <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="/assets/Images/Logo.png" />
+    </div>
+
+    <ul class="sidebar-menu">
+      <li><a href="../dashboard/organizer-dashboard.html">Dashboard</a></li>
+      <li class="active"><a href="create-event.html">Create Events</a></li>
+      <li><a href="event-listing.html">Events</a></li>
+      <li><a href="../volunteers/volunteers.html">Volunteers</a></li>
+      <li><a href="../certificates/organizer-certificates.html">Certificates</a></li>
+      <li><a href="../profile/organizer-profile.html">Profile</a></li>
+      <li><button id="logoutBtn">Log out</button></li>
+    </ul>
+  </aside>
+
+   MAIN 
+  <main class="main-content">
+
+    <header class="topbar">
+      <h1>Create Event</h1>
+    </header>
+
+    <section class="form-section"> 
+
+      <!-- IMAGE -->
+       <div class="image-upload" id="imageBox">
+        <input type="file" id="imageInput" hidden />
+        <i class="fa-solid fa-camera"></i>
+        <p>Upload Event Image</p>
+      </div> 
+
+      <!-- FORM -->
+       <form id="eventForm">
+
+        <label>Event Name</label>
+        <input type="text" id="name" required />
+
+        <label>Category</label>
+        <input type="text" id="category" placeholder="Community Service" />
+
+        <label>Volunteer Roles</label>
+        <div class="tags-input">
+          <input type="text" id="roleInput" placeholder="Enter role" />
+          <button type="button" id="addRole">+</button>
+        </div>
+        <div id="rolesList"></div>
+
+        <label>Description</label>
+        <textarea id="description"></textarea>
+
+        <label>Requirements</label>
+        <textarea id="requirements"></textarea>
+
+        <div class="grid-2">
+          <div>
+            <label>Date</label>
+            <input type="date" id="date" />
+          </div>
+
+          <div>
+            <label>Start Time</label>
+            <input type="time" id="startTime" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <label>End Time</label>
+            <input type="time" id="endTime" />
+          </div>
+
+          <div>
+            <label>City</label>
+            <input type="text" id="city" />
+          </div>
+        </div>
+
+        <label>Venue</label>
+        <input type="text" id="venue" />
+
+        <label>Number of Volunteers</label>
+        <input type="number" id="slots" value="10" />
+
+        <label>
+          Certificates
+          <input type="checkbox" id="certificateEnabled" />
+        </label>
+
+        <div class="actions">
+          <button type="button" id="saveDraft">Save Draft</button>
+          <button type="submit">Publish Event</button>
+        </div>
+
+        <p id="formMsg"></p>
+
+      </form>
+
+    </section>
+
+  </main>
+</div>
+
+<script type="module" src="create-event.js"></script>
+</body>
+</html> 
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create Event</title>
+<link rel="stylesheet" href="../../assets/css/shared.css" />
+<link rel="stylesheet" href="../../assets/css/layout.css" />
+<link rel="stylesheet" href="../../assets/css/forms.css" />
+<link rel="stylesheet" href="create-event.css" />
+</head><body>
+<div class="dashboard-layout"><aside class="sidebar"><div class="sidebar-logo"><img src="/Images/Logo.png" /></div><ul class="sidebar-menu"><li><a href="../dashboard/organizer-dashboard.html">Dashboard</a></li><li class="active"><a href="create-event.html">Create Events</a></li><li><a href="event-listing.html">Events</a></li><li><button id="logoutBtn" class="sidebar-logout">Log out</button></li></ul></aside>
+<main class="main-content"><header class="topbar"><h1 class="page-title">Create Event</h1></header>
+<section class="page-content"><form id="eventForm" class="create-form">
+<div class="form-group"><label>Event Name</label><input id="name" required /></div>
+<div class="form-group"><label>Category</label><input id="category" /></div>
+<div class="form-group"><label>Description</label><textarea id="description"></textarea></div>
+<div class="form-group"><label>Venue</label><input id="venue" /></div>
+<div class="form-group"><label>City</label><input id="city" /></div>
+<div class="form-group"><label>Date</label><input id="date" type="date" /></div>
+<div class="form-group"><label>Start Time</label><input id="startTime" type="time" /></div>
+<div class="form-group"><label>End Time</label><input id="endTime" type="time" /></div>
+<div class="form-group"><label>Volunteer Slots</label><input id="slots" type="number" value="10" /></div>
+<div class="form-group"><label>Roles (comma separated)</label><input id="roles" /></div>
+<div class="form-group"><label>Requirements (comma separated)</label><input id="requirements" /></div>
+<label><input id="certificateEnabled" type="checkbox" /> Certificates enabled</label>
+<small id="formError" class="form-error"></small><small id="formSuccess" class="success-message"></small>
+<div class="actions"><button id="saveDraft" type="button" class="secondary-btn">Save Draft</button><button id="publishBtn" type="submit" class="primary-btn">Publish Event</button></div>
+</form></section></main></div>
+<script type="module" src="create-event.js"></script>
+</body></html> -->

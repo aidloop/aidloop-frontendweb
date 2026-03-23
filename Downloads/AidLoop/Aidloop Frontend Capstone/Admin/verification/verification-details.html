@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verification Details</title>
+  <link rel="stylesheet" href="verification-details.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="card-header">
+        <h1 id="orgTitle">Loading...</h1>
+        <span id="statusBadge" class="status-badge awaiting">Awaiting Verification</span>
+      </div>
+
+      <div class="details-grid">
+        <div class="label">Org. Name:</div>
+        <div class="value" id="orgName">Loading...</div>
+
+        <div class="label">Social Links:</div>
+        <div class="value" id="socialLinks">—</div>
+
+        <div class="label">Email:</div>
+        <div class="value" id="email">—</div>
+
+        <div class="label">Phone No:</div>
+        <div class="value" id="phoneNumber">—</div>
+
+        <div class="label">Location:</div>
+        <div class="value" id="location">—</div>
+      </div>
+
+      <div class="description-section">
+        <h2>Description</h2>
+        <div class="description-box" id="description">
+          Loading organization description...
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="rejectBtn" class="btn btn-reject">Reject</button>
+        <button id="approveBtn" class="btn btn-approve">Approve</button>
+      </div>
+
+      <p id="feedback" class="feedback"></p>
+    </section>
+  </main>
+
+  <script src="verification-details.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<!-- 
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verification Details</title>
+<link rel="stylesheet" href="../../assets/css/shared.css" />
+<link rel="stylesheet" href="verification-details.css" />
+</head><body>
+<main class="auth-wrap"><section class="auth-card"><h1 id="orgName">Loading...</h1><p id="orgEmail"></p><p id="orgLocation"></p><div class="actions"><button id="rejectBtn" class="secondary-btn">Reject</button><button id="approveBtn" class="primary-btn">Approve</button></div><small id="feedback"></small></section></main>
+<script type="module" src="verification-details.js"></script>
+</body></html> -->
