@@ -6,45 +6,52 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     // Clear previous messages
     messageDiv.className = 'error-message';
+    if (errorMsg) errorMsg.style.display = 'none';
 
     // Validation
-    if (Email === '' || password === '' ) {
+    if (email === '' || password === '' ) {
         messageDiv.textContent = 'Please fill in all fields';
         return;
     }
 
-    if (Email.length < 14) {
+    if (email.length < 14) {
         messageDiv.textContent = 'Email must be at least 14 characters';
         return;
     }
 
-    // Demo credentials (in real app, this would be server-side)
-    const validEmail = 'demo@example.com';
    // Regex for phone (simple 10 digits)
     const phoneRegex = /^[0-9]{10}$/;
     
    if (!phoneRegex.test(phone)) {
-    errorMsg.style.display = 'block';
+    if(errorMsg) {
+        errorMsg.style.display = 'block';
     errorMsg.innerText = 'Phone number must be 10 digits.';
-    event.preventDefault(); // stop form submission
+    }
+    return; // Stop if phone is invalid
    } else {
-    errorMsg.style.display = 'none';
+    if (errorMsg)errorMsg.style.display = 'none';
     alert("phone number Validated!")
    }
+
+   // Demo credentials (in real app, this would be server-side)
+    const validEmail = 'demo@example.com';
+    const validphone = '1234567890'; // Added valid phone
+
+
     
    // Check credentials
-    if (Email === validEmail && phone === validphone) {
+    if (email === validEmail && phone === validPhone) {
         messageDiv.className = 'success-message';
         messageDiv.textContent = 'Login Successful! Redirecting...'; 
 
         setTimeout(() => {
-            alert('Welcome, ' + Email + '!');
+            alert('Welcome, ' + email + '!');
         }, 2000);
 
     } else {
         messageDiv.textContent = 'Invalid Email or Phone Number';
     }
-}) 
+});
 // Allow Enter key to submit
 document.addEventListener('keypress', function(event){
     if (event.key === 'Enter') {
