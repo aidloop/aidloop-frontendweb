@@ -73,9 +73,9 @@ body {
         width: 15px;
    }
 
-   .aside .active {
+   .aside #active {
         background-color: blue;
-        width: 200px;
+        width: 100%;
         
 
    }
