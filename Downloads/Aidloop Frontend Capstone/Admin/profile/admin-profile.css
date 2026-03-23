@@ -1,0 +1,298 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: #eef3f7;
+  color: #172033;
+}
+
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 16rem;
+  background: #223f6b;
+  color: #ffffff;
+  padding: 2rem 1rem;
+}
+
+.sidebar-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 3rem;
+}
+
+.sidebar-logo img {
+  width: 3.25rem;
+  height: 3.25rem;
+  object-fit: contain;
+}
+
+.sidebar-logo h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1c7ae3;
+}
+
+.sidebar-logo h2 span {
+  color: #26a653;
+}
+
+.sidebar-menu {
+  list-style: none;
+}
+
+.sidebar-menu li {
+  margin-bottom: 0.8rem;
+}
+
+.sidebar-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-decoration: none;
+  color: #ffffff;
+  padding: 0.95rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+}
+
+.sidebar-menu li a i {
+  width: 1rem;
+  text-align: center;
+}
+
+.sidebar-menu li.active a,
+.sidebar-menu li a:hover {
+  background: #1d7de2;
+}
+
+/* Main */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Topbar */
+.topbar {
+  height: 6rem;
+  background: #ffffff;
+  border-bottom: 0.0625rem solid #e6e8eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.search-box {
+  width: 21rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border: 0.0625rem solid #d9dde3;
+  border-radius: 0.45rem;
+  padding: 0 1rem;
+  background: #ffffff;
+}
+
+.search-box i {
+  color: #6b7280;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  background: transparent;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.notification {
+  position: relative;
+  color: #111827;
+  font-size: 1.35rem;
+}
+
+.notification-dot {
+  position: absolute;
+  top: 0.08rem;
+  right: -0.12rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #ef2f2f;
+  border-radius: 50%;
+}
+
+.user-avatar {
+  width: 2.8rem;
+  height: 2.8rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Page */
+.page-content {
+  padding: 2rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.page-header p {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+/* Grid */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  align-items: start;
+}
+
+/* Cards */
+.card {
+  background: #ffffff;
+  padding: 1.6rem 1.4rem;
+  border-radius: 0;
+}
+
+.card h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.8rem;
+  color: #172033;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  color: #111827;
+  margin-bottom: 0.45rem;
+}
+
+.form-group input {
+  width: 100%;
+  height: 3rem;
+  border: 0.0625rem solid #cfd4db;
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+  font-size: 0.95rem;
+  color: #172033;
+  background: #ffffff;
+}
+
+.form-group input[readonly] {
+  background: #f2f4f7;
+  border-color: #f2f4f7;
+  color: #9aa1ab;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.3rem;
+}
+
+.align-right {
+  justify-content: flex-end;
+}
+
+.primary-btn,
+.secondary-btn {
+  border: none;
+  border-radius: 0.55rem;
+  padding: 0.85rem 1.35rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover {
+  opacity: 0.92;
+}
+
+.primary-btn:active,
+.secondary-btn:active {
+  transform: scale(0.98);
+}
+
+.primary-btn {
+  background: #223f6b;
+  min-width: 8.9rem;
+}
+
+.secondary-btn {
+  background: #667a99;
+  min-width: 11rem;
+}
+
+/* Responsive */
+@media (max-width: 75rem) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 62rem) {
+  .sidebar {
+    display: none;
+  }
+
+  .topbar {
+    padding: 0 1rem;
+  }
+
+  .search-box {
+    width: 16rem;
+  }
+
+  .page-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+  }
+}

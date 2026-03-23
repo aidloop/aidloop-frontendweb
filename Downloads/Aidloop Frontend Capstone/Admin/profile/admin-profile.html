@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIDLoop - Admin Profile</title>
+  <link rel="stylesheet" href="admin-profile.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="/assets/Images/Logo.png" alt="AIDLoop Logo" />
+      </div>
+
+      <ul class="sidebar-menu">
+        <li>
+          <a href="../dashboard/admin-dashboard.html"><i class="fa-solid fa-border-all"></i><span>Dashboard</span></a>
+        </li>
+        <li>
+          <a href="../verification/verification-queue.html"><i class="fa-regular fa-square-check"></i><span>Verification Queue</span></a>
+        </li>
+        <li>
+          <a href="../organizations/organization-directory.html"><i class="fa-regular fa-building"></i><span>Organization Directory</span></a>
+        </li>
+        <li>
+          <a href="../events/events-oversight.html"><i class="fa-regular fa-calendar"></i><span>Events Oversight</span></a>
+        </li>
+        <li>
+          <a href="../flags/flags.html"><i class="fa-regular fa-flag"></i><span>Flags</span></a>
+        </li>
+        <li>
+          <a href="../user/user-management.html"><i class="fa-regular fa-user"></i><span>User Management</span></a>
+        </li>
+        <li>
+          <a href="../certificates/certificates.html"><i class="fa-regular fa-award"></i><span>Certificates</span></a>
+        </li>
+        <li class="active">
+          <a href="admin-profile.html"><i class="fa-regular fa-circle-user"></i><span>Profile</span></a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search organizations..." />
+        </div>
+
+        <div class="topbar-right">
+          <div class="notification">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notification-dot"></span>
+          </div>
+
+          <img
+            class="user-avatar"
+            src="https://i.pravatar.cc/100?img=47"
+            alt="Admin Avatar"
+          />
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <section class="page-content">
+        <div class="page-header">
+          <h1>Admin Profile</h1>
+          <p>Manage your account information and security settings</p>
+        </div>
+
+        <div class="profile-grid">
+          <!-- Profile Information -->
+          <section class="card">
+            <h2>Profile Information</h2>
+
+            <form id="profileForm" class="form">
+              <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" readonly />
+              </div>
+
+              <div class="form-group">
+                <label for="emailAddress">Email Address</label>
+                <input type="email" id="emailAddress" readonly />
+              </div>
+
+              <div class="form-group">
+                <label for="role">Role</label>
+                <input type="text" id="role" readonly />
+              </div>
+
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" id="phoneNumber" />
+              </div>
+
+              <div class="button-row">
+                <button type="button" id="editProfileBtn" class="primary-btn">Edit Profile</button>
+              </div>
+            </form>
+          </section>
+
+          <!-- Security -->
+          <section class="card">
+            <h2>Security</h2>
+
+            <form id="passwordForm" class="form">
+              <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" placeholder="***********" />
+              </div>
+
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" placeholder="***********" />
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPassword">Confirm New Password</label>
+                <input type="password" id="confirmPassword" placeholder="***********" />
+              </div>
+
+              <div class="button-row align-right">
+                <button type="submit" class="secondary-btn">Change Password</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="admin-profile.js"></script>
+</body>
+</html>
