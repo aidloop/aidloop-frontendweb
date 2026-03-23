@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIDLoop Organizer Dashboard</title>
+  <link rel="stylesheet" href="../assets/css/shared.css" />
+  <link rel="stylesheet" href="organizer-dashboard.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="/assets/Images/Logo.png" alt="AIDLoop Logo" />
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="active">
+          <a href="organizer-dashboard.html"><i class="fa-regular fa-house"></i><span>Dashboard</span></a>
+        </li>
+        <li>
+          <a href="../Create-Event/create-event.html"><i class="fa-regular fa-square-plus"></i><span>Create Events</span></a>
+        </li>
+        <li>
+          <a href="../Event-Listing/event-listing.html"><i class="fa-regular fa-calendar"></i><span>Events</span></a>
+        </li>
+        <li>
+          <a href="../Volunteers/volunteers.html"><i class="fa-solid fa-users"></i><span>Volunteers</span></a>
+        </li>
+        <li>
+          <a href="../Certificates/organizer-certificates.html"><i class="fa-regular fa-id-card"></i><span>Certificates</span></a>
+        </li>
+        <li>
+          <a href="../Organizer-Profile/organizer-profile.html"><i class="fa-regular fa-address-card"></i><span>Profile</span></a>
+        </li>
+        <li>
+          <button type="button" id="logoutBtn" class="sidebar-logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Log out</span>
+          </button>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <h1 class="welcome-title">Welcome Back</h1>
+          <p class="welcome-subtitle">An overview of your events and volunteer activity</p>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="../events/create-event.html" class="create-event-btn">Create Event</a>
+          <button class="icon-btn" type="button"><i class="fa-regular fa-bell"></i></button>
+          <div class="profile-mini">
+            <img id="organizerAvatar" src="https://i.pravatar.cc/100?img=12" alt="Organizer Avatar" />
+          </div>
+        </div>
+      </header>
+
+      <section class="dashboard-section">
+        <h2>Dashboard</h2>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="totalEvents">0</div>
+            <div class="stat-footer"><i class="fa-regular fa-calendar"></i><span>Total Event Created</span></div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number" id="upcomingEvents">0</div>
+            <div class="stat-footer"><i class="fa-regular fa-clock"></i><span>Upcoming Events</span></div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number" id="completedEvents">0</div>
+            <div class="stat-footer"><i class="fa-regular fa-circle-check"></i><span>Completed Events</span></div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-number" id="totalVolunteers">0</div>
+            <div class="stat-footer"><i class="fa-regular fa-circle-check"></i><span>Total Volunteers</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="recent-events-section">
+        <div class="section-divider"></div>
+        <h2>Recent Events</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Events Name</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Volunteers</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="eventsTable">
+              <tr>
+                <td colspan="6">Loading events...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="organizer-dashboard.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Organizer Dashboard</title>
+<link rel="stylesheet" href="../../assets/css/shared.css" />
+<link rel="stylesheet" href="../../assets/css/layout.css" />
+<link rel="stylesheet" href="../../assets/css/tables.css" />
+<link rel="stylesheet" href="../../assets/css/badges.css" />
+<link rel="stylesheet" href="organizer-dashboard.css" />
+</head><body>
+<div class="dashboard-layout">
+<aside class="sidebar"><div class="sidebar-logo"><img src="/Images/Logo.png" /></div><ul class="sidebar-menu">
+<li class="active"><a href="organizer-dashboard.html"><span>Dashboard</span></a></li>
+<li><a href="../events/create-event.html"><span>Create Events</span></a></li>
+<li><a href="../events/event-listing.html"><span>Events</span></a></li>
+<li><a href="../volunteers/volunteers.html"><span>Volunteers</span></a></li>
+<li><a href="../certificates/organizer-certificates.html"><span>Certificates</span></a></li>
+<li><a href="../profile/organizer-profile.html"><span>Profile</span></a></li>
+<li><button id="logoutBtn" class="sidebar-logout">Log out</button></li>
+</ul></aside>
+<main class="main-content">
+<header class="topbar"><div><h1 class="page-title">Welcome Back</h1><p class="page-subtitle">An overview of your events and volunteer activity</p></div></header>
+<section class="page-content">
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-number" id="totalEvents">0</div><div class="stat-footer"><span>Total Events</span></div></div>
+<div class="stat-card"><div class="stat-number" id="upcomingEvents">0</div><div class="stat-footer"><span>Upcoming Events</span></div></div>
+<div class="stat-card"><div class="stat-number" id="completedEvents">0</div><div class="stat-footer"><span>Completed Events</span></div></div>
+<div class="stat-card"><div class="stat-number" id="totalVolunteers">0</div><div class="stat-footer"><span>Total Volunteers</span></div></div>
+</div>
+<div class="table-wrapper"><table><thead><tr><th>Event</th><th>Location</th><th>Date</th><th>Volunteers</th><th>Status</th></tr></thead><tbody id="eventsTable"></tbody></table></div>
+</section></main></div>
+<script type="module" src="organizer-dashboard.js"></script>
+</body></html> -->

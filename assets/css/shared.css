@@ -1,0 +1,28 @@
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: "Poppins", sans-serif; 
+}
+body { 
+    background: #f4f7fb; 
+    color: #1f2f46; 
+}
+a { 
+    text-decoration: none; 
+}
+button:disabled { 
+    opacity: 0.7; 
+    cursor: not-allowed; 
+}
+.form-error, .success-message { 
+    display: block; 
+    font-size: 0.85rem; 
+    margin-top: 0.5rem; 
+}
+.form-error { 
+    color: #dc2626; 
+}
+.success-message { 
+    color: #16a34a; 
+}

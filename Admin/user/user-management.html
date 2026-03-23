@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIDLoop - User Management</title>
+  <link rel="stylesheet" href="user-management.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+</head>
+<body>
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="/assets/Images/Logo.png" alt="AIDLoop Logo" />
+      </div>
+
+      <ul class="sidebar-menu">
+        <li>
+          <a href="../dashboard/admin-dashboard.html"><i class="fa-solid fa-border-all"></i><span>Dashboard</span></a>
+        </li>
+        <li>
+          <a href="../verification/verification-queue.html"><i class="fa-regular fa-square-check"></i><span>Verification Queue</span></a>
+        </li>
+        <li>
+          <a href="../organizations/organization-directory.html"><i class="fa-regular fa-building"></i><span>Organization Directory</span></a>
+        </li>
+        <li>
+          <a href="../events/events-oversight.html"><i class="fa-regular fa-calendar"></i><span>Events Oversight</span></a>
+        </li>
+        <li>
+          <a href="../flags/flags.html"><i class="fa-regular fa-flag"></i><span>Flags</span></a>
+        </li>
+        <li class="active">
+          <a href="user-management.html"><i class="fa-regular fa-user"></i><span>User Management</span></a>
+        </li>
+        <li>
+          <a href="../certificates/certificates.html"><i class="fa-regular fa-award"></i><span>Certificates</span></a>
+        </li>
+        <li>
+          <a href="../profile/admin-profile.html"><i class="fa-regular fa-circle-user"></i><span>Profile</span></a>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Search users..." />
+        </div>
+
+        <div class="topbar-right">
+          <div class="notification">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notification-dot"></span>
+          </div>
+
+          <div class="admin-profile">
+            <img
+              class="user-avatar"
+              id="adminAvatar"
+              src="https://i.pravatar.cc/100?img=47"
+              alt="Admin Avatar"
+            />
+            <div class="admin-text">
+              <h4 id="adminName">Loading...</h4>
+              <p id="adminRole">Admin</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="page-content">
+        <div class="page-header">
+          <h1>User Management</h1>
+          <p>View and manage volunteers and organizers registered on the platform.</p>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>USER NAME</th>
+                <th>USER EMAIL</th>
+                <th>LOCATION</th>
+                <th>ROLE</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+
+            <tbody id="userTable">
+              <tr>
+                <td colspan="5">Loading users...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="user-management.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Management</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css" />
+    <link rel="stylesheet" href="../../assets/css/layout.css" />
+    <link rel="stylesheet" href="../../assets/css/tables.css" />
+  </head>
+  <body>
+    <div class="dashboard-layout">
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <img src="/Images/Logo.png" />
+        </div>
+        <ul class="sidebar-menu">
+          <li><a href="../dashboard/admin-dashboard.html">Dashboard</a></li>
+          <li class="active"><a href="user-management.html">User Management</a>
+          </li><li><button id="logoutBtn" class="sidebar-logout">Log out</button></li>
+        </ul>
+      </aside>
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <h1 class="page-title">User Management</h1>
+            <p class="page-subtitle">View and manage registered users.</p>
+          </div>
+        </header>
+        <section class="page-content">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Location</th>
+                  <th>Role</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="userTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="user-management.js"></script>
+  </body>
+</html> -->
