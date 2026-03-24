@@ -15,7 +15,7 @@ body{
 
 /* SIDEBAR */
 
-.sidebar{
+/* .sidebar{
     width:16rem;
     background:#243a5e;
     color:white;
@@ -49,6 +49,67 @@ body{
 
 .menu li:hover{
     background:#1f6ed4;
+} */
+
+.sidebar {
+  width: 15rem;
+  background: #223f6b;
+  color: #ffffff;
+  padding: 1.8rem 0.9rem;
+}
+
+.sidebar-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 2.4rem;
+}
+
+.sidebar-logo img {
+  width: 3.1rem;
+  height: 3.1rem;
+  object-fit: contain;
+}
+
+.sidebar-logo h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1d7de2;
+}
+
+.sidebar-logo h2 span {
+  color: #27a657;
+}
+
+.sidebar-menu {
+  list-style: none;
+}
+
+.sidebar-menu li {
+  margin-bottom: 0.8rem;
+}
+
+.sidebar-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  color: #ffffff;
+  padding: 0.9rem 0.85rem;
+  border-radius: 0.45rem;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+}
+
+.sidebar-menu li a i {
+  width: 1rem;
+  text-align: center;
+}
+
+.sidebar-menu li.active a,
+.sidebar-menu li a:hover {
+  background: #1d7de2;
 }
 
 /* CONTENT */

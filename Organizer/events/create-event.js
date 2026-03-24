@@ -1,5 +1,5 @@
 import { apiRequest } from "../../assets/js/api.js";
-import { ROUTES } from ".//../assets/js/config.js";
+import { ROUTES } from "../../assets/js/config.js";
 import { logout } from "../../assets/js/logout.js";
 
 const roles = [];
