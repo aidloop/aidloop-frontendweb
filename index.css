@@ -169,14 +169,15 @@ a {
 .hero-text .title {
   font-size: 4rem;
   line-height: 1.05;
-  font-weight: 800;
+  font-weight: 700;
   color: #223f6b;
+  margin-top: -2px;
 }
 
 .hero-text .title-large {
-  font-size: 4.2rem;
+  font-size: 4rem;
   line-height: 1.05;
-  font-weight: 800;
+  font-weight: 700;
   margin: 0.4rem 0;
 }
 
@@ -215,6 +216,14 @@ a {
   object-fit: cover;
   display: block;
 }
+/* 
+.hero-image img{
+    width:550px;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+} */
 
 .section-title {
   text-align: center;
