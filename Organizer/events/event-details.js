@@ -1,6 +1,6 @@
-import { apiRequest } from "../assets/js/api.js";
-import { requireRole } from "../assets/js/auth.js";
-import { logout } from "../assets/js/logout.js";
+import { apiRequest } from "../../assets/js/api.js";
+import { requireRole } from "../../assets/js/auth.js";
+import { logout } from "../../assets/js/logout.js";
 
 const els = {
   name: document.getElementById("eventName"),
@@ -102,60 +102,12 @@ els.editBtn.addEventListener("click", () => {
 
 // Logout
 els.logoutBtn.addEventListener("click", () => {
-  logout("../login/login.html");
+  logout("../login/organizer-login.html/");
+  
 });
 
 // Init
 document.addEventListener("DOMContentLoaded", async () => {
-  await requireRole("organizer", "../login/login.html");
+  await requireRole("organizer", "../login/organizer-login.html");
   await loadEvent();
 });
-
-
-
-
-
-
-
-
-
-
-
-// import { apiRequest, normalizeArray } from "../../assets/js/api.js";
-// import { requireOrganizer } from "../../assets/js/auth.js";
-// import { logout } from "../../assets/js/logout.js";
-// import { ROUTES } from "../../assets/js/config.js";
-// import { getQueryParam, formatDate, getLocationText } from "../../assets/js/utils.js";
-
-// const eventId = getQueryParam("id");
-// document.getElementById("logoutBtn").addEventListener("click", () => logout(ROUTES.home));
-// document.getElementById("cancelLink").addEventListener("click", (e) => {
-//   e.preventDefault();
-//   window.location.href = `${ROUTES.organizerCancelEvent}?id=${encodeURIComponent(eventId)}`;
-// });
-
-// document.addEventListener("DOMContentLoaded", async () => {
-//   await requireOrganizer();
-//   try {
-//     const payload = await apiRequest("/events");
-//     const events = normalizeArray(payload, ["events"]);
-//     const event = events.find((e) => String(e._id || e.id) === String(eventId));
-//     document.getElementById("eventName").textContent = event?.name || "Event not found";
-//     document.getElementById("eventDescription").textContent = event?.description || "";
-//     document.getElementById("eventDate").textContent = formatDate(event?.date, "long");
-//     document.getElementById("eventLocation").textContent = getLocationText(event);
-
-//     const regsPayload = await apiRequest(`/applications/events/${eventId}/registrations`);
-//     const regs = Array.isArray(regsPayload) ? regsPayload : regsPayload.data || [];
-//     document.getElementById("volunteerTable").innerHTML = regs.map((v) => `
-//       <tr>
-//         <td>${v.user?.fullName || "Unknown"}</td>
-//         <td>${v.user?.email || "—"}</td>
-//         <td>${formatDate(v.createdAt, "long")}</td>
-//         <td>${v.attendance || "confirmed"}</td>
-//       </tr>
-//     `).join("") || `<tr><td colspan="4">No volunteers yet.</td></tr>`;
-//   } catch {
-//     document.getElementById("volunteerTable").innerHTML = `<tr><td colspan="4">Failed to load event details.</td></tr>`;
-//   }
-// });

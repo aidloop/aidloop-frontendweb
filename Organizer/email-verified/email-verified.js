@@ -1,5 +1,5 @@
-import { apiRequest } from "../assets/js/api.js";
-import { ROUTES } from "../assets/js/config.js";
+import { apiRequest } from "../../assets/js/api.js";
+import { ROUTES } from "../../assets/js/config.js";
 
 const els = {
   continueBtn: document.getElementById("continueBtn"),
@@ -54,11 +54,3 @@ document.addEventListener("DOMContentLoaded", async () => {
   await checkUserSession();
 });
 
-
-
-
-
-// import { ROUTES } from "../../assets/js/config.js";
-// document.getElementById("continueBtn").addEventListener("click", () => {
-//   window.location.href = ROUTES.organizerLogin;
-// });

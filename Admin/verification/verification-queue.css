@@ -2,7 +2,7 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Segoe UI;
+    font-family: "Poppins", sans-serif;
 }
 
 body{
@@ -243,11 +243,6 @@ button{
   color: #fff;
 }
 
-
-
-
-
-/* uses shared css */
 
 
 

@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+ font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -27,7 +27,7 @@ body {
 
 .logo-wrap {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .logo {
@@ -46,7 +46,7 @@ h1 {
   text-align: center;
   font-size: 1.1rem;
   font-weight: 700;
-  margin-bottom: 3.8rem;
+  margin-bottom: 2rem;
 }
 
 .form-group {
@@ -109,7 +109,7 @@ input:focus {
   gap: 0.55rem;
   cursor: pointer;
   margin-top: 0.2rem;
-  margin-bottom: 5.5rem;
+  margin-bottom: 1.5rem;
   user-select: none;
 }
 
@@ -175,6 +175,7 @@ input:focus {
   border: 0.125rem solid #1d7de2;
   background: #ffffff;
   color: #223f6b;
+  margin-top: 1rem;
 }
 
 .error-message {
@@ -212,36 +213,6 @@ input:focus {
   }
 
   .remember-wrap {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   }
 }
-
-
-
-
-
-
-
-
-
-/* .auth-wrap { 
-  min-height: 100vh; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  padding: 2rem; 
-}
-
-.auth-card { 
-  width: 100%; 
-  max-width: 32rem; 
-  background: #fff; 
-  border-radius: 1rem; 
-  padding: 2rem; 
-  box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.06); 
-}
-
-.auth-card h1 { 
-  margin-bottom: 1.2rem; 
-  color: #223f6b; 
-} */

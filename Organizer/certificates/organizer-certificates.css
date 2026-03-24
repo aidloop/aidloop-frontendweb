@@ -1,4 +1,4 @@
-* {
+*{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -312,55 +312,3 @@ tbody tr:last-child {
     min-width: 46rem;
   }
 }
-
-
-
-
-
-
-
-
-
-/* 
-.stats-grid { 
-  display: grid; 
-  grid-template-columns: repeat(3, minmax(0,1fr)); 
-  gap: 1rem; 
-  max-width: 40rem; 
-  margin-bottom: 2rem; 
-}
-
-.stat-card { 
-  background: #fff; 
-  border-radius: 0.9rem; 
-  padding: 1rem; 
-  border: 1px solid #d8dfe8; 
-}
-
-.stat-text p { 
-  font-size: 0.75rem; 
-  color: #8a94a6; 
-}
-
-.stat-text h3 { 
-  font-size: 1.8rem; 
-  color: #223f6b; 
-}
-
-.person-cell { 
-  display: flex; 
-  align-items: center; 
-  gap: 0.8rem; 
-}
-
-.avatar { 
-  width: 2.2rem; 
-  height: 2.2rem; 
-  border-radius: 50%; 
-  object-fit: cover; 
-}
-
-@media (max-width: 68rem) { .stats-grid { 
-  grid-template-columns: 1fr; 
-} 
-} */

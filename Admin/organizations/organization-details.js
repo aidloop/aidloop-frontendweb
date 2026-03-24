@@ -198,32 +198,3 @@ elements.overlay.addEventListener("click", (event) => {
 });
 
 document.addEventListener("DOMContentLoaded", loadOrganizerDetails);
-
-
-
-
-
-
-
-
-
-// import { apiRequest, normalizeArray } from "../../assets/js/api.js";
-// import { requireAdmin } from "../../assets/js/auth.js";
-// import { getQueryParam, getLocationText } from "../../assets/js/utils.js";
-
-// const id = getQueryParam("id");
-
-// document.addEventListener("DOMContentLoaded", async () => {
-//   await requireAdmin();
-//   try {
-//     const payload = await apiRequest("/user");
-//     const users = normalizeArray(payload, ["users"]);
-//     const org = users.find((u) => String(u._id || u.id) === String(id));
-//     document.getElementById("orgName").textContent = org?.fullName || org?.name || org?.organizationName || "Organization";
-//     document.getElementById("orgEmail").textContent = org?.email || "—";
-//     document.getElementById("orgLocation").textContent = getLocationText(org);
-//     document.getElementById("orgDescription").textContent = org?.description || org?.bio || "No description available.";
-//   } catch {
-//     document.getElementById("orgName").textContent = "Failed to load organization.";
-//   }
-// });

@@ -216,33 +216,3 @@ elements.overlay.addEventListener("click", (event) => {
 
 document.addEventListener("DOMContentLoaded", loadFlagDetails);
 
-
-
-
-
-
-
-
-
-
-// import { apiRequest, normalizeArray } from "../../assets/js/api.js";
-// import { requireAdmin } from "../../assets/js/auth.js";
-// import { getQueryParam, formatDate } from "../../assets/js/utils.js";
-
-// const id = getQueryParam("id");
-
-// document.addEventListener("DOMContentLoaded", async () => {
-//   await requireAdmin();
-//   try {
-//     const [eventsPayload, usersPayload] = await Promise.all([apiRequest("/events"), apiRequest("/user")]);
-//     const events = normalizeArray(eventsPayload, ["events"]);
-//     const users = normalizeArray(usersPayload, ["users"]);
-//     const org = users.find((u) => String(u._id || u.id) === String(id));
-//     const cancelled = events.filter((e) => String(e.organizer?._id || e.organizerId || "") === String(id) && ["cancelled", "canceled"].includes(String(e.status || "").toLowerCase()));
-//     document.getElementById("orgTitle").textContent = org?.fullName || org?.name || org?.organizationName || "Organization";
-//     document.getElementById("flagReason").textContent = cancelled[0]?.cancelReason || cancelled[0]?.reason || "Frequent cancellations";
-//     document.getElementById("lastEvent").textContent = cancelled[0] ? `${cancelled[0].name} • ${formatDate(cancelled[0].date, "long")}` : "—";
-//   } catch {
-//     document.getElementById("orgTitle").textContent = "Failed to load flag details.";
-//   }
-// });

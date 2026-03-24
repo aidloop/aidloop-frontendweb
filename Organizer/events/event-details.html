@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Event Details</title>
 
-  <link rel="stylesheet" href="../assets/css/shared.css" />
+  <link rel="stylesheet" href="../../assets/css/shared.css" />
+  <link rel="stylesheet" href="../../assets/css/layout.css">
   <link rel="stylesheet" href="event-details.css" />
 
   <link rel="stylesheet"
@@ -18,19 +19,47 @@
      <!-- Sidebar -->
      <aside class="sidebar">
       <div class="sidebar-logo">
-        <img src="/assets/Images/Logo.png" />
+        <img src="../../assets/Images/Logo.png" alt="AIDLoop Logo" />
       </div>
 
       <ul class="sidebar-menu">
-        <li><a href="../dashboard/organizer-dashboard.html">Dashboard</a></li>
-        <li><a href="create-event.html">Create Events</a></li>
-        <li class="active"><a href="event-details.html">Events</a></li>
-        <li><a href="../volunteers/volunteers.html">Volunteers</a></li>
-        <li><a href="../certificates/organizer-certificates.html">Certificates</a></li>
-        <li><a href="../profile/organizer-profile.html">Profile</a></li>
-        <li><button id="logoutBtn">Logout</button></li>
+        <li>
+          <a href="../dashboard/organizer-dashboard.html">
+            <i class="fa-regular fa-house"></i><span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="create-event.html">
+            <i class="fa-regular fa-square-plus"></i><span>Create Events</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="event-listing.html">
+            <i class="fa-regular fa-calendar"></i><span>Events</span>
+          </a>
+        </li>
+        <li>
+          <a href="../volunteers/volunteers.html">
+            <i class="fa-solid fa-users"></i><span>Volunteers</span>
+          </a>
+        </li>
+        <li>
+          <a href="../certificates/organizer-certificates.html">
+            <i class="fa-regular fa-id-card"></i><span>Certificates</span>
+          </a>
+        </li>
+        <li>
+          <a href="../profile/organizer-profile.html">
+            <i class="fa-regular fa-address-card"></i><span>Profile</span>
+          </a>
+        </li>
+        <li>
+          <button type="button" id="logoutBtn" class="sidebar-logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Log out</span>
+          </button>
+        </li>
       </ul>
-    </aside> 
+    </aside>
 
     <!-- Main -->
      <main class="main-content"> 
@@ -40,9 +69,15 @@
         <h1>Events</h1>
 
         <div class="top-actions">
-          <button id="editBtn" class="btn primary">Edit Event</button>
-          <button id="cancelBtn" class="btn danger">Cancel Event</button>
+          <button id="editBtn" class="btn-primary">Edit Event</button>
+          <a href="cancel-event.html"><button id="cancelBtn" class="btn-danger">Cancel Event</button></a>
+          <button class="icon-btn" type="button"><i class="fa-regular fa-bell"></i></button>
+
+          <div class="profile-mini">
+            <img id="organizerAvatar" src="https://i.pravatar.cc/100?img=12" alt="Organizer Avatar" />
+          </div>
         </div>
+
       </header> 
 
       <!-- Content -->
@@ -56,7 +91,7 @@
         </div>
 
         <h3>Events Description</h3>
-        <div id="eventDescription" class="description-box"></div> -->
+        <div id="eventDescription" class="description-box"></div> 
 
         <!-- Info Row -->
          <div class="event-meta">
@@ -113,24 +148,3 @@
 </body>
 </html> 
 
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html><html lang="en"><head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Event Details</title>
-<link rel="stylesheet" href="../../assets/css/shared.css" />
-<link rel="stylesheet" href="../../assets/css/layout.css" />
-<link rel="stylesheet" href="../../assets/css/tables.css" />
-<link rel="stylesheet" href="event-details.css" />
-</head><body>
-<div class="dashboard-layout"><aside class="sidebar"><div class="sidebar-logo"><img src="/Images/Logo.png" /></div><ul class="sidebar-menu"><li><a href="../dashboard/organizer-dashboard.html">Dashboard</a></li><li><a href="create-event.html">Create Events</a></li><li class="active"><a href="event-listing.html">Events</a></li><li><button id="logoutBtn" class="sidebar-logout">Log out</button></li></ul></aside>
-<main class="main-content"><header class="topbar"><div><h1 class="page-title">Event Details</h1></div><div><a id="cancelLink" class="secondary-btn" href="#">Cancel Event</a></div></header><section class="page-content"><h2 id="eventName">Loading...</h2><p id="eventDescription"></p><div class="meta"><span id="eventDate"></span><span id="eventLocation"></span></div><div class="table-wrapper"><table><thead><tr><th>Name</th><th>Email</th><th>Date</th><th>Status</th></tr></thead><tbody id="volunteerTable"></tbody></table></div></section></main></div>
-<script type="module" src="event-details.js"></script>
-</body></html> -->

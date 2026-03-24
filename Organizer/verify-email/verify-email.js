@@ -1,5 +1,5 @@
-import { apiRequest } from "../assets/js/api.js";
-import { ROUTES } from "../assets/js/config.js";
+import { apiRequest } from "../../assets/js/api.js";
+import { ROUTES } from "../../assets/js/config.js";
 
 const els = {
   resendBtn: document.getElementById("resendBtn"),
@@ -68,30 +68,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
-// import { apiRequest } from "../../assets/js/api.js";
-
-// const resendBtn = document.getElementById("resendBtn");
-// const emailText = document.getElementById("emailText");
-// const formError = document.getElementById("formError");
-// const formSuccess = document.getElementById("formSuccess");
-
-// const email = sessionStorage.getItem("aidloop_pending_verification_email") || localStorage.getItem("aidloop_organizer_email") || "";
-// emailText.textContent = email ? `Sent to: ${email}` : "";
-
-// resendBtn.addEventListener("click", async () => {
-//   formError.textContent = "";
-//   formSuccess.textContent = "";
-//   try {
-//     resendBtn.disabled = true;
-//     const result = await apiRequest("/auth/resend-otp", {
-//       method: "POST",
-//       body: JSON.stringify({ email })
-//     });
-//     formSuccess.textContent = result.message || "Verification email resent successfully.";
-//   } catch (err) {
-//     formError.textContent = err.message || "Failed to resend verification email.";
-//   } finally {
-//     resendBtn.disabled = false;
-//   }
-// });

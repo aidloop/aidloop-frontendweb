@@ -1,7 +1,7 @@
-import { apiRequest, normalizeArray } from "../assets/js/api.js";
-import { requireRole } from "../assets/js/auth.js";
-import { logout } from "../assets/js/logout.js";
-import { ROUTES } from "../assets/js/config.js";
+import { apiRequest, normalizeArray } from "../../assets/js/api.js";
+import { requireRole } from "..././assets/js/auth.js";
+import { logout } from "../../assets/js/logout.js";
+import { ROUTES } from "../../assets/js/config.js";
 
 const els = {
   orgName: document.getElementById("orgName"),
@@ -194,88 +194,3 @@ document.addEventListener("DOMContentLoaded", async () => {
   setEditable(false);
   await loadStats();
 });
-
-
-
-
-
-
-
-
-
-
-
-// import { apiRequest } from "../../assets/js/api.js";
-// import { requireOrganizer } from "../../assets/js/auth.js";
-// import { logout } from "../../assets/js/logout.js";
-// import { ROUTES } from "../../assets/js/config.js";
-// import { getLocationText } from "../../assets/js/utils.js";
-
-// const els = {
-//   orgName: document.getElementById("orgName"),
-//   email: document.getElementById("email"),
-//   phoneNumber: document.getElementById("phoneNumber"),
-//   website: document.getElementById("website"),
-//   location: document.getElementById("location"),
-//   description: document.getElementById("description"),
-//   editProfileBtn: document.getElementById("editProfileBtn"),
-//   logoutBtn: document.getElementById("logoutBtn"),
-//   profileMessage: document.getElementById("profileMessage")
-// };
-
-// let isEditing = false;
-
-// function setEditable(editable) {
-//   els.phoneNumber.readOnly = !editable;
-//   els.website.readOnly = !editable;
-//   els.location.readOnly = !editable;
-//   els.description.readOnly = !editable;
-// }
-
-// document.addEventListener("DOMContentLoaded", async () => {
-//   const organizer = await requireOrganizer();
-//   if (!organizer) return;
-
-//   els.logoutBtn.addEventListener("click", () => logout(ROUTES.home));
-
-//   function fill(user) {
-//     els.orgName.textContent = user.fullName || user.name || user.organizationName || "Organization";
-//     els.email.value = user.email || "";
-//     els.phoneNumber.value = user.phoneNumber || user.phone || "";
-//     els.website.value = user.website || user.socialLink || user.socialLinks?.[0] || "";
-//     els.location.value = getLocationText(user);
-//     els.description.value = user.description || user.bio || "";
-//   }
-
-//   fill(organizer);
-//   setEditable(false);
-
-//   els.editProfileBtn.addEventListener("click", async () => {
-//     els.profileMessage.textContent = "";
-//     if (!isEditing) {
-//       isEditing = true;
-//       setEditable(true);
-//       els.editProfileBtn.textContent = "Save Profile";
-//       return;
-//     }
-//     try {
-//       await apiRequest("/user/me", {
-//         method: "PUT",
-//         body: JSON.stringify({
-//           phoneNumber: els.phoneNumber.value.trim(),
-//           website: els.website.value.trim(),
-//           location: els.location.value.trim(),
-//           description: els.description.value.trim()
-//         })
-//       });
-//       isEditing = false;
-//       setEditable(false);
-//       els.editProfileBtn.textContent = "Edit Profile";
-//       els.profileMessage.textContent = "Profile updated successfully.";
-//       els.profileMessage.className = "success-message";
-//     } catch (err) {
-//       els.profileMessage.textContent = err.message || "Failed to update profile.";
-//       els.profileMessage.className = "form-error";
-//     }
-//   });
-// });

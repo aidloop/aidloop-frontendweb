@@ -1,5 +1,5 @@
-import { apiRequest } from "../assets/js/api.js";
-import { ROUTES } from "../assets/js/config.js";
+import { apiRequest } from "../../assets/js/api.js";
+import { ROUTES } from "../../assets/js/config.js";
 
 const els = {
   form: document.getElementById("loginForm"),
@@ -90,44 +90,3 @@ els.form.addEventListener("submit", async (e) => {
     setLoading(false);
   }
 });
-
-
-
-
-
-
-
-
-// import { apiRequest } from "../../assets/js/api.js";
-// import { ROUTES } from "../../assets/js/config.js";
-
-// const form = document.getElementById("loginForm");
-// const email = document.getElementById("email");
-// const password = document.getElementById("password");
-// const formError = document.getElementById("formError");
-// const formSuccess = document.getElementById("formSuccess");
-// const loginBtn = document.getElementById("loginBtn");
-
-// form.addEventListener("submit", async (e) => {
-//   e.preventDefault();
-//   formError.textContent = "";
-//   formSuccess.textContent = "";
-
-//   try {
-//     loginBtn.disabled = true;
-//     const response = await apiRequest("/auth/login", {
-//       method: "POST",
-//       body: JSON.stringify({ email: email.value.trim(), password: password.value.trim() })
-//     });
-//     if (String(response?.user?.role || "organizer").toLowerCase() !== "organizer") {
-//       throw new Error("Not an organizer account");
-//     }
-//     localStorage.setItem("aidloop_organizer_email", email.value.trim());
-//     formSuccess.textContent = response.message || "Login successful";
-//     setTimeout(() => { window.location.href = ROUTES.organizerDashboard; }, 800);
-//   } catch (err) {
-//     formError.textContent = err.message || "Login failed";
-//   } finally {
-//     loginBtn.disabled = false;
-//   }
-// });

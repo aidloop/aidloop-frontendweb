@@ -188,33 +188,3 @@ body {
     font-size: 20px;
   }
 }
-
-
-
-
-
-
-
-
-/* 
-.auth-wrap { min-height: 
-  100vh; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  padding: 2rem; 
-}
-
-.auth-card { 
-  width: 100%; 
-  max-width: 32rem; 
-  background: #fff; 
-  border-radius: 1rem; 
-  padding: 2rem; 
-  box-shadow: 0 0.5rem 2rem rgba(0,0,0,0.06); 
-}
-
-.auth-card h1 { 
-  margin-bottom: 1.2rem; 
-  color: #223f6b; 
-} */

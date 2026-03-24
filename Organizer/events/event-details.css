@@ -1,3 +1,49 @@
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-primary {
+  background: #223f6b;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.95rem 1.4rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+}
+
+
+.btn-danger {
+  background: #dc2626;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.95rem 1.4rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.icon-btn {
+  width: 2.6rem;
+  height: 2.6rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #223f6b;
+  font-size: 1.35rem;
+  cursor: pointer;
+}
+
+
+.profile-mini img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .event-details {
   padding: 2rem;
 }
@@ -70,19 +116,15 @@ td, th {
   border-bottom: 1px solid #ddd;
 }
 
-
-
-
-
-
-/* 
-.meta { 
-  display: flex; 
-  gap: 1rem; 
-  margin: 1rem 0 2rem; 
-  color: #6b7280; 
+.row-actions {
+  text-align: center;
 }
 
-#eventDescription { 
-  margin-top: 1rem; 
-} */
+.row-actions a,
+.row-actions button {
+  color: #223f6b;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}

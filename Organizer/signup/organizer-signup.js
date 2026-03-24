@@ -1,5 +1,5 @@
-import { apiRequest } from "../assets/js/api.js";
-import { ROUTES } from "../assets/js/config.js";
+import { apiRequest } from "../../assets/js/api.js";
+import { ROUTES } from "../../assets/js/config.js";
 
 const els = {
   form: document.getElementById("signupForm"),
@@ -55,6 +55,7 @@ els.form.addEventListener("submit", async (e) => {
 
     const response = await apiRequest("/auth/register/web", {
       method: "POST",
+      header: {"Content-Type": "application.json"},
       body: JSON.stringify({
         fullName,
         email,
@@ -77,50 +78,3 @@ els.form.addEventListener("submit", async (e) => {
     setLoading(false);
   }
 });
-
-
-
-
-
-
-
-
-
-// import { apiRequest } from "../../assets/js/api.js";
-// import { ROUTES } from "../../assets/js/config.js";
-
-// const form = document.getElementById("signupForm");
-// const name = document.getElementById("name");
-// const email = document.getElementById("email");
-// const password = document.getElementById("password");
-// const formError = document.getElementById("formError");
-// const formSuccess = document.getElementById("formSuccess");
-// const signupBtn = document.getElementById("signupBtn");
-
-// form.addEventListener("submit", async (e) => {
-//   e.preventDefault();
-//   formError.textContent = "";
-//   formSuccess.textContent = "";
-
-//   try {
-//     signupBtn.disabled = true;
-//     const response = await apiRequest("/auth/register/web", {
-//       method: "POST",
-//       body: JSON.stringify({
-//         fullName: name.value.trim(),
-//         email: email.value.trim(),
-//         password: password.value.trim()
-//       })
-//     });
-
-//     sessionStorage.setItem("aidloop_pending_verification_email", email.value.trim());
-//     localStorage.setItem("aidloop_organizer_email", email.value.trim());
-//     formSuccess.textContent = response.message || "Account created successfully";
-//     setTimeout(() => { window.location.href = ROUTES.organizerVerifyEmail; }, 1000);
-//   } catch (err) {
-//     formError.textContent = err.message || "Signup failed";
-//   } finally {
-//     signupBtn.disabled = false;
-//   }
-// });
-

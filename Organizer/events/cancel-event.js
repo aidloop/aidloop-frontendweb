@@ -1,7 +1,7 @@
-import { apiRequest } from "../assets/js/api.js";
-import { requireRole } from "../assets/js/auth.js";
-import { logout } from "../assets/js/logout.js";
-import { ROUTES } from "../assets/js/config.js";
+import { apiRequest } from "../../assets/js/api.js";
+import { requireRole } from "../../assets/js/auth.js";
+import { logout } from "../../assets/js/logout.js";
+import { ROUTES } from "../../assets/js/config.js";
 
 const eventId = new URLSearchParams(window.location.search).get("id");
 
@@ -85,39 +85,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 });
-
-
-
-
-
-
-
-
-
-// import { apiRequest } from "../../assets/js/api.js";
-// import { requireOrganizer } from "../../assets/js/auth.js";
-// import { logout } from "../../assets/js/logout.js";
-// import { ROUTES } from "../../assets/js/config.js";
-// import { getQueryParam } from "../../assets/js/utils.js";
-
-// const eventId = getQueryParam("id");
-// const reasonText = document.getElementById("reasonText");
-// const cancelBtn = document.getElementById("cancelEventBtn");
-// const msg = document.getElementById("msg");
-// document.getElementById("logoutBtn").addEventListener("click", () => logout(ROUTES.home));
-
-// cancelBtn.addEventListener("click", async () => {
-//   try {
-//     await apiRequest(`/events/${eventId}/cancel`, {
-//       method: "PATCH",
-//       body: JSON.stringify({ reason: reasonText.value.trim() || "Cancelled by organizer" })
-//     });
-//     msg.textContent = "Event cancelled successfully.";
-//     setTimeout(() => { window.location.href = ROUTES.organizerEventListing; }, 600);
-//   } catch (err) {
-//     msg.className = "form-error";
-//     msg.textContent = err.message || "Failed to cancel event.";
-//   }
-// });
-
-// document.addEventListener("DOMContentLoaded", requireOrganizer);
