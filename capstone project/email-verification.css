@@ -19,7 +19,7 @@ body {
 
 main {
     width: 100%;
-    max-width: 800px; /* controls how wide the content stretches */
+    max-width: 800px; 
     padding: 40px 24px;
     text-align: center;
 }

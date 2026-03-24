@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="dashboard6.css">
+    <link rel="stylesheet" href="organization-profile.css">
     <script src="https://kit.fontawesome.com/241f3a0b37.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,13 +15,17 @@
 </head>
 
 <body>
+
+    <!-- Dark overlay behind sidebar on mobile -->
+    <div class="sidebar-overlay" id="overlay"></div>
+
     <div class="main-container">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <img class="logo" src="images/aidloop logo with dark background.png" alt="logo">
             <nav class="sidebar-nav">
                 <ul>
                     <a href="">
-                        <li> <i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
+                        <li><i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
                     </a>
                     <a href="">
                         <li><i class="fa-solid fa-circle-plus fa-lg"></i> Create Events</li>
@@ -35,174 +39,165 @@
                     <a href="">
                         <li><i class="fa-solid fa-user-graduate fa-lg"></i> Certificates</li>
                     </a>
-                    <a  class="active" href="">
+                    <a class="active" href="">
                         <li><i class="fa-solid fa-building-user fa-lg"></i> Profile</li>
                     </a>
                     <a href="">
-                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> logout</li>
+                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> Logout</li>
                     </a>
                 </ul>
-
             </nav>
-
         </aside>
+
         <main class="main-content">
 
             <header class="header">
-                <div>
+                <!-- Hamburger: only visible on mobile -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
 
+                <div>
                     <h1>Organization Profile</h1>
                     <h6>Manage your organization information.</h6>
                 </div>
+
                 <div class="header-btn">
-
-                    <button class="create-btn Create">Edit Profile</button>
-                    <a class="fontawesome" href=""> <i class="fa-regular fa-bell fa-2xl"></i> </a>
-                    <a class="fontawesome" href=""> <i class="fa-regular fa-circle-user fa-2xl"></i> </a>
-
+                    <button class="create-btn">Edit Profile</button>
+                    <a class="fontawesome" href=""><i class="fa-regular fa-bell fa-2xl"></i></a>
+                    <a class="fontawesome" href=""><i class="fa-regular fa-circle-user fa-2xl"></i></a>
                 </div>
-
             </header>
 
-
+            <!-- Profile card -->
             <section class="first-section">
                 <div class="first-section-container">
+
                     <div class="first-part">
                         <div class="AL">
                             <h1>AL</h1>
                             <p>Verified Org</p>
-
                         </div>
                         <div class="Aidloop-foundation">
                             <h1>Aidloop Foundation</h1>
                             <p>Non-Profit Volunteer Organization</p>
                         </div>
-
                     </div>
 
                     <div class="second-part">
-
                         <div class="contact-grid">
                             <div class="second-part1">
                                 <div class="box">
                                     <i class="fa-regular fa-envelope"></i>
                                     <span>contact@gmail.com</span>
                                 </div>
-
-                                <div class="box ">
+                                <div class="box">
                                     <i class="fa-solid fa-phone"></i>
                                     <span>+234 8165434534</span>
                                 </div>
-
                             </div>
                             <div class="second-part2">
-                                <div class="box ">
+                                <div class="box">
                                     <span>www.aidloop.org</span>
                                 </div>
-                                <div class="box ">
+                                <div class="box">
                                     <i class="fa-solid fa-location-dot"></i>
                                     <span>Victoria Island, Lagos</span>
                                 </div>
-
                             </div>
-
                         </div>
-
-
                     </div>
-                </div>
 
+                </div>
             </section>
 
-
+            <!-- About section -->
             <section class="second-section">
                 <div class="second-section-container">
-                    <div class=" second-section-header">
+                    <div class="second-section-header">
                         <h2 class="about-organization">About Organization</h2>
-
                     </div>
                     <div class="second-section-text">
-                        <p>AidLoop connects volunteers with meaningful community events such as <br>
-                            environmental clean-ups, charity drives, and social impact activities. Our mission <br>
+                        <p>AidLoop connects volunteers with meaningful community events such as
+                            environmental clean-ups, charity drives, and social impact activities. Our mission
                             is to make volunteering accessible, rewarding, and impactful for every participant.
                         </p>
-
                     </div>
                 </div>
-
-
             </section>
 
-
-
+            <!-- Stat cards -->
             <section class="third-section">
-
                 <div class="card">
-                    <div class="card-image">
+                    <div class="card-image first">
                         <img src="images/noto_calendar.png" alt="">
                     </div>
                     <div class="card-text">
                         TOTAL EVENTS CREATED
                         <p>24</p>
-                        <div class="arrow-up">
+                        <div class="arrow-up first">
                             <img src="images/mdi_arrow-up.png" alt="">
                             <p>+5</p>
-                            <p>
-                                this month
-                            </p>
+                            <p>this month</p>
                         </div>
                     </div>
                 </div>
+
                 <div class="card">
-                    <div class="card-image">
+                    <div class="card-image second ">
                         <img src="images/ant-design_team-outlined.png" alt="">
                     </div>
                     <div class="card-text">
                         TOTAL VOLUNTEERS
                         <p>318</p>
-                        <div class="arrow-up">
+                        <div class="arrow-up second">
                             <img src="images/mdi_arrow-up.png" alt="">
                             <p>+318</p>
-                            <p>
-                                this month
-                            </p>
+                            <p>this month</p>
                         </div>
                     </div>
                 </div>
+
                 <div class="card">
-                    <div class="card-image">
+                    <div class="card-image third">
                         <img src="images/noto_trophy.png" alt="">
                     </div>
                     <div class="card-text">
                         CERTIFICATES ISSUED
                         <p>157</p>
-                        <div class="arrow-up">
+                        <div class="arrow-up third">
                             <div>
                                 <img src="images/mdi_arrow-up.png" alt="">
-                            <p>+18</p>
-                                
+                                <p>+18</p>
                             </div>
-                           <div class="arrow-up-text">
-                            <p>
-                                this month
-                            </p>
-
-                           </div> 
+                            <div class="arrow-up-text">
+                                <p>this month</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
             </section>
 
-
-
-
-
-
-
-
+        </main>
     </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+    </script>
 
 </body>
 

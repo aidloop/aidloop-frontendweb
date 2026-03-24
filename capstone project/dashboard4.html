@@ -15,13 +15,17 @@
 </head>
 
 <body>
+
+    <!-- Dark overlay behind sidebar on mobile -->
+    <div class="sidebar-overlay" id="overlay"></div>
+
     <div class="main-container">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <img class="logo" src="images/aidloop logo with dark background.png" alt="logo">
             <nav class="sidebar-nav">
                 <ul>
                     <a class="active" href="">
-                        <li> <i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
+                        <li><i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
                     </a>
                     <a href="">
                         <li><i class="fa-solid fa-circle-plus fa-lg"></i> Create Events</li>
@@ -39,159 +43,143 @@
                         <li><i class="fa-solid fa-building-user fa-lg"></i> Profile</li>
                     </a>
                     <a href="">
-                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> logout</li>
+                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> Logout</li>
                     </a>
                 </ul>
-
             </nav>
-
         </aside>
+
         <main class="main-content">
 
             <header class="header">
+                <!-- Hamburger: only visible on mobile -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
                 <div>
                     <h1>Events details</h1>
                     <h6>View and manage all your events</h6>
                 </div>
+
                 <div class="header-btn">
                     <button class="create-btn">Edit event</button>
-                    <a href=""> <i class="fa-regular fa-bell fa-2xl"></i> </a>
-                    <a href=""> <i class="fa-regular fa-circle-user fa-2xl"></i> </a>
-
+                    <a href=""><i class="fa-regular fa-bell fa-2xl"></i></a>
+                    <a href=""><i class="fa-regular fa-circle-user fa-2xl"></i></a>
                 </div>
-
             </header>
 
-
+            <!-- Image + event info card -->
             <section class="first-section">
                 <div class="first-image">
                     <img src="images/volunteers bending down.png" alt="">
-
                 </div>
 
                 <div class="text-beside-image">
                     <h2>Coastal clean-up Exercise</h2>
 
                     <div class="upcoming">
-                        <p>
                         <h3>Upcoming</h3>
-                        </p>
                     </div>
 
                     <div class="list-under-upcoming">
-                        <p>
-                            <i class="fa-solid fa-location-dot fa-lg"></i> Lekki waterfrontLagos
-                        </p>
-                        <p>
-                            <i class="fa-regular fa-calendar fa-lg"></i> June 12, 2026
-                        </p>
-                        <p>
-                            <i class="fa-regular fa-clock"></i> 8:00am - 12:00pm
-                        </p>
-                        <p>
-                            <i class="fa-solid fa-user-group fa-lg"></i> 18/40 volunteers
-                        </p>
-
+                        <p><i class="fa-solid fa-location-dot fa-lg"></i> Lekki waterfront, Lagos</p>
+                        <p><i class="fa-regular fa-calendar fa-lg"></i> June 12, 2026</p>
+                        <p><i class="fa-regular fa-clock"></i> 8:00am - 12:00pm</p>
+                        <p><i class="fa-solid fa-user-group fa-lg"></i> 18/40 volunteers</p>
                     </div>
-
-
-
                 </div>
             </section>
+
+            <!-- Description heading -->
             <div class="event-description">
-                <h3> Events Description </h3>
+                <h3>Events Description</h3>
             </div>
 
+            <!-- Description body -->
             <section class="second-section">
                 <div>
                     <p>
                         Join us for a community coastal clean-up exercise aimed at reducing plastic waste and protecting
                         marine life along the Lekki Waterfront. This initiative brings together passionate volunteers
-                        who
-                        are committed to keeping our beaches and waterways clean.
-
+                        who are committed to keeping our beaches and waterways clean.
                     </p>
                     <p>
                         During this event, volunteers will work in small groups to collect plastic waste, sort
-                        recyclable
-                        materials, and safely dispose of debris found along the shoreline. All necessary clean-up
-                        materials
-                        such as gloves, waste bags, and safety gear will be provided by the organizers.
-
+                        recyclable materials, and safely dispose of debris found along the shoreline. All necessary
+                        clean-up materials such as gloves, waste bags, and safety gear will be provided by the
+                        organizers.
                     </p>
-
                     <p>
                         Beyond the clean-up activity, the event will also include a short environmental awareness
-                        session
-                        where participants will learn about the impact of plastic pollution on marine ecosystems and how
-                        small everyday actions can contribute to a healthier environment.
-
+                        session where participants will learn about the impact of plastic pollution on marine ecosystems
+                        and how small everyday actions can contribute to a healthier environment.
                     </p>
                     <p>
                         Whether you are passionate about environmental sustainability, looking to give back to the
                         community, or simply want to spend a meaningful morning outdoors, this event is a great
-                        opportunity
-                        to make a positive impact while connecting with like-minded individuals.
-
+                        opportunity to make a positive impact while connecting with like-minded individuals.
                     </p>
-
-
                 </div>
-
-
             </section>
 
-
+            <!-- Stat cards -->
             <section class="third-section">
-
                 <div class="card">
                     <h3>40</h3>
-                    <p class="under-card"> <i id="fontawesome" class="fa-regular fa-calendar fa-lg"></i> total events
-                    </p>
+                    <p class="under-card"><i id="fontawesome" class="fa-regular fa-calendar fa-lg"></i> total events</p>
                 </div>
                 <div class="card">
                     <h3>59</h3>
-                    <p class="under-card"> <i id="fontawesome" class="fa-regular fa-clock fa-lg"></i> upcoming events
-                    </p>
+                    <p class="under-card"><i id="fontawesome" class="fa-regular fa-clock fa-lg"></i> upcoming events</p>
                 </div>
-               
                 <div class="card">
                     <h3>324</h3>
-                    <p class="under-card"> <i id="fontawesome" class="fa-regular fa-circle-check fa-lg"></i> total
-                        volunteers</p>
+                    <p class="under-card"><i id="fontawesome" class="fa-regular fa-circle-check fa-lg"></i> total volunteers</p>
                 </div>
-
             </section>
 
+            <!-- Volunteer search -->
             <section class="fourth-section">
                 <div class="first-part">
-                    <h4>Volunteer Registered</h2>
-
+                    <h4>Volunteer Registered</h4>
                 </div>
                 <div class="second-part">
                     <input type="text" placeholder="Search events by name, location..." />
                     <button class="search-btn">
-                        <i class="fa-solid fa-magnifying-glass "></i>
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
             </section>
 
-
+            <!-- Empty state -->
             <section class="fifth-section">
-                <div class="final-image"><img src="images/We Are Women - Together (1) 1.png" alt=""></div>
-                
-                    <h3>No Volunteers registered yet. <br> Volunteers will appear once they join</h3>
-                
+                <div class="final-image">
+                    <img src="images/We Are Women - Together (1) 1.png" alt="">
+                </div>
+                <h3>No Volunteers registered yet. <br> Volunteers will appear once they join</h3>
             </section>
 
         </main>
-
-
-
-
-
-
     </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+    </script>
 
 </body>
 

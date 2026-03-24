@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="volunteer-management.css">
+    <link rel="stylesheet" href="certificates.css">
     <script src="https://kit.fontawesome.com/241f3a0b37.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,13 +15,17 @@
 </head>
 
 <body>
+
+    <!-- Dark overlay behind sidebar on mobile -->
+    <div class="sidebar-overlay" id="overlay"></div>
+
     <div class="main-container">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <img class="logo" src="images/aidloop logo with dark background.png" alt="logo">
             <nav class="sidebar-nav">
                 <ul>
                     <a href="">
-                        <li> <i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
+                        <li><i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
                     </a>
                     <a href="">
                         <li><i class="fa-solid fa-circle-plus fa-lg"></i> Create Events</li>
@@ -29,67 +33,86 @@
                     <a href="">
                         <li><i class="fa-regular fa-calendar fa-lg"></i> Events</li>
                     </a>
-                    <a class="active" href="">
+                    <a href="">
                         <li><i class="fa-solid fa-user-group fa-lg"></i> Volunteers</li>
                     </a>
-                    <a href="">
+                    <a class="active" href="">
                         <li><i class="fa-solid fa-user-graduate fa-lg"></i> Certificates</li>
                     </a>
                     <a href="">
                         <li><i class="fa-solid fa-building-user fa-lg"></i> Profile</li>
                     </a>
                     <a href="">
-                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> logout</li>
+                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> Logout</li>
                     </a>
                 </ul>
-
             </nav>
-
         </aside>
+
         <main class="main-content">
 
             <header class="header">
+                <!-- Hamburger: only visible on mobile -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
                 <div>
-                    <h1>Volunteers</h1>
-                    <h6>Manage Volunteers across all events </h6>
+                    <h1>Certificates</h1>
+                    <h6>Manage Volunteers Certificates</h6>
                 </div>
+
                 <div class="header-btn">
-
-                    <a href=""> <i class="fa-regular fa-bell fa-2xl"></i> </a>
-                    <a href=""> <i class="fa-regular fa-circle-user fa-2xl"></i> </a>
-
+                    <button class="create-btn">Generate Certificate</button>
+                    <a href=""><i class="fa-regular fa-bell fa-2xl"></i></a>
+                    <a href=""><i class="fa-regular fa-circle-user fa-2xl"></i></a>
                 </div>
-
             </header>
 
-
+            <!-- Stat cards -->
             <section class="first-section">
-                <div class="first-part">
-                    <h2 class="tab active-tab">All</h2>
-                    <h2 class="tab">confirmed</h2>
-                    <h2 class="tab">Pending</h2>
-                    <h2 class="tab">Cancelled</h2>
-
+                <div class="card">
+                    <div class="card-image first">
+                        <img src="images/noto_trophy.png" alt="">
+                    </div>
+                    <div class="card-text">
+                        TOTAL <br> CERTIFICATES
+                        <p>6</p>
+                    </div>
                 </div>
-                <div class="second-part">
-                    <input type="text" placeholder="Search events by name, location..." />
-                    <button class="search-btn">
-                        <i class="fa-solid fa-magnifying-glass "></i>
-                    </button>
+
+                <div class="card">
+                    <div class="card-image second">
+                        <img src="images/fluent-color_checkmark-circle-32 (1).png" alt="">
+                    </div>
+                    <div class="card-text">
+                        ISSUED
+                        <p>4</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image third">
+                        <img src="images/ph_anchor-simple-fill.png" alt="">
+                    </div>
+                    <div class="card-text">
+                        PENDING
+                        <p>4</p>
+                    </div>
                 </div>
             </section>
 
-
-
+            <!-- Table -->
             <section class="second-section">
-
                 <table>
                     <thead class="table-head">
                         <tr>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th> Phone</th>
-                            <th> Status</th>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -101,10 +124,12 @@
                                     <span>John Doe</span>
                                 </div>
                             </td>
-                            <td>johndoe@gmail.com</td>
-                            <td>08098782343</td>
-                            <td class="status upcoming"> upcoming</td>
-                            <td>...</td>
+                            <td>Coastal Clean-up</td>
+                            <td>June 12, 2025</td>
+                            <td><span class="status Issued">Issued</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -113,10 +138,12 @@
                                     <span>Mary Musa</span>
                                 </div>
                             </td>
-                            <td>marymusa@gmail.com</td>
-                            <td>080987111543</td>
-                            <td class="status published"> published</td>
-                            <td>...</td>
+                            <td>Tree Planting Drive</td>
+                            <td>June 15, 2025</td>
+                            <td><span class="status Issued">Issued</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -125,10 +152,12 @@
                                     <span>David James</span>
                                 </div>
                             </td>
-                            <td>davidjames@gmail.com</td>
-                            <td>08098006543</td>
-                            <td class="status draft"> Draft</td>
-                            <td>...</td>
+                            <td>Beach Cleanup</td>
+                            <td>June 18, 2025</td>
+                            <td><span class="status Pending">Pending</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -137,10 +166,12 @@
                                     <span>Emeka Obi</span>
                                 </div>
                             </td>
-                            <td>emekaobi@gmail.com</td>
-                            <td> 08098786543</td>
-                            <td class="status completed"> Completed</td>
-                            <td>...</td>
+                            <td>Coastal Cleanup</td>
+                            <td>June 19, 2025</td>
+                            <td><span class="status Confirmed">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -149,32 +180,49 @@
                                     <span>Aisha Bello</span>
                                 </div>
                             </td>
-                            <td>Aishabello@gmail.com</td>
-                            <td> 09123456789</td>
-                            <td class="status completed"> completed</td>
-                            <td>...</td>
+                            <td>Food Distribution Drive</td>
+                            <td>June 20, 2025</td>
+                            <td><span class="status Pending">Pending</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="name-cell">
                                     <img class="table-image" src="images/Ellipse 34.png" alt="">
-                                    <span>fatima Ahmed</span>
+                                    <span>Fatima Ahmed</span>
                                 </div>
                             </td>
-                            <td>fatimaahmed@gmail.com</td>
-                            <td> 08094336543</td>
-                            <td class="status upcoming"> upcoming</td>
-                            <td>...</td>
+                            <td>Community Health Outreach</td>
+                            <td>June 22, 2025</td>
+                            <td><span class="status Confirmed">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
                         </tr>
-
-
                     </tbody>
                 </table>
             </section>
 
-        </main>
+            <!-- Pagination -->
+            <div class="next-prev">
+                <span class="info">Showing 6 of 6 certificates</span>
+                <div class="controls">
+                    <button class="page-btn nav-btn">
+                        <span>&#171;</span> Prev
+                    </button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn nav-btn">
+                        Next <span>&#187;</span>
+                    </button>
+                </div>
+            </div>
 
+        </main>
     </div>
+
     <script>
         const hamburger = document.getElementById('hamburger');
         const sidebar = document.getElementById('sidebar');
@@ -190,7 +238,6 @@
             overlay.classList.remove('active');
         });
     </script>
-
 
 </body>
 

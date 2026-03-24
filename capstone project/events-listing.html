@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="dashboard2.css">
+    <link rel="stylesheet" href="events-listing.css">
     <script src="https://kit.fontawesome.com/241f3a0b37.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,18 +15,22 @@
 </head>
 
 <body>
+
+    <!-- Dark overlay behind sidebar on mobile -->
+    <div class="sidebar-overlay" id="overlay"></div>
+
     <div class="main-container">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <img class="logo" src="images/aidloop logo with dark background.png" alt="logo">
             <nav class="sidebar-nav">
                 <ul>
-                    <a class="active" href="">
-                        <li> <i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
+                    <a href="">
+                        <li><i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
                     </a>
                     <a href="">
                         <li><i class="fa-solid fa-circle-plus fa-lg"></i> Create Events</li>
                     </a>
-                    <a href="">
+                    <a class="active" href="">
                         <li><i class="fa-regular fa-calendar fa-lg"></i> Events</li>
                     </a>
                     <a href="">
@@ -39,56 +43,60 @@
                         <li><i class="fa-solid fa-building-user fa-lg"></i> Profile</li>
                     </a>
                     <a href="">
-                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> logout</li>
+                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> Logout</li>
                     </a>
                 </ul>
-
             </nav>
-
         </aside>
+
         <main class="main-content">
 
             <header class="header">
+                <!-- Hamburger: only visible on mobile -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
                 <div>
                     <h1>Events</h1>
-                <h6>Browse and manage all your events</h6>
-            </div>
-                <div class="header-btn">
-                    <button class="create-btn">create event</button>
-                    <a href=""> <i class="fa-regular fa-bell fa-2xl"></i> </a>
-                    <a href=""> <i class="fa-regular fa-circle-user fa-2xl"></i> </a>
-
+                    <h6>Browse and manage all your events</h6>
                 </div>
 
+                <div class="header-btn">
+                    <button class="create-btn">create event</button>
+                    <a href=""><i class="fa-regular fa-bell fa-2xl"></i></a>
+                    <a href=""><i class="fa-regular fa-circle-user fa-2xl"></i></a>
+                </div>
             </header>
-
 
             <section class="first-section">
                 <div class="first-part">
                     <h2 class="tab active-tab">All</h2>
-                    <h2 class="tab">Upcoming</h2>
-                    <h2 class="tab">Completed</h2>
+                    <h2 class="tab">Draft</h2>
+                    <h2 class="tab">Published</h2>
+                    <h2 class="tab">Cancelled</h2>
+
+
                 </div>
                 <div class="second-part">
                     <input type="text" placeholder="Search events by name, location..." />
                     <button class="search-btn">
-                        <i class="fa-solid fa-magnifying-glass "></i>
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
             </section>
 
-
-
             <section class="second-section">
-
                 <table>
                     <thead class="table-head">
                         <tr>
                             <th>Event Name</th>
                             <th>Location</th>
-                            <th> Date</th>
-                            <th> Volunteers</th>
-                            <th> Status</th>
+                            <th>Date</th>
+                            <th>Volunteers</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -96,121 +104,129 @@
                         <tr>
                             <td>Beach Cleanup</td>
                             <td>Lekki waterfront</td>
-                            <td> June 15,2026</td>
-                            <td> 19/35</td>
-                            <td class="status upcoming"> upcoming</td>
-                            <td>...</td>
-                        </tr>
-                        <tr>
-                            <td>Food distribution</td>
-                            <td>Coastal Road EYC.</td>
-                            <td> June 23, 2026</td>
-                            <td> 19/35</td>
-                            <td class="status published"> published</td>
+                            <td>June 15, 2026</td>
+                            <td>19/35</td>
+                            <td><span class="status upcoming">upcoming</span></td>
                             <td>...</td>
                         </tr>
                         <tr>
                             <td>Food distribution</td>
                             <td>Coastal Road EYC.</td>
                             <td>June 23, 2026</td>
-                            <td> 19/35</td>
-                            <td class="status draft"> Draft</td>
+                            <td>19/35</td>
+                            <td><span class="status published">published</span></td>
                             <td>...</td>
                         </tr>
                         <tr>
                             <td>Food distribution</td>
                             <td>Coastal Road EYC.</td>
-                            <td> June 23, 2026</td>
-                            <td> 19/35</td>
-                            <td class="status completed"> Completed</td>
+                            <td>June 23, 2026</td>
+                            <td>19/35</td>
+                            <td><span class="status draft">Draft</span></td>
                             <td>...</td>
                         </tr>
                         <tr>
                             <td>Food distribution</td>
                             <td>Coastal Road EYC.</td>
-                            <td> June 23, 2026</td>
-                            <td> 19/35</td>
-                            <td class="status completed"> completed</td>
+                            <td>June 23, 2026</td>
+                            <td>19/35</td>
+                            <td><span class="status completed">Completed</span></td>
                             <td>...</td>
                         </tr>
-                         <tr>
+                        <tr>
+                            <td>Food distribution</td>
+                            <td>Coastal Road EYC.</td>
+                            <td>June 23, 2026</td>
+                            <td>19/35</td>
+                            <td><span class="status completed">completed</span></td>
+                            <td>...</td>
+                        </tr>
+                        <tr>
                             <td>Beach Cleanup</td>
                             <td>Lekki waterfront</td>
-                            <td> June 15,2026</td>
-                            <td> 19/35</td>
-                            <td class="status upcoming"> upcoming</td>
+                            <td>June 15, 2026</td>
+                            <td>19/35</td>
+                            <td><span class="status upcoming">upcoming</span></td>
                             <td>...</td>
                         </tr>
-                          <tr>
-                            <td>Food distribution</td>
-                            <td>Coastal Road EYC.</td>
-                            <td> June 23, 2026</td>
-                            <td> 19/35</td>
-                            <td class="status completed"> completed</td>
-                            <td>...</td>
-                        </tr>
-                         <tr>
+                        <tr>
                             <td>Food distribution</td>
                             <td>Coastal Road EYC.</td>
                             <td>June 23, 2026</td>
-                            <td> 19/35</td>
-                            <td class="status draft"> Draft</td>
+                            <td>19/35</td>
+                            <td><span class="status completed">completed</span></td>
                             <td>...</td>
                         </tr>
-                         <tr>
+                        <tr>
                             <td>Food distribution</td>
                             <td>Coastal Road EYC.</td>
                             <td>June 23, 2026</td>
-                            <td> 19/35</td>
-                            <td class="status draft"> Draft</td>
+                            <td>19/35</td>
+                            <td><span class="status draft">Draft</span></td>
                             <td>...</td>
                         </tr>
-                           <tr>
+                        <tr>
                             <td>Food distribution</td>
                             <td>Coastal Road EYC.</td>
-                            <td> June 23, 2026</td>
-                            <td> 19/35</td>
-                            <td class="status completed"> completed</td>
+                            <td>June 23, 2026</td>
+                            <td>19/35</td>
+                            <td><span class="status draft">Draft</span></td>
                             <td>...</td>
                         </tr>
-                           <tr>
+                        <tr>
                             <td>Food distribution</td>
                             <td>Coastal Road EYC.</td>
-                            <td> June 23, 2026</td>
-                            <td> 19/35</td>
-                            <td class="status completed"> completed</td>
+                            <td>June 23, 2026</td>
+                            <td>19/35</td>
+                            <td><span class="status completed">completed</span></td>
                             <td>...</td>
                         </tr>
-                         <tr>
+                        <tr>
+                            <td>Food distribution</td>
+                            <td>Coastal Road EYC.</td>
+                            <td>June 23, 2026</td>
+                            <td>19/35</td>
+                            <td><span class="status completed">completed</span></td>
+                            <td>...</td>
+                        </tr>
+                        <tr>
                             <td>Beach Cleanup</td>
                             <td>Lekki waterfront</td>
-                            <td> June 15,2026</td>
-                            <td> 19/35</td>
-                            <td class="status upcoming"> upcoming</td>
+                            <td>June 15, 2026</td>
+                            <td>19/35</td>
+                            <td><span class="status upcoming">upcoming</span></td>
                             <td>...</td>
                         </tr>
-                         </tr>
-                           <tr>
+                        <tr>
                             <td>Food distribution</td>
                             <td>Coastal Road EYC.</td>
-                            <td> June 23, 2026</td>
-                            <td> 19/35</td>
-                            <td class="status completed"> completed</td>
+                            <td>June 23, 2026</td>
+                            <td>19/35</td>
+                            <td><span class="status completed">completed</span></td>
                             <td>...</td>
                         </tr>
-
                     </tbody>
                 </table>
             </section>
 
         </main>
-
-
-
-
-
-
     </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+    </script>
 
 </body>
 

@@ -15,13 +15,17 @@
 </head>
 
 <body>
+
+    <!-- Dark overlay behind sidebar on mobile -->
+    <div class="sidebar-overlay" id="overlay"></div>
+
     <div class="main-container">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <img class="logo" src="images/aidloop logo with dark background.png" alt="logo">
             <nav class="sidebar-nav">
                 <ul>
                     <a class="active" href="">
-                        <li> <i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
+                        <li><i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
                     </a>
                     <a href="">
                         <li><i class="fa-solid fa-circle-plus fa-lg"></i> Create Events</li>
@@ -39,29 +43,33 @@
                         <li><i class="fa-solid fa-building-user fa-lg"></i> Profile</li>
                     </a>
                     <a href="">
-                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> logout</li>
+                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> Logout</li>
                     </a>
                 </ul>
-
             </nav>
-
         </aside>
+
         <main class="main-content">
 
             <header class="header">
+                <!-- Hamburger: only visible on mobile -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
                 <div>
                     <h1>Events</h1>
-                <h6>Browse and manage all your events</h6>
-            </div>
-                <div class="header-btn">
-                    <button class="create-btn">create event</button>
-                    <a href=""> <i class="fa-regular fa-bell fa-2xl"></i> </a>
-                    <a href=""> <i class="fa-regular fa-circle-user fa-2xl"></i> </a>
-
+                    <h6>Browse and manage all your events</h6>
                 </div>
 
+                <div class="header-btn">
+                    <button class="create-btn">create event</button>
+                    <a href=""><i class="fa-regular fa-bell fa-2xl"></i></a>
+                    <a href=""><i class="fa-regular fa-circle-user fa-2xl"></i></a>
+                </div>
             </header>
-
 
             <section class="first-section">
                 <div class="first-part">
@@ -72,35 +80,39 @@
                 <div class="second-part">
                     <input type="text" placeholder="Search events by name, location..." />
                     <button class="search-btn">
-                        <i class="fa-solid fa-magnifying-glass "></i>
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
             </section>
 
-
             <section class="second-section">
                 <div class="calendar-image">
-                    <img src="images/calendar.png" alt="image" height="300px" width="400px">
+                    <img src="images/calendar.png" alt="image">
                 </div>
                 <div class="text-under-image">
-                    <p><h3>No Events created yet. <br>
-                         Create your first volunteer event to start recruiting.</h3></p>
+                    <h3>No Events created yet. <br>
+                        Create your first volunteer event to start recruiting.</h3>
                 </div>
-
             </section>
 
-
-
-
-
         </main>
-
-
-
-
-
-
     </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+    </script>
 
 </body>
 

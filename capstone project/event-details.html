@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="dashboard5.css">
+    <link rel="stylesheet" href="event-details.css">
     <script src="https://kit.fontawesome.com/241f3a0b37.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,13 +24,13 @@
             <img class="logo" src="images/aidloop logo with dark background.png" alt="logo">
             <nav class="sidebar-nav">
                 <ul>
-                    <a class="active" href="">
+                    <a href="">
                         <li><i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
                     </a>
                     <a href="">
                         <li><i class="fa-solid fa-circle-plus fa-lg"></i> Create Events</li>
                     </a>
-                    <a href="">
+                    <a class="active" href="">
                         <li><i class="fa-regular fa-calendar fa-lg"></i> Events</li>
                     </a>
                     <a href="">
@@ -60,41 +60,38 @@
                 </button>
 
                 <div>
-                    <h1>Certificates</h1>
-                    <h6>Manage all Volunteers Activities</h6>
+                    <h1>Events</h1>
+                    <h6>Browse and manage all your events</h6>
                 </div>
 
                 <div class="header-btn">
+                    <button class="create-btn">Edit event</button>
+                    <button class="create-btn cancel-btn">Cancel Events</button>
                     <a href=""><i class="fa-regular fa-bell fa-2xl"></i></a>
                     <a href=""><i class="fa-regular fa-circle-user fa-2xl"></i></a>
                 </div>
             </header>
 
-            <!-- Image + event info card -->
-            <section class="first-section">
-                <div class="first-image">
+            <!-- Page body -->
+            <div class="page-body">
+
+                <!-- Event name + status badge -->
+                <div class="event-title-row">
+                    <h1>Coastal Clean-Up Exercise</h1>
+                    <span class="status-badge">Published</span>
+                </div>
+
+                <!-- Event photo with overlay badge -->
+                <div class="event-image-wrapper">
                     <img src="images/volunteers bending down.png" alt="">
+                    <span class="image-status-badge">Published</span>
                 </div>
 
-                <div class="text-beside-image">
-                    <h2>Coastal clean-up Exercise</h2>
-
-                    <div class="upcoming">
-                        <h3>Upcoming</h3>
-                    </div>
-
-                    <div class="list-under-upcoming">
-                        <p><i class="fa-solid fa-location-dot fa-lg"></i> Lekki waterfront, Lagos</p>
-                        <p><i class="fa-regular fa-calendar fa-lg"></i> June 12, 2026</p>
-                        <p><i class="fa-regular fa-clock"></i> 8:00am - 12:00pm</p>
-                        <p><i class="fa-solid fa-user-group fa-lg"></i> 18/40 volunteers</p>
-                    </div>
-                </div>
-            </section>
+            </div>
 
             <!-- Description heading -->
             <div class="event-description">
-                <h3>Events Description</h3>
+                <h2>Events Description</h2>
             </div>
 
             <!-- Description body -->
@@ -124,6 +121,27 @@
                 </div>
             </section>
 
+            <!-- Event meta info -->
+            <div class="list-under-upcoming">
+                <p><i class="fa-regular fa-clock"></i> 8:00am - 12:00Noon</p>
+                <p><i class="fa-regular fa-calendar fa-lg"></i> June 12, 2026</p>
+                <p><i class="fa-solid fa-location-dot fa-lg"></i> Lekki waterfront, Lagos</p>
+            </div>
+
+            <!-- Requirements -->
+            <div class="Requirements-container">
+                <div class="Requirements-header">
+                    <h2>Volunteers Requirements</h2>
+                </div>
+                <div class="Requirements-list">
+                    <ul>
+                        <li>Must be 16+</li>
+                        <li>Wear comfortable clothes</li>
+                        <li>Bring water bottle</li>
+                    </ul>
+                </div>
+            </div>
+
             <!-- Stat cards -->
             <section class="third-section">
                 <div class="card">
@@ -136,30 +154,75 @@
                 </div>
                 <div class="card">
                     <h3>324</h3>
-                    <p class="under-card"><i id="fontawesome" class="fa-regular fa-circle-check fa-lg"></i> total volunteers</p>
+                    <p class="under-card"><i id="fontawesome" class="fa-regular fa-circle-check fa-lg"></i> total
+                        volunteers</p>
                 </div>
             </section>
 
-            <!-- Volunteer search -->
-            <section class="fourth-section">
-                <div class="first-part">
-                    <h4>Volunteer Registered</h4>
-                </div>
-                <div class="second-part">
-                    <input type="text" placeholder="Search events by name, location..." />
-                    <button class="search-btn">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </div>
+            <!-- Volunteers table -->
+            <section class="final-section">
+                <table>
+                    <thead class="table-head">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Date</th>
+                            <th>Registration</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>johndoe@email.com</td>
+                            <td>March 10, 2026</td>
+                            <td><span class="status upcoming">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>John Smith</td>
+                            <td>johnsmith@email.com</td>
+                            <td>June 23, 2026</td>
+                            <td><span class="status published">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mary Johnson</td>
+                            <td>maryjohnson@email.com</td>
+                            <td>June 23, 2026</td>
+                            <td><span class="status draft">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Chinyere Okafor</td>
+                            <td>ahmedbello@email.com</td>
+                            <td>June 23, 2026</td>
+                            <td><span class="status completed">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Emeka Nwosu</td>
+                            <td>emekanwosu@email.com</td>
+                            <td>June 23, 2026</td>
+                            <td><span class="status completed">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </section>
 
-            <!-- Empty state -->
-            <section class="fifth-section">
-                <div class="final-image">
-                    <img src="images/Allura - Trophy 1.png" alt="">
-                </div>
-                <h3>No Volunteers registered yet. <br> Volunteers will appear once they join</h3>
-            </section>
+
+
 
         </main>
     </div>

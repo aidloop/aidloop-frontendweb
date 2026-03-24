@@ -37,9 +37,9 @@ body {
 }
 
 .sidebar a.active li {
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: 8px;
-    border-left: 3px solid #ffffff;
+    
+background: #057df2;
+    border-radius: 3px;
     padding-left: 13px;
 }
 
@@ -171,7 +171,7 @@ header a {
 .first-part {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 50px;
 }
 
 .tab {
@@ -235,34 +235,65 @@ input::placeholder {
     color: #ffffff;
 }
 
-/* ── EMPTY STATE ── */
+/* ── TABLE ── */
 .second-section {
-    display: flex;
+      background: rgba(228, 228, 228, 0.47);
+    border: 1px solid rgba(107, 124, 147, 0.5);
+    border-radius: 10px;
+    margin: 0 16px 40px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+}
+
+th, td {
+    padding: 16px 12px;
+    text-align: center;
+    border-bottom: 1px solid rgba(107, 124, 147, 0.5);
+}
+
+tbody tr {
+    border-bottom: 1px solid rgba(107, 124, 147, 0.5);
+}
+
+thead tr {
+    background: #d9d9d9;
+    color: #1f3a5f;
+    border-bottom: 2px solid rgba(107, 124, 147, 1);
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+.status {
+    padding: 6px 14px;
+    border-radius: 5px;
+    color: #f7f8f9;
+    text-align: center;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    padding: 40px 16px;
+    font-size: 13px;
+    font-weight: 400;
+    margin-top: 10px;
+    width: 100px;
+    max-width: 140px;
 }
 
-.calendar-image img {
-    width: 400px;
-    height: 300px;
-    max-width: 100%; /* prevents overflow on small screens */
-    object-fit: contain;
-}
-
-.text-under-image {
-    margin-top: 30px;
-    margin-bottom: 40px;
-    text-align: center;
-    color: #1f3a5f;
-    padding: 0 16px;
-}
+.upcoming  { background: #ffb347; }
+.completed { background: #057df2; }
+.published { background: #2e8b57; }
+.draft     { background: #6b7c93; }
 
 
-/* ════════════════════════════════════════
+/* 
    TABLET — max-width: 1024px
-════════════════════════════════════════ */
+ */
 @media (max-width: 1024px) {
     input {
         width: 160px;
@@ -270,11 +301,12 @@ input::placeholder {
 }
 
 
-/* ════════════════════════════════════════
+/* 
    MOBILE — max-width: 768px
-════════════════════════════════════════ */
+ */
 @media (max-width: 768px) {
 
+    /* Sidebar slides off-screen */
     .sidebar {
         transform: translateX(-100%);
         width: 220px;
@@ -329,21 +361,21 @@ input::placeholder {
         flex: 1;
     }
 
-    .calendar-image img {
-        width: 280px;
-        height: auto;
+    .second-section {
+        margin: 0 12px 30px;
     }
 
-    .text-under-image h3 {
-        font-size: 15px;
+    th, td {
+        padding: 12px 8px;
+        font-size: 12px;
     }
 }
 
 
-/* ════════════════════════════════════════
+/* 
    SMALL MOBILE — max-width: 480px
    iPhone SE (375px)
-════════════════════════════════════════ */
+ */
 @media (max-width: 480px) {
 
     .header h1 {
@@ -351,7 +383,7 @@ input::placeholder {
     }
 
     .header h6 {
-        display: none;
+        display: none; /* too cramped on SE */
     }
 
     .create-btn {
@@ -366,12 +398,13 @@ input::placeholder {
         gap: 16px;
     }
 
-    .calendar-image img {
-        width: 220px;
-        height: auto;
+    th, td {
+        padding: 10px 6px;
+        font-size: 11px;
     }
 
-    .text-under-image h3 {
-        font-size: 13px;
+    .status {
+        font-size: 10px;
+        padding: 4px 2px;
     }
 }
