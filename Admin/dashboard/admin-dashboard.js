@@ -12,7 +12,12 @@ const els = {
   searchInput: document.getElementById("searchInput"),
   goVerificationQueue: document.getElementById("goVerificationQueue"),
   viewOrganizations: document.getElementById("viewOrganizations"),
-  viewEvents: document.getElementById("viewEvents")
+  viewEvents: document.getElementById("viewEvents"),
+  logoutBtn: document.getElementById("logoutBtn"),
+  logoutModal: document.getElementById("logoutModal"),
+  closeLogoutModal: document.getElementById("closeLogoutModal"),
+  cancelLogout: document.getElementById("cancelLogout"),
+  confirmLogout: document.getElementById("confirmLogout")
 };
 
 let activityRowsCache = [];
@@ -103,7 +108,7 @@ function buildRecentActivity(users, events) {
       activities.push({
         activity: "Submitted for Verification",
         entity: user.fullName || user.name || user.email || "Organizer",
-        date: formatDate(user.createdAt || user.updatedAt),
+        date: user.createdAt || user.updatedAt,
         status: "Pending"
       });
     }
@@ -113,18 +118,18 @@ function buildRecentActivity(users, events) {
     activities.push({
       activity: "Event Created",
       entity: event.name || "Untitled Event",
-      date: formatDate(event.createdAt || event.date),
+      date: event.createdAt || event.date,
       status: event.status || "Published"
     });
   });
 
   return activities
-    .sort((a, b) => {
-      const aDate = new Date(a.date);
-      const bDate = new Date(b.date);
-      return bDate - aDate;
-    })
-    .slice(0, 8);
+    .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+    .slice(0, 8)
+    .map((item) => ({
+      ...item,
+      formattedDate: formatDate(item.date)
+    }));
 }
 
 function renderRecentActivity(rows) {
@@ -145,7 +150,7 @@ function getStatusBadgeClass(status) {
 function applyActivitySearch() {
   const query = els.searchInput.value.trim().toLowerCase();
   const filtered = activityRowsCache.filter((row) =>
-    `${row.activity} ${row.entity} ${row.date} ${row.status}`
+    `${row.activity} ${row.entity} ${row.formattedDate} ${row.status}`
       .toLowerCase()
       .includes(query)
   );
@@ -165,7 +170,7 @@ function applyActivitySearch() {
         <tr>
           <td>${row.activity}</td>
           <td>${row.entity}</td>
-          <td>${row.date}</td>
+          <td>${row.formattedDate}</td>
           <td>
             <span class="status-badge ${getStatusBadgeClass(row.status)}">
               ${row.status}
@@ -175,6 +180,33 @@ function applyActivitySearch() {
       `
     )
     .join("");
+}
+
+function openLogoutModal() {
+  els.logoutModal.classList.remove("hidden");
+}
+
+function closeLogoutModal() {
+  els.logoutModal.classList.add("hidden");
+  els.confirmLogout.disabled = false;
+  els.confirmLogout.textContent = "Yes, Log out";
+}
+
+async function handleLogout() {
+  try {
+    els.confirmLogout.disabled = true;
+    els.confirmLogout.textContent = "Logging out...";
+
+    await apiRequest("/auth/logout", {
+      method: "POST"
+    });
+  } catch (error) {
+    console.warn("Logout failed:", error.message);
+  } finally {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = "../../index.html";
+  }
 }
 
 async function loadAdminProfile() {
@@ -258,6 +290,23 @@ function bindUI() {
   });
 
   els.searchInput.addEventListener("input", applyActivitySearch);
+
+  els.logoutBtn.addEventListener("click", openLogoutModal);
+  els.closeLogoutModal.addEventListener("click", closeLogoutModal);
+  els.cancelLogout.addEventListener("click", closeLogoutModal);
+  els.confirmLogout.addEventListener("click", handleLogout);
+
+  els.logoutModal.addEventListener("click", (event) => {
+    if (event.target === els.logoutModal) {
+      closeLogoutModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !els.logoutModal.classList.contains("hidden")) {
+      closeLogoutModal();
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {

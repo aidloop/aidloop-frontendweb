@@ -1,7 +1,6 @@
 const API_BASE_URL = "https://aidloop-backend.onrender.com/api";
 
-const elements = {
-  overlay: document.getElementById("overlay"),
+const els = {
   closeBtn: document.getElementById("closeBtn"),
   volunteerName: document.getElementById("volunteerName"),
   eventName: document.getElementById("eventName"),
@@ -13,13 +12,7 @@ const elements = {
   downloadBtn: document.getElementById("downloadBtn")
 };
 
-let certificateId = null;
-let certificateRecord = null;
-
-function getCertificateIdFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("id");
-}
+const certificateId = new URLSearchParams(window.location.search).get("id");
 
 async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -31,24 +24,24 @@ async function apiRequest(endpoint, options = {}) {
   });
 
   const contentType = response.headers.get("content-type") || "";
-  const isJson = contentType.includes("application/json");
-  const data = isJson ? await response.json() : await response.blob();
+  const data = contentType.includes("application/json")
+    ? await response.json()
+    : await response.blob();
 
   if (!response.ok) {
-    if (isJson) {
+    if (contentType.includes("application/json")) {
       throw new Error(data.message || data.error || "Request failed");
     }
     throw new Error("Request failed");
   }
 
-  return { data, response };
+  return data;
 }
 
 function formatDate(dateValue) {
   if (!dateValue) return "—";
   const date = new Date(dateValue);
   if (Number.isNaN(date.getTime())) return dateValue;
-
   return date.toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "long",
@@ -56,85 +49,69 @@ function formatDate(dateValue) {
   });
 }
 
-function getVolunteerName(record) {
-  return (
-    record.volunteerName ||
-    record.user?.fullName ||
-    record.user?.name ||
-    record.volunteer?.fullName ||
-    record.volunteer?.name ||
-    "—"
+function setFeedback(message, type = "") {
+  els.feedback.textContent = message;
+  els.feedback.className = "feedback";
+  if (type) {
+    els.feedback.classList.add(type);
+  }
+}
+
+function populateCertificate(data) {
+  els.volunteerName.textContent =
+    data.user?.fullName ||
+    data.user?.name ||
+    data.volunteer?.fullName ||
+    data.volunteer?.name ||
+    data.volunteerName ||
+    "—";
+
+  els.eventName.textContent =
+    data.event?.name ||
+    data.eventName ||
+    "—";
+
+  els.phoneNumber.textContent =
+    data.user?.phoneNumber ||
+    data.user?.phone ||
+    data.volunteer?.phoneNumber ||
+    data.volunteer?.phone ||
+    data.phoneNumber ||
+    "—";
+
+  els.organizerName.textContent =
+    data.organizer?.fullName ||
+    data.organizer?.name ||
+    data.event?.organizer?.fullName ||
+    data.event?.organizer?.name ||
+    data.organizerName ||
+    "—";
+
+  els.eventDate.textContent = formatDate(
+    data.event?.date ||
+    data.eventDate ||
+    data.issuedAt ||
+    data.createdAt
   );
+
+  const status = String(data.status || "issued").toUpperCase();
+  els.certificateStatus.textContent = status;
 }
 
-function getPhoneNumber(record) {
-  return (
-    record.phoneNumber ||
-    record.user?.phoneNumber ||
-    record.user?.phone ||
-    record.volunteer?.phoneNumber ||
-    record.volunteer?.phone ||
-    "—"
-  );
-}
-
-function getEventName(record) {
-  return (
-    record.eventName ||
-    record.event?.name ||
-    record.event?.title ||
-    "—"
-  );
-}
-
-function getOrganizerName(record) {
-  return (
-    record.organizerName ||
-    record.organizer?.fullName ||
-    record.organizer?.name ||
-    record.organizer?.organizationName ||
-    record.event?.organizer?.fullName ||
-    record.event?.organizer?.name ||
-    record.event?.organizer?.organizationName ||
-    "—"
-  );
-}
-
-function getCertificateStatus(record) {
-  return String(record.status || "issued").toUpperCase();
-}
-
-function renderCertificate(record) {
-  certificateRecord = record;
-
-  elements.volunteerName.textContent = getVolunteerName(record);
-  elements.eventName.textContent = getEventName(record);
-  elements.phoneNumber.textContent = getPhoneNumber(record);
-  elements.organizerName.textContent = getOrganizerName(record);
-  elements.eventDate.textContent = formatDate(
-    record.eventDate ||
-    record.event?.date ||
-    record.issuedAt ||
-    record.createdAt
-  );
-  elements.certificateStatus.textContent = getCertificateStatus(record);
-}
-
-async function loadCertificatePreview() {
-  certificateId = getCertificateIdFromURL();
-
+async function loadCertificate() {
   if (!certificateId) {
-    elements.feedback.textContent = "Certificate ID not found in URL.";
-    elements.feedback.className = "feedback error";
+    setFeedback("No certificate ID provided.", "error");
+    els.downloadBtn.disabled = true;
     return;
   }
 
   try {
-    const { data } = await apiRequest(`/certificates/verify/${certificateId}`);
-    renderCertificate(data);
+    const data = await apiRequest(`/certificates/verify/${certificateId}`);
+    populateCertificate(data);
+    setFeedback("Certificate loaded successfully.", "success");
   } catch (error) {
-    elements.feedback.textContent = error.message;
-    elements.feedback.className = "feedback error";
+    setFeedback(error.message || "Failed to load certificate.", "error");
+    els.downloadBtn.disabled = true;
   }
 }
 
@@ -142,52 +119,39 @@ async function downloadCertificate() {
   if (!certificateId) return;
 
   try {
-    elements.downloadBtn.disabled = true;
-    elements.downloadBtn.textContent = "Downloading...";
-    elements.feedback.textContent = "";
+    els.downloadBtn.disabled = true;
+    els.downloadBtn.textContent = "Downloading...";
 
-    const { data, response } = await apiRequest(
-      `/certificates/download/${certificateId}`,
-      {
-        method: "GET"
-      }
-    );
+    const blob = await apiRequest(`/certificates/download/${certificateId}`);
+    const url = URL.createObjectURL(blob);
 
-    const blobUrl = window.URL.createObjectURL(data);
     const link = document.createElement("a");
-    const disposition = response.headers.get("content-disposition") || "";
-    const filenameMatch = disposition.match(/filename="?([^"]+)"?/i);
-    const filename = filenameMatch ? filenameMatch[1] : `certificate-${certificateId}.pdf`;
-
-    link.href = blobUrl;
-    link.download = filename;
+    link.href = url;
+    link.download = `certificate-${certificateId}.pdf`;
     document.body.appendChild(link);
     link.click();
     link.remove();
-    window.URL.revokeObjectURL(blobUrl);
 
-    elements.feedback.textContent = "Certificate downloaded successfully.";
-    elements.feedback.className = "feedback success";
+    URL.revokeObjectURL(url);
+    setFeedback("Certificate downloaded successfully.", "success");
   } catch (error) {
-    elements.feedback.textContent = error.message || "Failed to download certificate.";
-    elements.feedback.className = "feedback error";
+    setFeedback(error.message || "Failed to download certificate.", "error");
   } finally {
-    elements.downloadBtn.disabled = false;
-    elements.downloadBtn.textContent = "Download Certificate";
+    els.downloadBtn.disabled = false;
+    els.downloadBtn.textContent = "Download Certificate";
   }
 }
 
-function closeModal() {
+function closePreview() {
+  if (window.history.length > 1) {
+    window.history.back();
+    return;
+  }
+
   window.location.href = "certificates.html";
 }
 
-elements.closeBtn.addEventListener("click", closeModal);
-elements.downloadBtn.addEventListener("click", downloadCertificate);
+els.closeBtn.addEventListener("click", closePreview);
+els.downloadBtn.addEventListener("click", downloadCertificate);
 
-elements.overlay.addEventListener("click", (event) => {
-  if (event.target === elements.overlay) {
-    closeModal();
-  }
-});
-
-document.addEventListener("DOMContentLoaded", loadCertificatePreview);
+document.addEventListener("DOMContentLoaded", loadCertificate);

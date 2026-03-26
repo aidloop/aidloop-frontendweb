@@ -40,7 +40,7 @@ function render(rows) {
       <td>${row.eventName}</td>
       <td>${formatDate(row.date, "long")}</td>
       <td><span class="status-badge ${row.status === "issued" ? "status-issued" : "status-pending"}">${row.status === "issued" ? "Issued" : "Pending"}</span></td>
-      <td>${row.status === "issued" && row.certificateId ? `<a href="../../Admin/certificates/certificate-preview.html?id=${encodeURIComponent(row.certificateId)}">View</a>` : "..."}</td>
+      <td>${row.status === "issued" && row.certificateId ? `<a href="../certificates/certificate-preview.html?id=${encodeURIComponent(row.certificateId)}">View</a>` : "..."}</td>
     </tr>
   `).join("") || `<tr><td colspan="5">No certificate records found.</td></tr>`;
 }

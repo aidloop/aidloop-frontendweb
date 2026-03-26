@@ -2,12 +2,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
- font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
-  background: #edf1f5;
-  min-height: 100vh;
+  background: #edf2f6;
+  color: #172033;
 }
 
 .overlay {
@@ -15,106 +15,124 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .modal {
-  position: relative;
   width: 100%;
-  max-width: 30.5rem;
-  min-height: 52rem;
+  max-width: 34rem;
   background: #ffffff;
-  border-radius: 1.5rem;
-  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.12);
-  padding: 2.5rem 2rem 3rem;
+  border-radius: 1rem;
+  padding: 1.8rem;
+  position: relative;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.12);
 }
 
 .close-btn {
   position: absolute;
-  top: 1.6rem;
-  right: 1.7rem;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
   border: none;
   background: transparent;
-  color: #111827;
-  font-size: 1.9rem;
+  color: #6b7280;
+  font-size: 1rem;
   cursor: pointer;
 }
 
+.close-btn:hover {
+  color: #172033;
+}
+
 .modal h1 {
-  font-size: 2.15rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: #172033;
-  margin-top: 3rem;
-  margin-bottom: 3.2rem;
+  margin-bottom: 1.5rem;
 }
 
 .details-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  column-gap: 1.5rem;
-  row-gap: 2.35rem;
-  margin-bottom: 4.8rem;
+  grid-template-columns: 8rem 1fr;
+  gap: 0.9rem 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .label {
-  font-size: 0.95rem;
-  color: #172033;
-  font-weight: 400;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #223f6b;
 }
 
 .value {
-  font-size: 0.95rem;
-  color: #172033;
-  font-weight: 600;
+  font-size: 0.9rem;
+  color: #374151;
   word-break: break-word;
 }
 
 .certificate-card {
-  width: 13.5rem;
-  height: 8.8rem;
-  margin: 0 auto;
-  border-radius: 1.6rem;
-  background: #1d7de2;
-  box-shadow: 0 0.4rem 0.9rem rgba(0, 0, 0, 0.18);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.8rem;
-  color: #ffffff;
+  margin-top: 1rem;
+  border: 0.0625rem solid #d9dde3;
+  border-radius: 0.8rem;
+  padding: 1.4rem 1rem;
+  text-align: center;
+  background: #f9fbfd;
 }
 
 .certificate-icon {
   position: relative;
-  font-size: 2.8rem;
-  line-height: 1;
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1d7de2;
+  font-size: 2rem;
 }
 
 .badge-icon {
   position: absolute;
-  bottom: -0.15rem;
-  right: -0.55rem;
-  font-size: 1.45rem;
+  bottom: -0.2rem;
+  right: -0.2rem;
+  color: #f2a10d;
+  font-size: 1.2rem;
 }
 
 .certificate-card p {
-  font-size: 1.15rem;
+  font-size: 0.92rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  color: #16a34a;
+  letter-spacing: 0.04em;
+}
+
+.feedback {
+  min-height: 1.2rem;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.feedback.success {
+  color: #16a34a;
+}
+
+.feedback.error {
+  color: #dc2626;
 }
 
 .action-row {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   display: flex;
   justify-content: center;
 }
 
 .action-btn {
   border: none;
-  border-radius: 0.7rem;
-  padding: 0.95rem 1.4rem;
-  font-size: 0.95rem;
-  font-weight: 600;
+  padding: 0.9rem 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 
@@ -123,51 +141,30 @@ body {
   color: #ffffff;
 }
 
-.action-btn:disabled {
+.secondary-btn:hover {
+  opacity: 0.94;
+}
+
+.secondary-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.feedback {
-  min-height: 1.2rem;
-  margin-top: 1rem;
-  text-align: center;
-  font-size: 0.9rem;
-}
-
-.feedback.success {
-  color: #15803d;
-}
-
-.feedback.error {
-  color: #dc2626;
-}
-
-@media (max-width: 32rem) {
+@media (max-width: 36rem) {
   .modal {
-    min-height: auto;
-    padding: 2rem 1.2rem 2rem;
-  }
-
-  .modal h1 {
-    font-size: 1.75rem;
-    margin-top: 2.5rem;
-    margin-bottom: 2rem;
+    padding: 1.2rem;
   }
 
   .details-grid {
     grid-template-columns: 1fr;
-    row-gap: 0.7rem;
-    margin-bottom: 3rem;
+    gap: 0.4rem;
   }
 
   .label {
-    font-weight: 600;
-    margin-top: 0.75rem;
+    margin-top: 0.4rem;
   }
 
-  .certificate-card {
+  .action-btn {
     width: 100%;
-    max-width: 13.5rem;
   }
 }

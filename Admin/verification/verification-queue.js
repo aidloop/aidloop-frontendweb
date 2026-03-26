@@ -1,12 +1,19 @@
 const API_BASE_URL = "https://aidloop-backend.onrender.com/api";
 
-const elements = {
+const els = {
   searchInput: document.getElementById("searchInput"),
   orgTable: document.getElementById("orgTable"),
+  orgTableWrap: document.getElementById("orgTableWrap"),
   pendingCount: document.getElementById("pendingCount"),
   adminName: document.getElementById("adminName"),
   adminAvatar: document.getElementById("adminAvatar"),
-  filterButtons: document.querySelectorAll(".filter-btn")
+  filterButtons: document.querySelectorAll(".filter-btn"),
+  emptyState: document.getElementById("emptyState"),
+  logoutBtn: document.getElementById("logoutBtn"),
+  logoutModal: document.getElementById("logoutModal"),
+  closeLogoutModal: document.getElementById("closeLogoutModal"),
+  cancelLogout: document.getElementById("cancelLogout"),
+  confirmLogout: document.getElementById("confirmLogout")
 };
 
 let organizers = [];
@@ -99,11 +106,11 @@ function updatePendingCount() {
     (organizer) => organizer._verificationStatus === "awaiting"
   ).length;
 
-  elements.pendingCount.textContent = count;
+  els.pendingCount.textContent = count;
 }
 
 function renderTable() {
-  const query = elements.searchInput.value.trim().toLowerCase();
+  const query = els.searchInput.value.trim().toLowerCase();
 
   const filtered = organizers.filter((organizer) => {
     const matchesFilter =
@@ -122,15 +129,15 @@ function renderTable() {
   });
 
   if (!filtered.length) {
-    elements.orgTable.innerHTML = `
-      <tr>
-        <td colspan="5">No organizations found.</td>
-      </tr>
-    `;
+    els.orgTableWrap.style.display = "none";
+    els.emptyState.style.display = "block";
     return;
   }
 
-  elements.orgTable.innerHTML = filtered
+  els.orgTableWrap.style.display = "table";
+  els.emptyState.style.display = "none";
+
+  els.orgTable.innerHTML = filtered
     .map((organizer) => {
       const id = organizer._id || organizer.id || "";
       const status = organizer._verificationStatus;
@@ -171,15 +178,14 @@ async function loadAdminProfile() {
       profile = await apiRequest("/user/me");
     }
 
-    elements.adminName.textContent =
+    els.adminName.textContent =
       profile.fullName || profile.name || "Admin";
 
     if (profile.profileImage) {
-      elements.adminAvatar.src = profile.profileImage;
+      els.adminAvatar.src = profile.profileImage;
     }
   } catch (error) {
     console.error("Failed to load admin profile:", error.message);
-    window.location.href = "../login/admin-login.html";
   }
 }
 
@@ -206,7 +212,7 @@ async function loadVerificationQueue() {
     renderTable();
   } catch (error) {
     console.error("Failed to load verification queue:", error.message);
-    elements.orgTable.innerHTML = `
+    els.orgTable.innerHTML = `
       <tr>
         <td colspan="5">Failed to load verification queue.</td>
       </tr>
@@ -215,9 +221,9 @@ async function loadVerificationQueue() {
 }
 
 function bindFilters() {
-  elements.filterButtons.forEach((button) => {
+  els.filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      elements.filterButtons.forEach((btn) => btn.classList.remove("active"));
+      els.filterButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
       currentFilter = button.dataset.filter;
       renderTable();
@@ -225,13 +231,57 @@ function bindFilters() {
   });
 }
 
-function bindSearch() {
-  elements.searchInput.addEventListener("input", renderTable);
+function openLogoutModal() {
+  els.logoutModal.classList.remove("hidden");
+}
+
+function closeLogoutModal() {
+  els.logoutModal.classList.add("hidden");
+  els.confirmLogout.disabled = false;
+  els.confirmLogout.textContent = "Yes, Log out";
+}
+
+async function handleLogout() {
+  try {
+    els.confirmLogout.disabled = true;
+    els.confirmLogout.textContent = "Logging out...";
+
+    await apiRequest("/auth/logout", {
+      method: "POST"
+    });
+  } catch (error) {
+    console.warn("Logout failed:", error.message);
+  } finally {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = "../../index.html";
+  }
+}
+
+function bindUI() {
+  els.searchInput.addEventListener("input", renderTable);
+  bindFilters();
+
+  els.logoutBtn.addEventListener("click", openLogoutModal);
+  els.closeLogoutModal.addEventListener("click", closeLogoutModal);
+  els.cancelLogout.addEventListener("click", closeLogoutModal);
+  els.confirmLogout.addEventListener("click", handleLogout);
+
+  els.logoutModal.addEventListener("click", (event) => {
+    if (event.target === els.logoutModal) {
+      closeLogoutModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !els.logoutModal.classList.contains("hidden")) {
+      closeLogoutModal();
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  bindFilters();
-  bindSearch();
+  bindUI();
   await loadAdminProfile();
   await loadVerificationQueue();
 });

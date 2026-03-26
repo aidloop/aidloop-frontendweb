@@ -1,16 +1,22 @@
 const API_BASE_URL = "https://aidloop-backend.onrender.com/api";
 
-const elements = {
-  searchInput: document.getElementById("searchInput"),
-  flagsTable: document.getElementById("flagsTable"),
-  emptyState: document.getElementById("emptyState"),
+const els = {
   adminName: document.getElementById("adminName"),
   adminRole: document.getElementById("adminRole"),
   adminAvatar: document.getElementById("adminAvatar"),
-  filterButtons: document.querySelectorAll(".filter-btn")
+  flagsTable: document.getElementById("flagsTable"),
+  flagsTableWrap: document.querySelector(".table-wrapper table"),
+  emptyState: document.getElementById("emptyState"),
+  searchInput: document.getElementById("searchInput"),
+  filterButtons: document.querySelectorAll(".filter-btn"),
+  logoutBtn: document.getElementById("logoutBtn"),
+  logoutModal: document.getElementById("logoutModal"),
+  closeLogoutModal: document.getElementById("closeLogoutModal"),
+  cancelLogout: document.getElementById("cancelLogout"),
+  confirmLogout: document.getElementById("confirmLogout")
 };
 
-let flaggedOrganizations = [];
+let flagsCache = [];
 let currentFilter = "all";
 
 async function apiRequest(endpoint, options = {}) {
@@ -39,13 +45,6 @@ async function apiRequest(endpoint, options = {}) {
   return data;
 }
 
-function normalizeEvents(payload) {
-  if (Array.isArray(payload)) return payload;
-  if (Array.isArray(payload?.events)) return payload.events;
-  if (Array.isArray(payload?.data)) return payload.data;
-  return [];
-}
-
 function normalizeUsers(payload) {
   if (Array.isArray(payload)) return payload;
   if (Array.isArray(payload?.users)) return payload.users;
@@ -53,7 +52,25 @@ function normalizeUsers(payload) {
   return [];
 }
 
-function getUserStatus(user) {
+function normalizeEvents(payload) {
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload?.events)) return payload.events;
+  if (Array.isArray(payload?.data)) return payload.data;
+  return [];
+}
+
+function formatDate(dateValue) {
+  if (!dateValue) return "—";
+  const date = new Date(dateValue);
+  if (Number.isNaN(date.getTime())) return dateValue;
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+function getOrganizerStatus(user) {
   const status = String(user.status || "").toLowerCase();
   const approvalStatus = String(user.approvalStatus || "").toLowerCase();
   const isVerified = Boolean(user.isVerified);
@@ -68,8 +85,7 @@ function getUserStatus(user) {
   ) {
     return "verified";
   }
-
-  return "awaiting";
+  return "pending";
 }
 
 function getSeverity(count) {
@@ -78,215 +94,115 @@ function getSeverity(count) {
   return "high";
 }
 
-function getSeverityText(severity) {
+function getSeverityLabel(count) {
+  const severity = getSeverity(count);
   return severity.charAt(0).toUpperCase() + severity.slice(1);
 }
 
-function formatDate(dateValue) {
-  if (!dateValue) return "—";
-  const date = new Date(dateValue);
-  if (Number.isNaN(date.getTime())) return dateValue;
-
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric"
-  });
+function getOrganizerName(user) {
+  return user.fullName || user.name || user.organizationName || "Organization";
 }
 
-function getOrganizerId(event) {
-  if (typeof event.organizer === "object" && event.organizer) {
-    return event.organizer._id || event.organizer.id || "";
-  }
-  return event.organizerId || "";
-}
-
-function getOrganizerName(event) {
-  if (typeof event.organizer === "object" && event.organizer) {
-    return (
-      event.organizer.fullName ||
-      event.organizer.name ||
-      event.organizer.organizationName ||
-      "Organizer"
-    );
-  }
-  return event.organizerName || "Organizer";
-}
-
-function getOrganizerSubtitle(user) {
-  return user?.tagline || user?.organizationType || user?.bio || "Registered organization";
-}
-
-function buildFlagData(events, users) {
-  const usersMap = new Map(
-    users
-      .filter((user) => String(user.role || "").toLowerCase() === "organizer")
-      .map((user) => [String(user._id || user.id), user])
+function buildFlags(users, events) {
+  const organizers = users.filter(
+    (user) => String(user.role || "").toLowerCase() === "organizer"
   );
 
-  const cancelledEvents = events.filter((event) => {
-    const status = String(event.status || "").toLowerCase();
-    return status === "cancelled" || status === "canceled";
-  });
+  return organizers
+    .map((organizer) => {
+      const organizerId = String(organizer._id || organizer.id || "");
 
-  const grouped = new Map();
-
-  cancelledEvents.forEach((event) => {
-    const organizerId = String(getOrganizerId(event));
-    const organizerName = getOrganizerName(event);
-
-    if (!grouped.has(organizerId)) {
-      grouped.set(organizerId, {
-        organizerId,
-        organizerName,
-        organizer: usersMap.get(organizerId) || null,
-        cancellations: 0,
-        lastEventDate: null,
-        lastEventName: "",
-        reason: "Frequent Cancellations"
+      const organizerEvents = events.filter((event) => {
+        const eventOrganizerId =
+          String(event.organizer?._id || event.organizer?.id || event.organizerId || "");
+        return eventOrganizerId === organizerId;
       });
-    }
 
-    const record = grouped.get(organizerId);
-    record.cancellations += 1;
+      const cancelledEvents = organizerEvents.filter((event) => {
+        const status = String(event.status || "").toLowerCase();
+        return status.includes("cancel");
+      });
 
-    const eventDate = event.date || event.updatedAt || event.createdAt || null;
-    if (!record.lastEventDate || new Date(eventDate) > new Date(record.lastEventDate)) {
-      record.lastEventDate = eventDate;
-      record.lastEventName = event.name || event.title || "Untitled Event";
-    }
+      if (!cancelledEvents.length) return null;
 
-    if (event.cancelReason || event.reason) {
-      record.reason = event.cancelReason || event.reason;
-    }
-  });
+      const latestCancelled = cancelledEvents.sort(
+        (a, b) => new Date(b.date || b.updatedAt || b.createdAt || 0) - new Date(a.date || a.updatedAt || a.createdAt || 0)
+      )[0];
 
-  return Array.from(grouped.values()).map((item) => ({
-    ...item,
-    severity: getSeverity(item.cancellations),
-    userStatus: item.organizer ? getUserStatus(item.organizer) : "awaiting"
-  }));
+      return {
+        id: organizerId,
+        status: getOrganizerStatus(organizer),
+        name: getOrganizerName(organizer),
+        cancellations: cancelledEvents.length,
+        severity: getSeverity(cancelledEvents.length),
+        severityLabel: getSeverityLabel(cancelledEvents.length),
+        lastEventDate: latestCancelled?.date || latestCancelled?.updatedAt || latestCancelled?.createdAt || "",
+        reason:
+          latestCancelled?.cancelReason ||
+          latestCancelled?.reason ||
+          "Frequent cancellations"
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => new Date(b.lastEventDate || 0) - new Date(a.lastEventDate || 0));
 }
 
 function renderFlags() {
-  const query = elements.searchInput.value.trim().toLowerCase();
+  const query = els.searchInput.value.trim().toLowerCase();
 
-  const filtered = flaggedOrganizations.filter((item) => {
-    const matchesFilter =
-      currentFilter === "all" ? true : item.userStatus === currentFilter;
+  let filtered = [...flagsCache];
 
-    const searchableText = `
-      ${item.organizerName}
-      ${item.reason}
-      ${item.lastEventName}
-      ${item.userStatus}
-      ${item.severity}
-    `.toLowerCase();
+  if (currentFilter !== "all") {
+    filtered = filtered.filter((item) => item.status === currentFilter);
+  }
 
-    return matchesFilter && searchableText.includes(query);
-  });
+  if (query) {
+    filtered = filtered.filter((item) => {
+      const searchableText = `
+        ${item.name}
+        ${item.cancellations}
+        ${item.severityLabel}
+        ${formatDate(item.lastEventDate)}
+        ${item.reason}
+      `.toLowerCase();
+
+      return searchableText.includes(query);
+    });
+  }
 
   if (!filtered.length) {
-    elements.flagsTable.innerHTML = "";
-    elements.emptyState.style.display = "flex";
+    els.flagsTableWrap.style.display = "none";
+    els.emptyState.style.display = "block";
     return;
   }
 
-  elements.emptyState.style.display = "none";
+  els.flagsTableWrap.style.display = "table";
+  els.emptyState.style.display = "none";
 
-  elements.flagsTable.innerHTML = filtered
-    .map((item) => `
-      <tr data-status="${item.userStatus}">
-        <td>
-          <div class="org-cell">
-            <div class="org-icon">
-              <i class="fa-regular fa-building"></i>
-            </div>
-            <div class="org-info">
-              <h4>${item.organizerName}</h4>
-              <p>${getOrganizerSubtitle(item.organizer)}</p>
-            </div>
-          </div>
-        </td>
-        <td>${item.cancellations}</td>
-        <td>
-          <span class="severity-badge ${item.severity}">
-            ${getSeverityText(item.severity)}
-          </span>
-        </td>
-        <td>${formatDate(item.lastEventDate)}</td>
-        <td class="flag-reason">${item.reason}</td>
-        <td class="action-links">
-          <a href="#" class="review-link" data-id="${item.organizerId}">Review</a> |
-          <a href="mailto:${item.organizer?.email || ""}">Contact</a>
-        </td>
-      </tr>
-    `)
-    .join("");
-
-  attachReviewHandlers();
-}
-
-function attachReviewHandlers() {
-  document.querySelectorAll(".review-link").forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      const organizerId = link.dataset.id;
-      window.location.href = `flag-details.html?id=${encodeURIComponent(organizerId)}`;
-    });
-  });
-}
-
-async function loadAdminProfile() {
-  try {
-    let profile;
-
-    try {
-      profile = await apiRequest("/users/me");
-    } catch {
-      profile = await apiRequest("/user/me");
-    }
-
-    elements.adminName.textContent = profile.fullName || profile.name || "Admin";
-    elements.adminRole.textContent = profile.role
-      ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
-      : "Admin";
-
-    if (profile.profileImage) {
-      elements.adminAvatar.src = profile.profileImage;
-    }
-  } catch (error) {
-    console.error("Failed to load admin profile:", error.message);
-    window.location.href = "../login/admin-login.html";
-  }
-}
-
-async function loadFlags() {
-  try {
-    const [eventsPayload, usersPayload] = await Promise.all([
-      apiRequest("/events"),
-      apiRequest("/user").catch(() => apiRequest("/users"))
-    ]);
-
-    const events = normalizeEvents(eventsPayload);
-    const users = normalizeUsers(usersPayload);
-
-    flaggedOrganizations = buildFlagData(events, users);
-    renderFlags();
-  } catch (error) {
-    console.error("Failed to load flags:", error.message);
-    elements.flagsTable.innerHTML = `
-      <tr>
-        <td colspan="6">Failed to load flags.</td>
-      </tr>
-    `;
-  }
+  els.flagsTable.innerHTML = filtered.map((item) => `
+    <tr>
+      <td>${item.name}</td>
+      <td>${item.cancellations}</td>
+      <td>
+        <span class="severity-badge ${item.severity}">
+          ${item.severityLabel}
+        </span>
+      </td>
+      <td>${formatDate(item.lastEventDate)}</td>
+      <td>${item.reason}</td>
+      <td>
+        <a class="action-link" href="flag-details.html?id=${encodeURIComponent(item.id)}">
+          Review
+        </a>
+      </td>
+    </tr>
+  `).join("");
 }
 
 function bindFilters() {
-  elements.filterButtons.forEach((button) => {
+  els.filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      elements.filterButtons.forEach((btn) => btn.classList.remove("active"));
+      els.filterButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
       currentFilter = button.dataset.filter;
       renderFlags();
@@ -294,13 +210,108 @@ function bindFilters() {
   });
 }
 
-function bindSearch() {
-  elements.searchInput.addEventListener("input", renderFlags);
+function openLogoutModal() {
+  els.logoutModal.classList.remove("hidden");
+}
+
+function closeLogoutModal() {
+  els.logoutModal.classList.add("hidden");
+  els.confirmLogout.disabled = false;
+  els.confirmLogout.textContent = "Yes, Log out";
+}
+
+async function handleLogout() {
+  try {
+    els.confirmLogout.disabled = true;
+    els.confirmLogout.textContent = "Logging out...";
+
+    await apiRequest("/auth/logout", {
+      method: "POST"
+    });
+  } catch (error) {
+    console.warn("Logout failed:", error.message);
+  } finally {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = "../../index.html";
+  }
+}
+
+async function loadAdminProfile() {
+  try {
+    let profile;
+    try {
+      profile = await apiRequest("/users/me");
+    } catch {
+      profile = await apiRequest("/user/me");
+    }
+
+    els.adminName.textContent =
+      profile.fullName ||
+      profile.name ||
+      "Admin User";
+
+    els.adminRole.textContent =
+      profile.role
+        ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
+        : "Admin";
+
+    if (profile.profileImage) {
+      els.adminAvatar.src = profile.profileImage;
+    }
+  } catch (error) {
+    console.error("Failed to load admin profile:", error.message);
+    window.location.href = "../profile/admin-profile.html";
+  }
+}
+
+async function loadFlags() {
+  try {
+    const [usersPayload, eventsPayload] = await Promise.all([
+      apiRequest("/user").catch(() => apiRequest("/users")),
+      apiRequest("/events")
+    ]);
+
+    const users = normalizeUsers(usersPayload);
+    const events = normalizeEvents(eventsPayload);
+
+    flagsCache = buildFlags(users, events);
+    renderFlags();
+  } catch (error) {
+    console.error("Failed to load flags:", error.message);
+    els.flagsTable.innerHTML = `
+      <tr>
+        <td colspan="6">Failed to load flags.</td>
+      </tr>
+    `;
+  }
+}
+
+function bindUI() {
+  els.searchInput.addEventListener("input", renderFlags);
+
+  bindFilters();
+
+  els.logoutBtn.addEventListener("click", openLogoutModal);
+  els.closeLogoutModal.addEventListener("click", closeLogoutModal);
+  els.cancelLogout.addEventListener("click", closeLogoutModal);
+  els.confirmLogout.addEventListener("click", handleLogout);
+
+  els.logoutModal.addEventListener("click", (event) => {
+    if (event.target === els.logoutModal) {
+      closeLogoutModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !els.logoutModal.classList.contains("hidden")) {
+      closeLogoutModal();
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  bindFilters();
-  bindSearch();
+  bindUI();
   await loadAdminProfile();
   await loadFlags();
 });

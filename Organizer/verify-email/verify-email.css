@@ -81,7 +81,7 @@ body {
 .primary-btn {
   margin-top: 2rem;
   width: 100%;
-  max-width: 28rem;
+  max-width: 15rem;
   border: none;
   background: #223f6b;
   color: #ffffff;
@@ -93,11 +93,11 @@ body {
 }
 
 .primary-btn:hover {
-  opacity: 0.95;
+  background: goldenrod;
 }
 
 .primary-btn:disabled {
-  opacity: 0.7;
+  background: #dc2626;
   cursor: not-allowed;
 }
 

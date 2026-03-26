@@ -6,8 +6,8 @@
 }
 
 body {
-  min-height: 100vh;
-  background: #edf1f5;
+  background: #edf2f6;
+  color: #172033;
 }
 
 .page {
@@ -15,77 +15,78 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .details-card {
   width: 100%;
-  max-width: 33rem;
+  max-width: 42rem;
   background: #ffffff;
-  border-radius: 1.5rem;
-  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.12);
-  padding: 2.5rem 1.4rem 1.6rem;
+  border-radius: 1rem;
+  padding: 1.8rem;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.12);
 }
 
 .header-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .header-row h1 {
-  font-size: 1.05rem;
-  font-weight: 500;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: #172033;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
 .role-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 10rem;
-  padding: 0.95rem 1.2rem;
-  border-radius: 1rem;
+  min-width: 6rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.55rem;
   color: #ffffff;
-  font-size: 0.95rem;
+  font-size: 0.72rem;
   font-weight: 700;
+  text-transform: capitalize;
 }
 
 .role-badge.organizer {
-  background: #c536af;
-}
-
-.role-badge.volunteer {
   background: #1d7de2;
 }
 
+.role-badge.volunteer {
+  background: #16a34a;
+}
+
 .role-badge.admin {
-  background: #223f6b;
+  background: #6b7280;
+}
+
+.role-badge.user {
+  background: #64748b;
 }
 
 .info-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  column-gap: 1.5rem;
-  row-gap: 2.35rem;
-  padding: 0 1.45rem;
-  margin-bottom: 1.8rem;
+  grid-template-columns: 8rem 1fr;
+  gap: 0.9rem 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .label {
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: #2a3342;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #223f6b;
 }
 
 .value {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #172033;
-  line-height: 1.2;
+  font-size: 0.9rem;
+  color: #374151;
   word-break: break-word;
 }
 
@@ -93,54 +94,48 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 8rem;
-  padding: 0.95rem 1rem;
-  border-radius: 0.6rem;
+  min-width: 6rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
   color: #ffffff;
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 .status-badge.active {
-  background: #16a357;
+  background: #16a34a;
 }
 
-.status-badge.inactive {
-  background: #ef2b2b;
-}
-
-.description-section {
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
-  padding: 0 0.3rem;
+.status-badge.deactivated {
+  background: #dc2626;
 }
 
 .description-section h2 {
-  font-size: 1.05rem;
-  font-weight: 400;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
   color: #172033;
-  margin-bottom: 1rem;
 }
 
 .description-box {
-  border: 0.08rem solid #2f4f7e;
-  border-radius: 1rem;
-  padding: 1.35rem 1.15rem;
-  min-height: 9.2rem;
-  color: #8b8f96;
-  font-size: 0.95rem;
-  line-height: 1.35;
+  background: #f8fafc;
+  border: 0.0625rem solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #374151;
 }
 
 .feedback {
   min-height: 1.2rem;
-  margin: 0.5rem 0 1rem;
+  margin-top: 1rem;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .feedback.success {
-  color: #15803d;
+  color: #16a34a;
 }
 
 .feedback.error {
@@ -148,30 +143,28 @@ body {
 }
 
 .action-row {
+  margin-top: 1.3rem;
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0 0.3rem;
+  justify-content: flex-end;
+  gap: 0.8rem;
 }
 
 .action-btn {
   border: none;
   border-radius: 0.55rem;
-  min-width: 9rem;
-  padding: 1rem 1.2rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #ffffff;
+  padding: 0.85rem 1.2rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.15s ease;
 }
 
-.action-btn:hover {
-  opacity: 0.92;
+.deactivate-btn {
+  background: #dc2626;
+  color: #ffffff;
 }
 
-.action-btn:active {
-  transform: scale(0.98);
+.reactivate-btn {
+  background: #e5e7eb;
+  color: #172033;
 }
 
 .action-btn:disabled {
@@ -179,53 +172,27 @@ body {
   cursor: not-allowed;
 }
 
-.deactivate-btn {
-  background: #ef2b2b;
-}
-
-.reactivate-btn {
-  background: #16a357;
-}
-
-@media (max-width: 34rem) {
+@media (max-width: 36rem) {
   .details-card {
-    padding: 2rem 1rem 1.2rem;
+    padding: 1.2rem;
   }
 
   .header-row {
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 2rem;
-  }
-
-  .role-badge {
-    width: 100%;
-    min-width: auto;
   }
 
   .info-grid {
     grid-template-columns: 1fr;
-    row-gap: 0.75rem;
-    padding: 0;
+    gap: 0.4rem;
   }
 
   .label {
-    font-weight: 600;
-    margin-top: 0.75rem;
-  }
-
-  .status-badge {
-    width: 100%;
-    min-width: auto;
-  }
-
-  .description-section {
-    padding: 0;
+    margin-top: 0.4rem;
   }
 
   .action-row {
     flex-direction: column;
-    padding: 0;
   }
 
   .action-btn {

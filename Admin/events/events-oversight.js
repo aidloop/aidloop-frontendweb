@@ -1,16 +1,22 @@
 const API_BASE_URL = "https://aidloop-backend.onrender.com/api";
 
-const elements = {
-  searchInput: document.getElementById("searchInput"),
-  eventsTable: document.getElementById("eventsTable"),
-  emptyState: document.getElementById("emptyState"),
+const els = {
   adminName: document.getElementById("adminName"),
   adminRole: document.getElementById("adminRole"),
   adminAvatar: document.getElementById("adminAvatar"),
-  filterButtons: document.querySelectorAll(".filter-btn")
+  eventsTable: document.getElementById("eventsTable"),
+  eventsTableWrap: document.getElementById("eventsTableWrap"),
+  emptyState: document.getElementById("emptyState"),
+  searchInput: document.getElementById("searchInput"),
+  filterButtons: document.querySelectorAll(".filter-btn"),
+  logoutBtn: document.getElementById("logoutBtn"),
+  logoutModal: document.getElementById("logoutModal"),
+  closeLogoutModal: document.getElementById("closeLogoutModal"),
+  cancelLogout: document.getElementById("cancelLogout"),
+  confirmLogout: document.getElementById("confirmLogout")
 };
 
-let allEvents = [];
+let eventsCache = [];
 let currentFilter = "all";
 
 async function apiRequest(endpoint, options = {}) {
@@ -39,188 +45,112 @@ async function apiRequest(endpoint, options = {}) {
   return data;
 }
 
-function normalizeEvents(payload) {
-  if (Array.isArray(payload)) return payload;
-  if (Array.isArray(payload?.events)) return payload.events;
-  if (Array.isArray(payload?.data)) return payload.data;
+function normalizeEvents(eventsPayload) {
+  if (Array.isArray(eventsPayload)) return eventsPayload;
+  if (Array.isArray(eventsPayload?.events)) return eventsPayload.events;
+  if (Array.isArray(eventsPayload?.data)) return eventsPayload.data;
   return [];
 }
 
-function getEventStatus(event) {
-  const status = String(event.status || "").toLowerCase();
-
-  if (status === "cancelled" || status === "canceled") {
-    return "cancelled";
-  }
-
-  if (status === "published") {
-    return "published";
-  }
-
-  return status || "published";
-}
-
-function getEventName(event) {
-  return event.name || event.title || "Untitled Event";
-}
-
-function getOrganizerName(event) {
-  if (typeof event.organizer === "object" && event.organizer) {
-    return (
-      event.organizer.fullName ||
-      event.organizer.name ||
-      event.organizer.organizationName ||
-      "Organizer"
-    );
-  }
-
-  return event.organizerName || "Organizer";
-}
-
-function getOrganizerEmail(event) {
-  if (typeof event.organizer === "object" && event.organizer) {
-    return event.organizer.email || "—";
-  }
-
-  return event.contactEmail || event.email || "—";
-}
-
-function getLocation(event) {
+function formatLocation(event) {
   if (typeof event.location === "string" && event.location.trim()) {
     return event.location;
   }
 
   if (event.location && typeof event.location === "object") {
-    const venue = event.location.venue || "";
-    const city = event.location.city || "";
-    const state = event.location.state || "";
-
-    return [venue, city || state].filter(Boolean).join(", ") || "—";
+    return (
+      [event.location.venue, event.location.city || event.location.state]
+        .filter(Boolean)
+        .join(", ") || "—"
+    );
   }
 
-  return event.city || "—";
+  return event.city || event.state || "—";
 }
 
-function badgeText(status) {
-  if (status === "cancelled") return "Cancelled";
-  if (status === "published") return "Published";
-  return status.charAt(0).toUpperCase() + status.slice(1);
+function getStatusValue(event) {
+  const status = String(event.status || "").toLowerCase();
+
+  if (status.includes("cancel")) return "cancelled";
+  if (status.includes("draft")) return "draft";
+  return "published";
+}
+
+function getContactEmail(event) {
+  return (
+    event.organizer?.email ||
+    event.contactEmail ||
+    event.email ||
+    "—"
+  );
+}
+
+function getEventTitle(event) {
+  return event.name || event.title || "Untitled Event";
+}
+
+function getEventId(event) {
+  return event._id || event.id || "";
 }
 
 function renderEvents() {
-  const query = elements.searchInput.value.trim().toLowerCase();
+  const query = els.searchInput.value.trim().toLowerCase();
 
-  const filteredEvents = allEvents.filter((event) => {
-    const status = event._eventStatus;
+  let filtered = [...eventsCache];
 
-    const matchesFilter =
-      currentFilter === "all" ? true : status === currentFilter;
+  if (currentFilter !== "all") {
+    filtered = filtered.filter((event) => getStatusValue(event) === currentFilter);
+  }
 
-    const searchableText = `
-      ${getEventName(event)}
-      ${getOrganizerName(event)}
-      ${getOrganizerEmail(event)}
-      ${getLocation(event)}
-      ${status}
-    `.toLowerCase();
+  if (query) {
+    filtered = filtered.filter((event) => {
+      const searchableText = `
+        ${getEventTitle(event)}
+        ${getContactEmail(event)}
+        ${formatLocation(event)}
+        ${getStatusValue(event)}
+      `.toLowerCase();
 
-    return matchesFilter && searchableText.includes(query);
-  });
+      return searchableText.includes(query);
+    });
+  }
 
-  if (!filteredEvents.length) {
-    elements.eventsTable.innerHTML = "";
-    elements.emptyState.style.display = "flex";
+  if (!filtered.length) {
+    els.eventsTableWrap.style.display = "none";
+    els.emptyState.style.display = "block";
     return;
   }
 
-  elements.emptyState.style.display = "none";
+  els.eventsTableWrap.style.display = "table";
+  els.emptyState.style.display = "none";
 
-  elements.eventsTable.innerHTML = filteredEvents
-    .map((event) => {
-      const id = event._id || event.id || "";
-      const status = event._eventStatus;
+  els.eventsTable.innerHTML = filtered.map((event) => {
+    const status = getStatusValue(event);
 
-      return `
-        <tr data-status="${status}" data-name="${getEventName(event)}">
-          <td>
-            <div class="org-cell">
-              <div class="org-icon">
-                <i class="fa-regular fa-calendar"></i>
-              </div>
-              <div class="org-info">
-                <h4>${getEventName(event)}</h4>
-                <p>${getOrganizerName(event)}</p>
-              </div>
-            </div>
-          </td>
-          <td>${getOrganizerEmail(event)}</td>
-          <td>${getLocation(event)}</td>
-          <td><span class="status-badge ${status}">${badgeText(status)}</span></td>
-          <td><button class="details-btn" data-id="${id}">View Details</button></td>
-        </tr>
-      `;
-    })
-    .join("");
-
-  attachDetailHandlers();
-}
-
-function attachDetailHandlers() {
-  document.querySelectorAll(".details-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      const eventId = button.dataset.id;
-      window.location.href = `event-details.html?id=${encodeURIComponent(eventId)}`;
-    });
-  });
-}
-
-async function loadAdminProfile() {
-  try {
-    let profile;
-
-    try {
-      profile = await apiRequest("/users/me");
-    } catch {
-      profile = await apiRequest("/user/me");
-    }
-
-    elements.adminName.textContent = profile.fullName || profile.name || "Admin";
-    elements.adminRole.textContent = profile.role
-      ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
-      : "Admin";
-
-    if (profile.profileImage) {
-      elements.adminAvatar.src = profile.profileImage;
-    }
-  } catch (error) {
-    console.error("Failed to load admin profile:", error.message);
-    window.location.href = "../login/admin-login.html";
-  }
-}
-
-async function loadEvents() {
-  try {
-    const eventsPayload = await apiRequest("/events");
-    allEvents = normalizeEvents(eventsPayload).map((event) => ({
-      ...event,
-      _eventStatus: getEventStatus(event)
-    }));
-
-    renderEvents();
-  } catch (error) {
-    console.error("Failed to load events:", error.message);
-    elements.eventsTable.innerHTML = `
+    return `
       <tr>
-        <td colspan="5">Failed to load events.</td>
+        <td>${getEventTitle(event)}</td>
+        <td>${getContactEmail(event)}</td>
+        <td>${formatLocation(event)}</td>
+        <td>
+          <span class="status-badge ${status}">
+            ${status.charAt(0).toUpperCase() + status.slice(1)}
+          </span>
+        </td>
+        <td>
+          <a class="action-link" href="event-details.html?id=${encodeURIComponent(getEventId(event))}">
+            View Details
+          </a>
+        </td>
       </tr>
     `;
-  }
+  }).join("");
 }
 
 function bindFilters() {
-  elements.filterButtons.forEach((button) => {
+  els.filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      elements.filterButtons.forEach((btn) => btn.classList.remove("active"));
+      els.filterButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
       currentFilter = button.dataset.filter;
       renderEvents();
@@ -228,13 +158,101 @@ function bindFilters() {
   });
 }
 
-function bindSearch() {
-  elements.searchInput.addEventListener("input", renderEvents);
+function openLogoutModal() {
+  els.logoutModal.classList.remove("hidden");
+}
+
+function closeLogoutModal() {
+  els.logoutModal.classList.add("hidden");
+  els.confirmLogout.disabled = false;
+  els.confirmLogout.textContent = "Yes, Log out";
+}
+
+async function handleLogout() {
+  try {
+    els.confirmLogout.disabled = true;
+    els.confirmLogout.textContent = "Logging out...";
+
+    await apiRequest("/auth/logout", {
+      method: "POST"
+    });
+  } catch (error) {
+    console.warn("Logout failed:", error.message);
+  } finally {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = "../../index.html";
+  }
+}
+
+async function loadAdminProfile() {
+  try {
+    let profile;
+    try {
+      profile = await apiRequest("/users/me");
+    } catch {
+      profile = await apiRequest("/user/me");
+    }
+
+    els.adminName.textContent =
+      profile.fullName ||
+      profile.name ||
+      "Admin User";
+
+    els.adminRole.textContent =
+      profile.role
+        ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
+        : "Admin";
+
+    if (profile.profileImage) {
+      els.adminAvatar.src = profile.profileImage;
+    }
+  } catch (error) {
+    console.error("Failed to load admin profile:", error.message);
+    window.location.href = "../profile/admin-profile.html";
+  }
+}
+
+async function loadEvents() {
+  try {
+    const payload = await apiRequest("/events");
+    eventsCache = normalizeEvents(payload);
+    renderEvents();
+  } catch (error) {
+    console.error("Failed to load events:", error.message);
+    els.eventsTable.innerHTML = `
+      <tr>
+        <td colspan="5">Failed to load events.</td>
+      </tr>
+    `;
+  }
+}
+
+function bindUI() {
+  els.searchInput.addEventListener("input", renderEvents);
+
+  bindFilters();
+
+  els.logoutBtn.addEventListener("click", openLogoutModal);
+  els.closeLogoutModal.addEventListener("click", closeLogoutModal);
+  els.cancelLogout.addEventListener("click", closeLogoutModal);
+  els.confirmLogout.addEventListener("click", handleLogout);
+
+  els.logoutModal.addEventListener("click", (event) => {
+    if (event.target === els.logoutModal) {
+      closeLogoutModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !els.logoutModal.classList.contains("hidden")) {
+      closeLogoutModal();
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  bindFilters();
-  bindSearch();
+  bindUI();
   await loadAdminProfile();
   await loadEvents();
 });

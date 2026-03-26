@@ -15,7 +15,7 @@ body {
   min-height: 100vh;
 }
 
-  /* Sidebar  */
+/* Sidebar */
 .sidebar {
   width: 15rem;
   background: #223f6b;
@@ -77,14 +77,39 @@ body {
   background: #1d7de2;
 }
 
- Main 
+/* Logout Button */
+.logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  padding: 0.9rem 0.85rem;
+  border-radius: 0.45rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.logout-btn i {
+  width: 1rem;
+  text-align: center;
+}
+
+.logout-btn:hover {
+  background: #ef2f2f;
+}
+
+/* Main */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
- /* Topbar  */
+/* Topbar */
 .topbar {
   height: 5.8rem;
   background: #ffffff;
@@ -174,7 +199,7 @@ body {
   font-size: 0.7rem;
 }
 
- Content 
+/* Content */
 .page-content {
   padding: 4rem 1.4rem 2rem;
 }
@@ -194,7 +219,7 @@ body {
   color: #6b7280;
 }
 
- /* Stats */
+/* Stats */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -237,7 +262,7 @@ body {
   font-size: 1rem;
 }
 
- /* Section titles  */
+/* Section titles */
 .quick-actions-section h2,
 .recent-activity-section h2 {
   font-size: 1.05rem;
@@ -245,7 +270,7 @@ body {
   margin-bottom: 1.15rem;
 }
 
- /* Quick actions  */
+/* Quick actions */
 .quick-actions-section {
   margin-bottom: 3rem;
   max-width: 42rem;
@@ -276,7 +301,7 @@ body {
   transform: scale(0.98);
 }
 
- /* Recent activity  */
+/* Recent activity */
 .recent-activity-section {
   max-width: 42rem;
 }
@@ -342,7 +367,95 @@ td {
   color: #fff;
 }
 
-/* Responsive  */
+/* Logout Modal */
+.hidden {
+  display: none !important;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 999;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 25rem;
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.15);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.9rem;
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.modal-icon-wrap {
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.modal-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #172033;
+}
+
+.modal-card p {
+  font-size: 0.92rem;
+  color: #6b7280;
+  margin-bottom: 1.3rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.modal-btn {
+  border: none;
+  border-radius: 0.55rem;
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  min-width: 8rem;
+}
+
+.modal-btn.secondary {
+  background: #e5e7eb;
+  color: #172033;
+}
+
+.modal-btn.danger {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+/* Responsive */
 @media (max-width: 75rem) {
   .stats-grid,
   .quick-actions {
@@ -395,5 +508,13 @@ td {
 
   .search-box {
     width: 12rem;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-btn {
+    width: 100%;
   }
 }

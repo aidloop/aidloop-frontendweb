@@ -1,14 +1,21 @@
 const API_BASE_URL = "https://aidloop-backend.onrender.com/api";
 
-const elements = {
-  searchInput: document.getElementById("searchInput"),
-  userTable: document.getElementById("userTable"),
+const els = {
   adminName: document.getElementById("adminName"),
   adminRole: document.getElementById("adminRole"),
-  adminAvatar: document.getElementById("adminAvatar")
+  adminAvatar: document.getElementById("adminAvatar"),
+  userTable: document.getElementById("userTable"),
+  userTableWrap: document.getElementById("userTableWrap"),
+  emptyState: document.getElementById("emptyState"),
+  searchInput: document.getElementById("searchInput"),
+  logoutBtn: document.getElementById("logoutBtn"),
+  logoutModal: document.getElementById("logoutModal"),
+  closeLogoutModal: document.getElementById("closeLogoutModal"),
+  cancelLogout: document.getElementById("cancelLogout"),
+  confirmLogout: document.getElementById("confirmLogout")
 };
 
-let allUsers = [];
+let usersCache = [];
 
 async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -44,7 +51,7 @@ function normalizeUsers(payload) {
 }
 
 function getDisplayName(user) {
-  return user.fullName || user.name || user.organizationName || "Unnamed User";
+  return user.fullName || user.name || user.organizationName || "User";
 }
 
 function getLocation(user) {
@@ -53,163 +60,166 @@ function getLocation(user) {
   }
 
   if (user.location && typeof user.location === "object") {
-    return user.location.city || user.location.state || user.location.venue || "—";
+    return (
+      [user.location.venue, user.location.city || user.location.state]
+        .filter(Boolean)
+        .join(", ") || "—"
+    );
   }
 
   return user.city || user.state || "—";
 }
 
 function getRole(user) {
-  const role = String(user.role || "user").toLowerCase();
-  if (role === "organizer") return "Organizer";
-  if (role === "volunteer") return "Volunteer";
-  if (role === "admin") return "Admin";
-  return role.charAt(0).toUpperCase() + role.slice(1);
-}
-
-function getRoleClass(user) {
-  return String(user.role || "").toLowerCase() === "organizer"
-    ? "organizer"
-    : "volunteer";
-}
-
-function isUserActive(user) {
-  if (typeof user.isActive === "boolean") return user.isActive;
-  const status = String(user.status || "").toLowerCase();
-  return status !== "deactivated" && status !== "inactive";
+  return String(user.role || "user").toLowerCase();
 }
 
 function renderUsers() {
-  const query = elements.searchInput.value.trim().toLowerCase();
+  const query = els.searchInput.value.trim().toLowerCase();
 
-  const filteredUsers = allUsers.filter((user) => {
-    const searchable = `
+  const filtered = usersCache.filter((user) => {
+    const searchableText = `
       ${getDisplayName(user)}
       ${user.email || ""}
       ${getLocation(user)}
       ${getRole(user)}
     `.toLowerCase();
 
-    return searchable.includes(query);
+    return searchableText.includes(query);
   });
 
-  if (!filteredUsers.length) {
-    elements.userTable.innerHTML = `
-      <tr>
-        <td colspan="5">No users found.</td>
-      </tr>
-    `;
+  if (!filtered.length) {
+    els.userTableWrap.style.display = "none";
+    els.emptyState.style.display = "block";
     return;
   }
 
-  elements.userTable.innerHTML = filteredUsers
-    .map((user) => {
-      const id = user._id || user.id || "";
-      const active = isUserActive(user);
+  els.userTableWrap.style.display = "table";
+  els.emptyState.style.display = "none";
 
-      return `
-        <tr data-id="${id}">
-          <td>${getDisplayName(user)}</td>
-          <td>${user.email || "—"}</td>
-          <td>${getLocation(user)}</td>
-          <td><span class="role-badge ${getRoleClass(user)}">${getRole(user)}</span></td>
-          <td class="actions-cell">
-            <button class="btn btn-view" data-id="${id}">View</button>
+  els.userTable.innerHTML = filtered.map((user) => {
+    const role = getRole(user);
+    const id = user._id || user.id || "";
+    const isActive = user.isActive !== false;
+
+    return `
+      <tr>
+        <td>${getDisplayName(user)}</td>
+        <td>${user.email || "—"}</td>
+        <td>${getLocation(user)}</td>
+        <td><span class="role-badge ${role}">${role}</span></td>
+        <td>
+          <div class="actions-cell">
+            <a class="action-link" href="user-details.html?id=${encodeURIComponent(id)}">View</a>
             <button
-              class="btn ${active ? "btn-active" : "btn-deactivate"} action-status-btn"
+              class="action-btn ${isActive ? "" : "deactivated"}"
               data-id="${id}"
-              data-active="${active}"
+              ${isActive ? "" : "disabled"}
             >
-              ${active ? "Active" : "Deactivate"}
+              ${isActive ? "Deactivate" : "Deactivated"}
             </button>
-          </td>
-        </tr>
-      `;
-    })
-    .join("");
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join("");
 
-  bindActionButtons();
+  bindDeactivateButtons();
 }
 
-function bindActionButtons() {
-  document.querySelectorAll(".btn-view").forEach((button) => {
-    button.addEventListener("click", () => {
-      const userId = button.dataset.id;
-      window.location.href = `user-details.html?id=${encodeURIComponent(userId)}`;
-    });
-  });
-
-  document.querySelectorAll(".action-status-btn").forEach((button) => {
+function bindDeactivateButtons() {
+  document.querySelectorAll(".action-btn[data-id]").forEach((button) => {
     button.addEventListener("click", async () => {
-      const userId = button.dataset.id;
-      const isActive = button.dataset.active === "true";
-
-      if (!isActive) {
-        alert("This user is already deactivated.");
-        return;
-      }
-
-      const confirmed = window.confirm("Deactivate this user?");
-      if (!confirmed) return;
+      const id = button.dataset.id;
+      if (!id || button.disabled) return;
 
       try {
         button.disabled = true;
-        button.textContent = "Processing...";
+        button.textContent = "Deactivating...";
 
-        await apiRequest(`/admin/users/${userId}/deactivate`, {
+        await apiRequest(`/admin/users/${id}/deactivate`, {
           method: "PATCH"
         });
 
-        const userIndex = allUsers.findIndex(
-          (user) => String(user._id || user.id) === String(userId)
+        usersCache = usersCache.map((user) =>
+          String(user._id || user.id) === String(id)
+            ? { ...user, isActive: false }
+            : user
         );
-
-        if (userIndex > -1) {
-          allUsers[userIndex].isActive = false;
-          allUsers[userIndex].status = "deactivated";
-        }
 
         renderUsers();
       } catch (error) {
-        alert(error.message);
-        renderUsers();
+        console.error("Failed to deactivate user:", error.message);
+        button.disabled = false;
+        button.textContent = "Deactivate";
       }
     });
   });
+}
+
+function openLogoutModal() {
+  els.logoutModal.classList.remove("hidden");
+}
+
+function closeLogoutModal() {
+  els.logoutModal.classList.add("hidden");
+  els.confirmLogout.disabled = false;
+  els.confirmLogout.textContent = "Yes, Log out";
+}
+
+async function handleLogout() {
+  try {
+    els.confirmLogout.disabled = true;
+    els.confirmLogout.textContent = "Logging out...";
+
+    await apiRequest("/auth/logout", {
+      method: "POST"
+    });
+  } catch (error) {
+    console.warn("Logout failed:", error.message);
+  } finally {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = "../../index.html";
+  }
 }
 
 async function loadAdminProfile() {
   try {
     let profile;
-
     try {
       profile = await apiRequest("/users/me");
     } catch {
       profile = await apiRequest("/user/me");
     }
 
-    elements.adminName.textContent = profile.fullName || profile.name || "Admin";
-    elements.adminRole.textContent = profile.role
-      ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
-      : "Admin";
+    els.adminName.textContent =
+      profile.fullName ||
+      profile.name ||
+      "Admin User";
+
+    els.adminRole.textContent =
+      profile.role
+        ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
+        : "Admin";
 
     if (profile.profileImage) {
-      elements.adminAvatar.src = profile.profileImage;
+      els.adminAvatar.src = profile.profileImage;
     }
   } catch (error) {
     console.error("Failed to load admin profile:", error.message);
-    window.location.href = "../login/admin-login.html";
+    window.location.href = "../profile/admin-profile.html";
   }
 }
 
 async function loadUsers() {
   try {
-    const usersPayload = await apiRequest("/user");
-    allUsers = normalizeUsers(usersPayload);
+    const payload = await apiRequest("/user").catch(() => apiRequest("/users"));
+    usersCache = normalizeUsers(payload);
     renderUsers();
   } catch (error) {
     console.error("Failed to load users:", error.message);
-    elements.userTable.innerHTML = `
+    els.userTable.innerHTML = `
       <tr>
         <td colspan="5">Failed to load users.</td>
       </tr>
@@ -217,12 +227,29 @@ async function loadUsers() {
   }
 }
 
-function bindSearch() {
-  elements.searchInput.addEventListener("input", renderUsers);
+function bindUI() {
+  els.searchInput.addEventListener("input", renderUsers);
+
+  els.logoutBtn.addEventListener("click", openLogoutModal);
+  els.closeLogoutModal.addEventListener("click", closeLogoutModal);
+  els.cancelLogout.addEventListener("click", closeLogoutModal);
+  els.confirmLogout.addEventListener("click", handleLogout);
+
+  els.logoutModal.addEventListener("click", (event) => {
+    if (event.target === els.logoutModal) {
+      closeLogoutModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !els.logoutModal.classList.contains("hidden")) {
+      closeLogoutModal();
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  bindSearch();
+  bindUI();
   await loadAdminProfile();
   await loadUsers();
 });

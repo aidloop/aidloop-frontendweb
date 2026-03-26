@@ -40,8 +40,12 @@
   cursor: pointer;
 }
 
-.sidebar-menu li.active a, .sidebar-menu li a:hover, .sidebar-logout:hover { 
+.sidebar-menu li.active a, .sidebar-menu li a:hover { 
     background: #1f80ea; 
+}
+
+.sidebar-logout:hover {
+    background: #dc2626;
 }
 
 .main-content { 

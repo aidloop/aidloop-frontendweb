@@ -1,44 +1,27 @@
 const API_BASE_URL = "https://aidloop-backend.onrender.com/api";
 
-const elements = {
+const els = {
   loginForm: document.getElementById("loginForm"),
   email: document.getElementById("email"),
   password: document.getElementById("password"),
   rememberMe: document.getElementById("rememberMe"),
-  togglePassword: document.getElementById("togglePassword"),
-  forgotPasswordBtn: document.getElementById("forgotPasswordBtn"),
   loginBtn: document.getElementById("loginBtn"),
+  forgotPasswordBtn: document.getElementById("forgotPasswordBtn"),
+  togglePassword: document.getElementById("togglePassword"),
   emailError: document.getElementById("emailError"),
   passwordError: document.getElementById("passwordError"),
   formError: document.getElementById("formError"),
   formSuccess: document.getElementById("formSuccess")
 };
 
-function clearMessages() {
-  elements.emailError.textContent = "";
-  elements.passwordError.textContent = "";
-  elements.formError.textContent = "";
-  elements.formSuccess.textContent = "";
-}
-
-function validateEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function setLoading(isLoading) {
-  elements.loginBtn.disabled = isLoading;
-  elements.loginBtn.textContent = isLoading ? "Logging in..." : "Log in";
-}
-
 async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    method: options.method || "GET",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
       ...(options.headers || {})
     },
-    body: options.body || null
+    ...options
   });
 
   const contentType = response.headers.get("content-type") || "";
@@ -57,94 +40,108 @@ async function apiRequest(endpoint, options = {}) {
   return data;
 }
 
-function loadRememberedEmail() {
-  const savedEmail = localStorage.getItem("aidloop_admin_email");
-  if (savedEmail) {
-    elements.email.value = savedEmail;
-    elements.rememberMe.checked = true;
-  }
+function clearErrors() {
+  els.emailError.textContent = "";
+  els.passwordError.textContent = "";
+  els.formError.textContent = "";
+  els.formSuccess.textContent = "";
 }
 
-function saveRememberedEmail() {
-  if (elements.rememberMe.checked) {
-    localStorage.setItem("aidloop_admin_email", elements.email.value.trim());
-  } else {
-    localStorage.removeItem("aidloop_admin_email");
-  }
+function validateEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-async function checkExistingSession() {
-  try {
-    const status = await apiRequest("/auth/status");
-    if (status) {
-      window.location.href = "../dashboard/admin-dashboard.html";
-    }
-  } catch {
-    // stay on page
-  }
-}
+function validateForm() {
+  clearErrors();
 
-elements.togglePassword.addEventListener("click", () => {
-  const isPassword = elements.password.type === "password";
-  elements.password.type = isPassword ? "text" : "password";
-  elements.togglePassword.innerHTML = isPassword
-    ? '<i class="fa-regular fa-eye"></i>'
-    : '<i class="fa-regular fa-eye-slash"></i>';
-});
-
-elements.forgotPasswordBtn.addEventListener("click", () => {
-  alert("Forgot password flow is not connected yet.");
-});
-
-elements.loginForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  clearMessages();
-
-  const email = elements.email.value.trim();
-  const password = elements.password.value.trim();
-
+  const email = els.email.value.trim();
+  const password = els.password.value.trim();
   let isValid = true;
 
   if (!email) {
-    elements.emailError.textContent = "Email address is required.";
+    els.emailError.textContent = "Email address is required.";
     isValid = false;
   } else if (!validateEmail(email)) {
-    elements.emailError.textContent = "Enter a valid email address.";
+    els.emailError.textContent = "Enter a valid email address.";
     isValid = false;
   }
 
   if (!password) {
-    elements.passwordError.textContent = "Password is required.";
-    isValid = false;
-  } else if (password.length < 6) {
-    elements.passwordError.textContent = "Password must be at least 6 characters.";
+    els.passwordError.textContent = "Password is required.";
     isValid = false;
   }
 
-  if (!isValid) return;
+  return isValid;
+}
+
+function restoreRememberedEmail() {
+  const rememberedEmail = localStorage.getItem("aidloop_admin_email");
+  if (rememberedEmail) {
+    els.email.value = rememberedEmail;
+    els.rememberMe.checked = true;
+  }
+}
+
+function togglePasswordVisibility() {
+  const isPassword = els.password.type === "password";
+  els.password.type = isPassword ? "text" : "password";
+
+  els.togglePassword.innerHTML = isPassword
+    ? '<i class="fa-regular fa-eye"></i>'
+    : '<i class="fa-regular fa-eye-slash"></i>';
+}
+
+async function handleLogin(event) {
+  event.preventDefault();
+
+  if (!validateForm()) return;
 
   try {
-    setLoading(true);
+    clearErrors();
+    els.loginBtn.disabled = true;
+    els.loginBtn.textContent = "Logging in...";
 
-    const result = await apiRequest("/auth/login", {
+    const payload = await apiRequest("/auth/login", {
       method: "POST",
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({
+        email: els.email.value.trim(),
+        password: els.password.value.trim()
+      })
     });
 
-    saveRememberedEmail();
-    elements.formSuccess.textContent = result.message || "Login successful.";
+    const role = String(payload?.user?.role || payload?.role || "").toLowerCase();
+
+    if (role && role !== "admin") {
+      throw new Error("This account is not an admin account.");
+    }
+
+    if (els.rememberMe.checked) {
+      localStorage.setItem("aidloop_admin_email", els.email.value.trim());
+    } else {
+      localStorage.removeItem("aidloop_admin_email");
+    }
+
+    els.formSuccess.textContent = payload.message || "Login successful.";
 
     setTimeout(() => {
       window.location.href = "../dashboard/admin-dashboard.html";
-    }, 700);
+    }, 800);
   } catch (error) {
-    elements.formError.textContent = error.message || "Login failed.";
+    els.formError.textContent = error.message || "Login failed.";
   } finally {
-    setLoading(false);
+    els.loginBtn.disabled = false;
+    els.loginBtn.textContent = "Log in";
   }
-});
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadRememberedEmail();
-  checkExistingSession();
-});
+function handleForgotPassword() {
+  clearErrors();
+  els.formError.textContent =
+    "No admin forgot-password endpoint has been provided yet.";
+}
+
+els.loginForm.addEventListener("submit", handleLogin);
+els.togglePassword.addEventListener("click", togglePasswordVisibility);
+els.forgotPasswordBtn.addEventListener("click", handleForgotPassword);
+
+document.addEventListener("DOMContentLoaded", restoreRememberedEmail);

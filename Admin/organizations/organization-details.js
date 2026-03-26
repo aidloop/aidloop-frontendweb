@@ -1,24 +1,18 @@
 const API_BASE_URL = "https://aidloop-backend.onrender.com/api";
 
-const elements = {
-  overlay: document.getElementById("overlay"),
+const els = {
   closeBtn: document.getElementById("closeBtn"),
   orgTitle: document.getElementById("orgTitle"),
+  statusBadge: document.getElementById("statusBadge"),
   orgName: document.getElementById("orgName"),
   socialLinks: document.getElementById("socialLinks"),
   email: document.getElementById("email"),
   phoneNumber: document.getElementById("phoneNumber"),
   location: document.getElementById("location"),
-  description: document.getElementById("description"),
-  statusBadge: document.getElementById("statusBadge")
+  description: document.getElementById("description")
 };
 
-let organizerId = null;
-
-function getOrganizerIdFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("id");
-}
+const organizerId = new URLSearchParams(window.location.search).get("id");
 
 async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -53,14 +47,32 @@ function normalizeUsers(payload) {
   return [];
 }
 
-function getStatus(user) {
+function getDisplayName(user) {
+  return user.fullName || user.name || user.organizationName || "Organization";
+}
+
+function getLocation(user) {
+  if (typeof user.location === "string" && user.location.trim()) {
+    return user.location;
+  }
+
+  if (user.location && typeof user.location === "object") {
+    return (
+      [user.location.venue, user.location.city || user.location.state]
+        .filter(Boolean)
+        .join(", ") || "—"
+    );
+  }
+
+  return user.city || user.state || "—";
+}
+
+function getOrganizerStatus(user) {
   const status = String(user.status || "").toLowerCase();
   const approvalStatus = String(user.approvalStatus || "").toLowerCase();
   const isVerified = Boolean(user.isVerified);
 
-  if (status === "rejected" || approvalStatus === "rejected") {
-    return "rejected";
-  }
+  if (status === "rejected" || approvalStatus === "rejected") return "rejected";
 
   if (
     status === "verified" ||
@@ -75,126 +87,97 @@ function getStatus(user) {
   return "awaiting";
 }
 
-function getStatusText(status) {
-  if (status === "verified") return "Verified";
-  if (status === "rejected") return "Rejected";
-  return "Awaiting";
-}
+function setStatusBadge(status) {
+  els.statusBadge.textContent =
+    status === "verified"
+      ? "Verified"
+      : status === "rejected"
+      ? "Rejected"
+      : "Awaiting";
 
-function getDisplayName(user) {
-  return user.fullName || user.name || user.organizationName || "Unnamed Organizer";
-}
-
-function getLocation(user) {
-  if (typeof user.location === "string" && user.location.trim()) {
-    return user.location;
-  }
-
-  if (user.location && typeof user.location === "object") {
-    return (
-      user.location.city ||
-      user.location.state ||
-      user.location.venue ||
-      "—"
-    );
-  }
-
-  return user.city || user.state || "—";
+  els.statusBadge.className = "status-badge";
+  els.statusBadge.classList.add(status);
 }
 
 function renderSocialLinks(user) {
-  const links =
-    user.socialLinks ||
+  const link =
     user.website ||
     user.socialLink ||
-    user.link ||
+    user.socialLinks?.[0] ||
     "";
 
-  if (!links) {
-    elements.socialLinks.textContent = "—";
+  if (!link) {
+    els.socialLinks.textContent = "—";
     return;
   }
 
-  if (Array.isArray(links)) {
-    elements.socialLinks.innerHTML = links
-      .map((link) => `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`)
-      .join("<br>");
-    return;
-  }
-
-  elements.socialLinks.innerHTML = `<a href="${links}" target="_blank" rel="noopener noreferrer">${links}</a>`;
+  els.socialLinks.innerHTML = `
+    <a class="social-link" href="${link}" target="_blank" rel="noopener noreferrer">
+      ${link}
+    </a>
+  `;
 }
 
-function renderOrganizer(user) {
-  const displayName = getDisplayName(user);
-  const status = getStatus(user);
+function populateOrganizer(user) {
+  const status = getOrganizerStatus(user);
 
-  elements.orgTitle.textContent = displayName;
-  elements.orgName.textContent = displayName;
-  elements.email.textContent = user.email || "—";
-  elements.phoneNumber.textContent =
-    user.phoneNumber ||
-    user.phone ||
-    user.mobile ||
-    "—";
-  elements.location.textContent = getLocation(user);
-  elements.description.textContent =
+  els.orgTitle.textContent = getDisplayName(user);
+  els.orgName.textContent = getDisplayName(user);
+  els.email.textContent = user.email || "—";
+  els.phoneNumber.textContent = user.phoneNumber || user.phone || "—";
+  els.location.textContent = getLocation(user);
+  els.description.innerHTML = `<p>${
     user.description ||
     user.bio ||
-    "No description available.";
+    "No organization description available."
+  }</p>`;
 
   renderSocialLinks(user);
-
-  elements.statusBadge.className = `status-badge ${status}`;
-  elements.statusBadge.textContent = getStatusText(status);
+  setStatusBadge(status);
 }
 
 async function loadOrganizerDetails() {
-  organizerId = getOrganizerIdFromURL();
-
   if (!organizerId) {
-    elements.orgTitle.textContent = "Organizer not found";
-    elements.description.textContent = "No organizer ID was provided in the URL.";
+    els.orgTitle.textContent = "No organizer selected";
+    els.description.innerHTML = "<p>No organizer ID provided.</p>";
     return;
   }
 
   try {
-    let usersPayload;
+    let payload;
 
     try {
-      usersPayload = await apiRequest("/user");
+      payload = await apiRequest("/user");
     } catch {
-      usersPayload = await apiRequest("/users");
+      payload = await apiRequest("/users");
     }
 
-    const users = normalizeUsers(usersPayload);
+    const users = normalizeUsers(payload);
+
     const organizer = users.find(
       (user) => String(user._id || user.id) === String(organizerId)
     );
 
     if (!organizer) {
-      throw new Error("Organizer not found.");
+      throw new Error("Organizer not found");
     }
 
-    renderOrganizer(organizer);
+    populateOrganizer(organizer);
   } catch (error) {
-    elements.orgTitle.textContent = "Error";
-    elements.description.textContent = error.message;
-    elements.statusBadge.className = "status-badge rejected";
-    elements.statusBadge.textContent = "Unavailable";
+    els.orgTitle.textContent = "Unable to load organizer";
+    els.description.innerHTML = `<p>${error.message || "Failed to fetch organizer details."}</p>`;
   }
 }
 
 function closeModal() {
+  if (window.history.length > 1) {
+    window.history.back();
+    return;
+  }
+
   window.location.href = "organization-directory.html";
 }
 
-elements.closeBtn.addEventListener("click", closeModal);
-
-elements.overlay.addEventListener("click", (event) => {
-  if (event.target === elements.overlay) {
-    closeModal();
-  }
-});
+els.closeBtn.addEventListener("click", closeModal);
 
 document.addEventListener("DOMContentLoaded", loadOrganizerDetails);

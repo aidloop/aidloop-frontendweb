@@ -2,24 +2,20 @@ const API_BASE_URL = "https://aidloop-backend.onrender.com/api";
 
 const els = {
   orgTitle: document.getElementById("orgTitle"),
+  statusBadge: document.getElementById("statusBadge"),
   orgName: document.getElementById("orgName"),
   socialLinks: document.getElementById("socialLinks"),
   email: document.getElementById("email"),
   phoneNumber: document.getElementById("phoneNumber"),
   location: document.getElementById("location"),
   description: document.getElementById("description"),
-  statusBadge: document.getElementById("statusBadge"),
   rejectBtn: document.getElementById("rejectBtn"),
   approveBtn: document.getElementById("approveBtn"),
   feedback: document.getElementById("feedback")
 };
 
-let organizerId = null;
-
-function getOrganizerIdFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("id");
-}
+const organizerId = new URLSearchParams(window.location.search).get("id");
+let currentOrganizer = null;
 
 async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -54,7 +50,27 @@ function normalizeUsers(payload) {
   return [];
 }
 
-function detectStatus(user) {
+function getDisplayName(user) {
+  return user.fullName || user.name || user.organizationName || "Organization";
+}
+
+function getLocation(user) {
+  if (typeof user.location === "string" && user.location.trim()) {
+    return user.location;
+  }
+
+  if (user.location && typeof user.location === "object") {
+    return (
+      [user.location.venue, user.location.city || user.location.state]
+        .filter(Boolean)
+        .join(", ") || "—"
+    );
+  }
+
+  return user.city || user.state || "—";
+}
+
+function getVerificationStatus(user) {
   const status = String(user.status || "").toLowerCase();
   const approvalStatus = String(user.approvalStatus || "").toLowerCase();
   const isVerified = Boolean(user.isVerified);
@@ -68,176 +84,165 @@ function detectStatus(user) {
     approvalStatus === "approved" ||
     isVerified
   ) {
-    return "approved";
+    return "verified";
   }
 
   return "awaiting";
 }
 
-function getLocationText(user) {
-  if (typeof user.location === "string" && user.location.trim()) {
-    return user.location;
-  }
+function setStatusBadge(status) {
+  els.statusBadge.textContent =
+    status === "verified"
+      ? "Verified"
+      : status === "rejected"
+      ? "Rejected"
+      : "Awaiting Verification";
 
-  if (user.location && typeof user.location === "object") {
-    return user.location.city || user.location.venue || user.location.state || "—";
-  }
-
-  return user.city || user.state || "—";
+  els.statusBadge.className = "status-badge";
+  els.statusBadge.classList.add(status);
 }
 
 function renderSocialLinks(user) {
-  const links = user.socialLinks || user.website || user.socialLink || user.link || "";
+  const link =
+    user.website ||
+    user.socialLink ||
+    user.socialLinks?.[0] ||
+    "";
 
-  if (!links) {
+  if (!link) {
     els.socialLinks.textContent = "—";
     return;
   }
 
-  if (Array.isArray(links)) {
-    els.socialLinks.innerHTML = links
-      .map(link => `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`)
-      .join("<br>");
-    return;
-  }
-
-  els.socialLinks.innerHTML = `<a href="${links}" target="_blank" rel="noopener noreferrer">${links}</a>`;
+  els.socialLinks.innerHTML = `
+    <a class="social-link" href="${link}" target="_blank" rel="noopener noreferrer">
+      ${link}
+    </a>
+  `;
 }
 
-function setBadge(status) {
-  els.statusBadge.className = "status-badge";
+function setFeedback(message, type = "") {
+  els.feedback.textContent = message;
+  els.feedback.className = "feedback";
+  if (type) {
+    els.feedback.classList.add(type);
+  }
+}
 
-  if (status === "approved") {
-    els.statusBadge.classList.add("approved");
-    els.statusBadge.textContent = "Approved";
-    return;
+function populateOrganizer(user) {
+  const status = getVerificationStatus(user);
+
+  currentOrganizer = user;
+
+  els.orgTitle.textContent = getDisplayName(user);
+  els.orgName.textContent = getDisplayName(user);
+  els.email.textContent = user.email || "—";
+  els.phoneNumber.textContent =
+    user.phoneNumber || user.phone || "—";
+  els.location.textContent = getLocation(user);
+  els.description.textContent =
+    user.description ||
+    user.bio ||
+    "No organization description available.";
+
+  renderSocialLinks(user);
+  setStatusBadge(status);
+
+  if (status === "verified") {
+    els.approveBtn.disabled = true;
   }
 
   if (status === "rejected") {
-    els.statusBadge.classList.add("rejected");
-    els.statusBadge.textContent = "Rejected";
-    return;
-  }
-
-  els.statusBadge.classList.add("awaiting");
-  els.statusBadge.textContent = "Awaiting Verification";
-}
-
-function renderOrganizer(user) {
-  const displayName = user.fullName || user.name || user.organizationName || "Unnamed Organizer";
-  const currentStatus = detectStatus(user);
-
-  els.orgTitle.textContent = displayName;
-  els.orgName.textContent = displayName;
-  els.email.textContent = user.email || "—";
-  els.phoneNumber.textContent = user.phoneNumber || user.phone || user.mobile || "—";
-  els.location.textContent = getLocationText(user);
-  els.description.textContent = user.description || user.bio || "No description available.";
-
-  renderSocialLinks(user);
-  setBadge(currentStatus);
-
-  if (currentStatus === "approved" || currentStatus === "rejected") {
-    els.approveBtn.disabled = true;
     els.rejectBtn.disabled = true;
   }
 }
 
-function setLoadingState(isLoading) {
-  els.approveBtn.disabled = isLoading;
-  els.rejectBtn.disabled = isLoading;
-
-  els.approveBtn.textContent = isLoading ? "Processing..." : "Approve";
-  els.rejectBtn.textContent = isLoading ? "Processing..." : "Reject";
-}
-
-async function loadOrganizer() {
-  organizerId = getOrganizerIdFromURL();
-
+async function loadOrganizerDetails() {
   if (!organizerId) {
-    els.feedback.textContent = "Organizer ID not found in URL.";
-    els.feedback.classList.add("error");
+    setFeedback("No organizer ID provided.", "error");
+    els.rejectBtn.disabled = true;
+    els.approveBtn.disabled = true;
     return;
   }
 
   try {
-    let usersPayload;
+    let payload;
 
     try {
-      usersPayload = await apiRequest("/user");
+      payload = await apiRequest("/user");
     } catch {
-      usersPayload = await apiRequest("/users");
+      payload = await apiRequest("/users");
     }
 
-    const users = normalizeUsers(usersPayload);
+    const users = normalizeUsers(payload);
+
     const organizer = users.find(
-      user => String(user._id || user.id) === String(organizerId)
+      (user) => String(user._id || user.id) === String(organizerId)
     );
 
     if (!organizer) {
-      throw new Error("Organizer not found.");
+      throw new Error("Organizer not found");
     }
 
-    renderOrganizer(organizer);
+    populateOrganizer(organizer);
   } catch (error) {
-    els.feedback.textContent = error.message;
-    els.feedback.classList.add("error");
+    els.orgTitle.textContent = "Unable to load organizer";
+    els.description.textContent = "Failed to fetch organizer details.";
+    setFeedback(error.message || "Failed to load organizer details.", "error");
+    els.rejectBtn.disabled = true;
+    els.approveBtn.disabled = true;
   }
 }
 
 async function approveOrganizer() {
+  if (!organizerId) return;
+
   try {
-    setLoadingState(true);
-    els.feedback.textContent = "";
+    els.approveBtn.disabled = true;
+    els.rejectBtn.disabled = true;
 
     await apiRequest(`/admin/organizers/${organizerId}/approve`, {
       method: "PATCH"
     });
 
-    setBadge("approved");
-    els.feedback.textContent = "Organizer approved successfully.";
-    els.feedback.classList.remove("error");
-    els.feedback.classList.add("success");
+    setStatusBadge("verified");
+    setFeedback("Organizer approved successfully.", "success");
 
     setTimeout(() => {
       window.location.href = "verification-queue.html";
-    }, 1000);
+    }, 900);
   } catch (error) {
-    els.feedback.textContent = error.message;
-    els.feedback.classList.remove("success");
-    els.feedback.classList.add("error");
-  } finally {
-    setLoadingState(false);
+    els.approveBtn.disabled = false;
+    els.rejectBtn.disabled = false;
+    setFeedback(error.message || "Failed to approve organizer.", "error");
   }
 }
 
 async function rejectOrganizer() {
+  if (!organizerId) return;
+
   try {
-    setLoadingState(true);
-    els.feedback.textContent = "";
+    els.approveBtn.disabled = true;
+    els.rejectBtn.disabled = true;
 
     await apiRequest(`/admin/organizers/${organizerId}/reject`, {
       method: "PATCH"
     });
 
-    setBadge("rejected");
-    els.feedback.textContent = "Organizer rejected successfully.";
-    els.feedback.classList.remove("error");
-    els.feedback.classList.add("success");
+    setStatusBadge("rejected");
+    setFeedback("Organizer rejected successfully.", "success");
 
     setTimeout(() => {
       window.location.href = "verification-queue.html";
-    }, 1000);
+    }, 900);
   } catch (error) {
-    els.feedback.textContent = error.message;
-    els.feedback.classList.remove("success");
-    els.feedback.classList.add("error");
-  } finally {
-    setLoadingState(false);
+    els.approveBtn.disabled = false;
+    els.rejectBtn.disabled = false;
+    setFeedback(error.message || "Failed to reject organizer.", "error");
   }
 }
 
 els.approveBtn.addEventListener("click", approveOrganizer);
 els.rejectBtn.addEventListener("click", rejectOrganizer);
 
-document.addEventListener("DOMContentLoaded", loadOrganizer);
+document.addEventListener("DOMContentLoaded", loadOrganizerDetails);

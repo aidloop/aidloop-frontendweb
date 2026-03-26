@@ -1,25 +1,20 @@
 const API_BASE_URL = "https://aidloop-backend.onrender.com/api";
 
-const elements = {
-  overlay: document.getElementById("overlay"),
+const els = {
   closeBtn: document.getElementById("closeBtn"),
   orgTitle: document.getElementById("orgTitle"),
-  orgName: document.getElementById("orgName"),
   severityBadge: document.getElementById("severityBadge"),
+  orgName: document.getElementById("orgName"),
   flagReason: document.getElementById("flagReason"),
   lastEventCancelled: document.getElementById("lastEventCancelled"),
   description: document.getElementById("description"),
-  contactBtn: document.getElementById("contactBtn"),
-  feedback: document.getElementById("feedback")
+  feedback: document.getElementById("feedback"),
+  contactBtn: document.getElementById("contactBtn")
 };
 
-let organizerId = null;
-let currentFlagRecord = null;
-
-function getOrganizerIdFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("id");
-}
+const organizerId = new URLSearchParams(window.location.search).get("id");
+let currentOrganizer = null;
+let currentCancelledEvent = null;
 
 async function apiRequest(endpoint, options = {}) {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -47,13 +42,6 @@ async function apiRequest(endpoint, options = {}) {
   return data;
 }
 
-function normalizeEvents(payload) {
-  if (Array.isArray(payload)) return payload;
-  if (Array.isArray(payload?.events)) return payload.events;
-  if (Array.isArray(payload?.data)) return payload.data;
-  return [];
-}
-
 function normalizeUsers(payload) {
   if (Array.isArray(payload)) return payload;
   if (Array.isArray(payload?.users)) return payload.users;
@@ -61,23 +49,26 @@ function normalizeUsers(payload) {
   return [];
 }
 
-function getOrganizerId(event) {
-  if (typeof event.organizer === "object" && event.organizer) {
-    return event.organizer._id || event.organizer.id || "";
-  }
-  return event.organizerId || "";
+function normalizeEvents(payload) {
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload?.events)) return payload.events;
+  if (Array.isArray(payload?.data)) return payload.data;
+  return [];
 }
 
-function getOrganizerName(event) {
-  if (typeof event.organizer === "object" && event.organizer) {
-    return (
-      event.organizer.fullName ||
-      event.organizer.name ||
-      event.organizer.organizationName ||
-      "Organizer"
-    );
-  }
-  return event.organizerName || "Organizer";
+function formatDate(dateValue) {
+  if (!dateValue) return "—";
+  const date = new Date(dateValue);
+  if (Number.isNaN(date.getTime())) return dateValue;
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
+}
+
+function getOrganizerName(user) {
+  return user.fullName || user.name || user.organizationName || "Organization";
 }
 
 function getSeverity(count) {
@@ -86,133 +77,140 @@ function getSeverity(count) {
   return "high";
 }
 
-function getSeverityText(severity) {
+function getSeverityLabel(count) {
+  const severity = getSeverity(count);
   return severity.charAt(0).toUpperCase() + severity.slice(1);
 }
 
-function buildFlagData(events, users) {
-  const usersMap = new Map(
-    users
-      .filter((user) => String(user.role || "").toLowerCase() === "organizer")
-      .map((user) => [String(user._id || user.id), user])
-  );
-
-  const cancelledEvents = events.filter((event) => {
-    const status = String(event.status || "").toLowerCase();
-    return status === "cancelled" || status === "canceled";
-  });
-
-  const grouped = new Map();
-
-  cancelledEvents.forEach((event) => {
-    const orgId = String(getOrganizerId(event));
-    const organizerName = getOrganizerName(event);
-
-    if (!grouped.has(orgId)) {
-      grouped.set(orgId, {
-        organizerId: orgId,
-        organizerName,
-        organizer: usersMap.get(orgId) || null,
-        cancellations: 0,
-        lastEventDate: null,
-        lastEventName: "",
-        reason: "Frequent Event Cancellation"
-      });
-    }
-
-    const record = grouped.get(orgId);
-    record.cancellations += 1;
-
-    const eventDate = event.date || event.updatedAt || event.createdAt || null;
-    if (!record.lastEventDate || new Date(eventDate) > new Date(record.lastEventDate)) {
-      record.lastEventDate = eventDate;
-      record.lastEventName = event.name || event.title || "Untitled Event";
-    }
-
-    if (event.cancelReason || event.reason) {
-      record.reason = event.cancelReason || event.reason;
-    }
-  });
-
-  return Array.from(grouped.values()).map((record) => ({
-    ...record,
-    severity: getSeverity(record.cancellations)
-  }));
+function setSeverity(count) {
+  const severity = getSeverity(count);
+  els.severityBadge.textContent = getSeverityLabel(count);
+  els.severityBadge.className = "severity-badge";
+  els.severityBadge.classList.add(severity);
 }
 
-function renderFlagRecord(record) {
-  currentFlagRecord = record;
+function setFeedback(message, type = "") {
+  els.feedback.textContent = message;
+  els.feedback.className = "feedback";
+  if (type) {
+    els.feedback.classList.add(type);
+  }
+}
 
-  elements.orgTitle.innerHTML = record.organizerName;
-  elements.orgName.innerHTML = record.organizerName;
-  elements.flagReason.textContent = record.reason || "Frequent Event Cancellation";
-  elements.lastEventCancelled.textContent = record.lastEventName || "—";
-  elements.description.textContent =
-    record.organizer?.description ||
-    record.organizer?.bio ||
+function populateDetails(organizer, cancelledEvents) {
+  const latestCancelled = [...cancelledEvents].sort(
+    (a, b) =>
+      new Date(b.date || b.updatedAt || b.createdAt || 0) -
+      new Date(a.date || a.updatedAt || a.createdAt || 0)
+  )[0];
+
+  currentOrganizer = organizer;
+  currentCancelledEvent = latestCancelled || null;
+
+  const cancellationsCount = cancelledEvents.length;
+  const reason =
+    latestCancelled?.cancelReason ||
+    latestCancelled?.reason ||
+    "Frequent cancellations";
+
+  els.orgTitle.textContent = getOrganizerName(organizer);
+  els.orgName.textContent = getOrganizerName(organizer);
+  els.flagReason.textContent = reason;
+
+  els.lastEventCancelled.textContent = latestCancelled
+    ? `${latestCancelled.name || latestCancelled.title || "Untitled Event"} • ${formatDate(
+        latestCancelled.date || latestCancelled.updatedAt || latestCancelled.createdAt
+      )}`
+    : "—";
+
+  els.description.textContent =
+    organizer.description ||
+    organizer.bio ||
     "No organizer description available.";
 
-  elements.severityBadge.className = `severity-badge ${record.severity}`;
-  elements.severityBadge.textContent = getSeverityText(record.severity);
-
-  const email = record.organizer?.email || "";
-  elements.contactBtn.onclick = () => {
-    if (!email) {
-      elements.feedback.textContent = "Organizer email not available.";
-      elements.feedback.className = "feedback error";
-      return;
-    }
-    window.location.href = `mailto:${email}`;
-  };
+  setSeverity(cancellationsCount);
 }
 
 async function loadFlagDetails() {
-  organizerId = getOrganizerIdFromURL();
-
   if (!organizerId) {
-    elements.orgTitle.textContent = "Flag not found";
-    elements.description.textContent = "No organizer ID was provided in the URL.";
+    setFeedback("No organizer ID provided.", "error");
+    els.contactBtn.disabled = true;
     return;
   }
 
   try {
-    const [eventsPayload, usersPayload] = await Promise.all([
-      apiRequest("/events"),
-      apiRequest("/user").catch(() => apiRequest("/users"))
+    const [usersPayload, eventsPayload] = await Promise.all([
+      apiRequest("/user").catch(() => apiRequest("/users")),
+      apiRequest("/events")
     ]);
 
-    const events = normalizeEvents(eventsPayload);
     const users = normalizeUsers(usersPayload);
-    const flagRecords = buildFlagData(events, users);
+    const events = normalizeEvents(eventsPayload);
 
-    const record = flagRecords.find(
-      (item) => String(item.organizerId) === String(organizerId)
+    const organizer = users.find(
+      (user) => String(user._id || user.id) === String(organizerId)
     );
 
-    if (!record) {
-      throw new Error("Flag details not found.");
+    if (!organizer) {
+      throw new Error("Organizer not found");
     }
 
-    renderFlagRecord(record);
+    const cancelledEvents = events.filter((event) => {
+      const eventOrganizerId = String(
+        event.organizer?._id ||
+        event.organizer?.id ||
+        event.organizerId ||
+        ""
+      );
+      const status = String(event.status || "").toLowerCase();
+      return (
+        eventOrganizerId === String(organizerId) &&
+        status.includes("cancel")
+      );
+    });
+
+    if (!cancelledEvents.length) {
+      throw new Error("No flagged cancelled events found for this organizer");
+    }
+
+    populateDetails(organizer, cancelledEvents);
   } catch (error) {
-    elements.orgTitle.textContent = "Error";
-    elements.description.textContent = error.message;
-    elements.severityBadge.className = "severity-badge high";
-    elements.severityBadge.textContent = "Unavailable";
+    els.orgTitle.textContent = "Unable to load flag details";
+    els.description.textContent = "Failed to fetch organizer flag details.";
+    setFeedback(error.message || "Failed to load flag details.", "error");
+    els.contactBtn.disabled = true;
   }
+}
+
+function contactOrganizer() {
+  if (!currentOrganizer) return;
+
+  const organizerName = getOrganizerName(currentOrganizer);
+  const organizerEmail = currentOrganizer.email || "";
+  const subject = encodeURIComponent(`AidLoop Flag Review - ${organizerName}`);
+  const body = encodeURIComponent(
+    `Hello ${organizerName},\n\nWe are contacting you regarding flagged activity connected to your recent event record on AidLoop.\n\nPlease reply with clarification on the cancelled event and any relevant updates.\n\nThank you.`
+  );
+
+  if (!organizerEmail) {
+    setFeedback("No organizer email available.", "error");
+    return;
+  }
+
+  window.location.href = `mailto:${organizerEmail}?subject=${subject}&body=${body}`;
+  setFeedback("Opening your email client...", "success");
 }
 
 function closeModal() {
-  window.location.href = "Flags.html";
+  if (window.history.length > 1) {
+    window.history.back();
+    return;
+  }
+
+  window.location.href = "flags.html";
 }
 
-elements.closeBtn.addEventListener("click", closeModal);
-
-elements.overlay.addEventListener("click", (event) => {
-  if (event.target === elements.overlay) {
-    closeModal();
-  }
-});
+els.closeBtn.addEventListener("click", closeModal);
+els.contactBtn.addEventListener("click", contactOrganizer);
 
 document.addEventListener("DOMContentLoaded", loadFlagDetails);
-

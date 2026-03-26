@@ -4,49 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Details</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="user-details.css" />
 </head>
 <body>
   <main class="page">
     <section class="details-card">
       <div class="header-row">
-        <h1>Bacaris Climate Project</h1>
-        <span class="role-badge">Organizer</span>
+        <h1 id="userTitle">Loading...</h1>
+        <span class="role-badge" id="roleBadge">User</span>
       </div>
 
       <div class="info-grid">
-        <div class="label">Org. Name:</div>
-        <div class="value">Bacaris Climate Project</div>
+        <div class="label">Name:</div>
+        <div class="value" id="userName">Loading...</div>
 
         <div class="label">Email:</div>
-        <div class="value">bacaris@bacaris.org</div>
+        <div class="value" id="email">—</div>
 
         <div class="label">Phone No:</div>
-        <div class="value">08123456789</div>
+        <div class="value" id="phoneNumber">—</div>
 
         <div class="label">Location:</div>
-        <div class="value">Lagos</div>
+        <div class="value" id="location">—</div>
 
         <div class="label">Date Joined:</div>
-        <div class="value">Jan 10, 2026</div>
+        <div class="value" id="dateJoined">—</div>
 
         <div class="label">Status</div>
         <div class="value">
-          <span class="status-badge" id="statusBadge">Active</span>
+          <span class="status-badge" id="statusBadge">Loading...</span>
         </div>
       </div>
 
       <div class="description-section">
         <h2>Description</h2>
-        <div class="description-box">
-          Bacaris Climate Project is focused on coastal cleanups and environmental awareness in Lagos.
-          They organize monthly volunteer events and partner with local communities to improve sustainability
+        <div class="description-box" id="description">
+          Loading description...
         </div>
       </div>
 
+      <p id="feedback" class="feedback"></p>
+
       <div class="action-row">
-        <button class="action-btn deactivate-btn" id="deactivateBtn">Deactivate</button>
-        <button class="action-btn reactivate-btn" id="reactivateBtn">Reactivate</button>
+        <button class="action-btn deactivate-btn" id="deactivateBtn" type="button">Deactivate</button>
+        <button class="action-btn reactivate-btn" id="reactivateBtn" type="button">Reactivate</button>
       </div>
     </section>
   </main>

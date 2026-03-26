@@ -1,16 +1,22 @@
 const API_BASE_URL = "https://aidloop-backend.onrender.com/api";
 
-const elements = {
-  searchInput: document.getElementById("searchInput"),
-  certificatesTable: document.getElementById("certificatesTable"),
-  emptyState: document.getElementById("emptyState"),
+const els = {
   adminName: document.getElementById("adminName"),
   adminRole: document.getElementById("adminRole"),
   adminAvatar: document.getElementById("adminAvatar"),
-  filterButtons: document.querySelectorAll(".filter-btn")
+  certificatesTable: document.getElementById("certificatesTable"),
+  certificatesTableWrap: document.getElementById("certificatesTableWrap"),
+  emptyState: document.getElementById("emptyState"),
+  searchInput: document.getElementById("searchInput"),
+  filterButtons: document.querySelectorAll(".filter-btn"),
+  logoutBtn: document.getElementById("logoutBtn"),
+  logoutModal: document.getElementById("logoutModal"),
+  closeLogoutModal: document.getElementById("closeLogoutModal"),
+  cancelLogout: document.getElementById("cancelLogout"),
+  confirmLogout: document.getElementById("confirmLogout")
 };
 
-let allCertificates = [];
+let certificateRowsCache = [];
 let currentFilter = "all";
 
 async function apiRequest(endpoint, options = {}) {
@@ -26,14 +32,13 @@ async function apiRequest(endpoint, options = {}) {
   const contentType = response.headers.get("content-type") || "";
   const data = contentType.includes("application/json")
     ? await response.json()
-    : await response.text();
+    : await response.blob();
 
   if (!response.ok) {
-    throw new Error(
-      (data && data.message) ||
-      (data && data.error) ||
-      "Request failed"
-    );
+    if (contentType.includes("application/json")) {
+      throw new Error(data.message || data.error || "Request failed");
+    }
+    throw new Error("Request failed");
   }
 
   return data;
@@ -50,7 +55,6 @@ function formatDate(dateValue) {
   if (!dateValue) return "—";
   const date = new Date(dateValue);
   if (Number.isNaN(date.getTime())) return dateValue;
-
   return date.toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",
@@ -58,141 +62,168 @@ function formatDate(dateValue) {
   });
 }
 
+function getStatusValue(item) {
+  const raw = String(item.status || "").toLowerCase();
+  if (raw === "issued") return "issued";
+  return "issued";
+}
+
 function getVolunteerName(item) {
   return (
-    item.volunteerName ||
     item.user?.fullName ||
     item.user?.name ||
     item.volunteer?.fullName ||
     item.volunteer?.name ||
-    "—"
+    item.volunteerName ||
+    "Volunteer"
   );
 }
 
 function getEventName(item) {
-  return (
-    item.eventName ||
-    item.event?.name ||
-    item.event?.title ||
-    "—"
-  );
+  return item.event?.name || item.eventName || "Event";
 }
 
 function getOrganizerName(item) {
   return (
-    item.organizerName ||
     item.organizer?.fullName ||
     item.organizer?.name ||
-    item.organizer?.organizationName ||
     item.event?.organizer?.fullName ||
     item.event?.organizer?.name ||
-    item.event?.organizer?.organizationName ||
-    "—"
+    item.organizerName ||
+    "Organizer"
   );
 }
 
-function getCertificateStatus(item) {
-  return String(item.status || "issued").toLowerCase();
+function getCertificateId(item) {
+  return item._id || item.id || item.certificateId || "";
 }
 
-function getCertificateId(item) {
-  return item.certificateId || item._id || item.id || "";
+function openLogoutModal() {
+  els.logoutModal.classList.remove("hidden");
+}
+
+function closeLogoutModal() {
+  els.logoutModal.classList.add("hidden");
+  els.confirmLogout.disabled = false;
+  els.confirmLogout.textContent = "Yes, Log out";
+}
+
+async function handleLogout() {
+  try {
+    els.confirmLogout.disabled = true;
+    els.confirmLogout.textContent = "Logging out...";
+
+    await apiRequest("/auth/logout", {
+      method: "POST"
+    });
+  } catch (error) {
+    console.warn("Logout failed:", error.message);
+  } finally {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = "../../index.html";
+  }
+}
+
+function renderCertificates() {
+  const query = els.searchInput.value.trim().toLowerCase();
+
+  let filtered = [...certificateRowsCache];
+
+  if (currentFilter !== "all") {
+    filtered = filtered.filter((item) => {
+      const status = getStatusValue(item);
+      return currentFilter === "issued"
+        ? status === "issued"
+        : status !== "issued";
+    });
+  }
+
+  if (query) {
+    filtered = filtered.filter((item) => {
+      const searchableText = `
+        ${getVolunteerName(item)}
+        ${getEventName(item)}
+        ${getOrganizerName(item)}
+        ${formatDate(item.issuedAt || item.createdAt || item.date)}
+      `.toLowerCase();
+
+      return searchableText.includes(query);
+    });
+  }
+
+  if (!filtered.length) {
+    els.certificatesTableWrap.style.display = "none";
+    els.emptyState.style.display = "block";
+    return;
+  }
+
+  els.certificatesTableWrap.style.display = "table";
+  els.emptyState.style.display = "none";
+
+  els.certificatesTable.innerHTML = filtered.map((item) => {
+    const certificateId = getCertificateId(item);
+
+    return `
+      <tr>
+        <td>${getVolunteerName(item)}</td>
+        <td>${getEventName(item)}</td>
+        <td>${getOrganizerName(item)}</td>
+        <td>${formatDate(item.issuedAt || item.createdAt || item.date)}</td>
+        <td>
+          <a class="action-link" href="certificate-preview.html?id=${encodeURIComponent(certificateId)}">
+            View Certificate
+          </a>
+        </td>
+      </tr>
+    `;
+  }).join("");
 }
 
 async function loadAdminProfile() {
   try {
     let profile;
-
     try {
       profile = await apiRequest("/users/me");
     } catch {
       profile = await apiRequest("/user/me");
     }
 
-    elements.adminName.textContent = profile.fullName || profile.name || "Admin";
-    elements.adminRole.textContent = profile.role
-      ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
-      : "Admin";
+    els.adminName.textContent =
+      profile.fullName ||
+      profile.name ||
+      "Admin User";
+
+    els.adminRole.textContent =
+      profile.role
+        ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
+        : "Admin";
 
     if (profile.profileImage) {
-      elements.adminAvatar.src = profile.profileImage;
+      els.adminAvatar.src = profile.profileImage;
     }
   } catch (error) {
     console.error("Failed to load admin profile:", error.message);
-    window.location.href = "../login/admin-login.html";
+    window.location.href = "../profile/admin-profile.html";
   }
 }
 
 async function loadCertificates() {
   try {
     const payload = await apiRequest("/certificates/my-certificates");
-    allCertificates = normalizeCertificates(payload);
+    certificateRowsCache = normalizeCertificates(payload);
     renderCertificates();
   } catch (error) {
     console.error("Failed to load certificates:", error.message);
-    elements.certificatesTable.innerHTML = `
-      <tr>
-        <td colspan="5">Failed to load certificates.</td>
-      </tr>
-    `;
+    certificateRowsCache = [];
+    renderCertificates();
   }
-}
-
-function renderCertificates() {
-  const query = elements.searchInput.value.trim().toLowerCase();
-
-  const filtered = allCertificates.filter((item) => {
-    const status = getCertificateStatus(item);
-
-    const matchesFilter =
-      currentFilter === "all"
-        ? true
-        : status === currentFilter;
-
-    const searchable = `
-      ${getVolunteerName(item)}
-      ${getEventName(item)}
-      ${getOrganizerName(item)}
-      ${status}
-    `.toLowerCase();
-
-    return matchesFilter && searchable.includes(query);
-  });
-
-  if (!filtered.length) {
-    elements.certificatesTable.innerHTML = "";
-    elements.emptyState.style.display = "flex";
-    return;
-  }
-
-  elements.emptyState.style.display = "none";
-
-  elements.certificatesTable.innerHTML = filtered
-    .map((item) => {
-      const certificateId = getCertificateId(item);
-      const status = getCertificateStatus(item);
-
-      return `
-        <tr data-status="${status}">
-          <td>${getVolunteerName(item)}</td>
-          <td>${getEventName(item)}</td>
-          <td>${getOrganizerName(item)}</td>
-          <td>${formatDate(item.dateIssued || item.issuedAt || item.createdAt)}</td>
-          <td class="action-links">
-            <a href="certificate-preview.html?id=${encodeURIComponent(certificateId)}">
-              View Certificate
-            </a>
-          </td>
-        </tr>
-      `;
-    })
-    .join("");
 }
 
 function bindFilters() {
-  elements.filterButtons.forEach((button) => {
+  els.filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      elements.filterButtons.forEach((btn) => btn.classList.remove("active"));
+      els.filterButtons.forEach((btn) => btn.classList.remove("active"));
       button.classList.add("active");
       currentFilter = button.dataset.filter;
       renderCertificates();
@@ -200,13 +231,31 @@ function bindFilters() {
   });
 }
 
-function bindSearch() {
-  elements.searchInput.addEventListener("input", renderCertificates);
+function bindUI() {
+  els.searchInput.addEventListener("input", renderCertificates);
+
+  bindFilters();
+
+  els.logoutBtn.addEventListener("click", openLogoutModal);
+  els.closeLogoutModal.addEventListener("click", closeLogoutModal);
+  els.cancelLogout.addEventListener("click", closeLogoutModal);
+  els.confirmLogout.addEventListener("click", handleLogout);
+
+  els.logoutModal.addEventListener("click", (event) => {
+    if (event.target === els.logoutModal) {
+      closeLogoutModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !els.logoutModal.classList.contains("hidden")) {
+      closeLogoutModal();
+    }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  bindFilters();
-  bindSearch();
+  bindUI();
   await loadAdminProfile();
   await loadCertificates();
 });

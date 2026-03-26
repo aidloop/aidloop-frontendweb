@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AIDLoop - Flags</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="flags.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
+  
 </head>
 <body>
   <div class="dashboard">
-     <!-- Sidebar  -->
     <aside class="sidebar">
       <div class="sidebar-logo">
-        <img src="/assets/Images/Logo.png" alt="AIDLoop Logo" />
+        <img src="../../assets/Images/Logo.png" alt="AIDLoop Logo" />
       </div>
 
       <ul class="sidebar-menu">
@@ -43,10 +43,15 @@
         <li>
           <a href="../profile/admin-profile.html"><i class="fa-regular fa-circle-user"></i><span>Profile</span></a>
         </li>
+        <li>
+          <button id="logoutBtn" class="logout-btn" type="button">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Log out</span>
+          </button>
+        </li>
       </ul>
     </aside>
 
-     <!-- Main Content  -->
     <main class="main-content">
       <header class="topbar">
         <div class="search-box">
@@ -65,8 +70,7 @@
               class="user-avatar"
               id="adminAvatar"
               src="https://i.pravatar.cc/100?img=12"
-              alt="Admin Avatar"
-            />
+              alt="Admin Avatar"/>
             <div class="admin-text">
               <h4 id="adminName">Loading...</h4>
               <p id="adminRole">Admin</p>
@@ -93,7 +97,7 @@
         </div>
 
         <div class="table-wrapper">
-          <table>
+          <table id="flagsTableWrap">
             <thead>
               <tr>
                 <th>ORGANIZATION NAME</th>
@@ -122,6 +126,26 @@
         </div>
       </section>
     </main>
+  </div>
+
+  <div class="modal-overlay hidden" id="logoutModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="closeLogoutModal" type="button" aria-label="Close">
+        &times;
+      </button>
+
+      <div class="modal-icon-wrap">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </div>
+
+      <h3>Log out?</h3>
+      <p>You are about to end your current admin session.</p>
+
+      <div class="modal-actions">
+        <button id="cancelLogout" class="modal-btn secondary" type="button">Cancel</button>
+        <button id="confirmLogout" class="modal-btn danger" type="button">Yes, Log out</button>
+      </div>
+    </div>
   </div>
 
   <script src="flags.js"></script>

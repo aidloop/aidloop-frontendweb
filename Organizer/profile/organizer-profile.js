@@ -1,5 +1,5 @@
 import { apiRequest, normalizeArray } from "../../assets/js/api.js";
-import { requireRole } from "..././assets/js/auth.js";
+import { requireRole } from ".../../assets/js/auth.js";
 import { logout } from "../../assets/js/logout.js";
 import { ROUTES } from "../../assets/js/config.js";
 
