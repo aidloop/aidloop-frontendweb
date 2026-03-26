@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIDLoop Organization Profile</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../../assets/css/shared.css" />
+  <link rel="stylesheet" href="organizer-profile.css" />
+</head>
+<body>
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="../../assets/Images/Logo.png" alt="AIDLoop Logo" />
+      </div>
+
+      <ul class="sidebar-menu">
+        <li>
+          <a href="../dashboard/organizer-dashboard.html">
+            <i class="fa-regular fa-house"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="../events/create-event.html">
+            <i class="fa-regular fa-square-plus"></i>
+            <span>Create Events</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="../events/event-listing.html">
+            <i class="fa-regular fa-calendar"></i>
+            <span>Events</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="../volunteers/volunteers.html">
+            <i class="fa-solid fa-users"></i>
+            <span>Volunteers</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="../certificates/organizer-certificates.html">
+            <i class="fa-regular fa-id-card"></i>
+            <span>Certificates</span>
+          </a>
+        </li>
+
+        <li class="active">
+          <a href="organizer-profile.html">
+            <i class="fa-regular fa-address-card"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+
+        <li>
+          <button type="button" id="logoutBtn" class="sidebar-logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Log out</span>
+          </button>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title">Organization Profile</h1>
+          <p class="page-subtitle">Manage your organization information.</p>
+        </div>
+
+        <div class="topbar-right">
+          <button type="button" id="editProfileBtn" class="edit-profile-btn">Edit Profile</button>
+
+          <button class="icon-btn" type="button">
+            <i class="fa-regular fa-bell"></i>
+          </button>
+
+          <button class="icon-btn" type="button">
+            <i class="fa-regular fa-circle-user"></i>
+          </button>
+        </div>
+      </header>
+
+      <section class="page-content">
+        <section class="profile-card">
+          <div class="profile-main">
+            <div class="profile-avatar" id="profileAvatarBox">AL</div>
+
+            <div class="profile-info">
+              <h2 id="orgName">Loading...</h2>
+              <p class="org-type-line">
+                <span id="orgType">Organization</span>
+                <span class="dot">•</span>
+                <span id="orgCategory">Volunteer Management</span>
+              </p>
+
+              <div class="verified-badge">
+                <span class="verified-dot"></span>
+                <span id="verificationText">Verified Org</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-grid">
+            <div class="info-chip">
+              <i class="fa-regular fa-envelope"></i>
+              <input type="email" id="email" readonly />
+            </div>
+
+            <div class="info-chip">
+              <i class="fa-solid fa-phone"></i>
+              <input type="text" id="phoneNumber" readonly />
+            </div>
+
+            <div class="info-chip">
+              <i class="fa-solid fa-globe"></i>
+              <input type="text" id="website" readonly />
+            </div>
+
+            <div class="info-chip">
+              <i class="fa-solid fa-location-dot"></i>
+              <input type="text" id="location" readonly />
+            </div>
+          </div>
+        </section>
+
+        <section class="about-card">
+          <h3>About Organization</h3>
+          <div class="about-box">
+            <textarea id="description" readonly></textarea>
+          </div>
+        </section>
+
+        <section class="stats-row">
+          <div class="mini-stat-card">
+            <div class="mini-stat-icon blue">
+              <i class="fa-regular fa-calendar"></i>
+            </div>
+            <div class="mini-stat-text">
+              <p class="mini-stat-label">TOTAL EVENTS CREATED</p>
+              <h4 id="totalEvents">0</h4>
+              <span class="mini-badge blue" id="eventsMonthText">This month</span>
+            </div>
+          </div>
+
+          <div class="mini-stat-card">
+            <div class="mini-stat-icon green">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <div class="mini-stat-text">
+              <p class="mini-stat-label">TOTAL VOLUNTEERS</p>
+              <h4 id="totalVolunteers">0</h4>
+              <span class="mini-badge green" id="volunteersMonthText">This month</span>
+            </div>
+          </div>
+
+          <div class="mini-stat-card">
+            <div class="mini-stat-icon gold">
+              <i class="fa-solid fa-trophy"></i>
+            </div>
+            <div class="mini-stat-text">
+              <p class="mini-stat-label">CERTIFICATES ISSUED</p>
+              <h4 id="certificatesIssued">0</h4>
+              <span class="mini-badge gold" id="certificatesMonthText">This month</span>
+            </div>
+          </div>
+        </section>
+
+        <p id="profileMessage" class="profile-message"></p>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="organizer-profile.js"></script>
+</body>
+</html>

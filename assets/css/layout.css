@@ -1,0 +1,92 @@
+.dashboard-layout { 
+    display: flex; 
+    min-height: 100vh; 
+}
+
+.sidebar { 
+    width: 15rem; 
+    background: #1f3b63; 
+    color: #fff; 
+    padding: 1.5rem 1rem; 
+    flex-shrink: 0; 
+}
+
+.sidebar-logo { 
+    text-align: center; 
+    margin-bottom: 2rem; 
+}
+
+.sidebar-logo img { 
+    width: 5.5rem; 
+}
+
+.sidebar-menu { 
+    list-style: none; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.55rem; 
+}
+
+.sidebar-menu li a, .sidebar-logout {
+  width: 100%; 
+  display: flex; 
+  align-items: center; 
+  gap: 0.85rem; 
+  color: #fff;
+  padding: 0.95rem 1rem; 
+  border-radius: 0.65rem; 
+  background: transparent; 
+  border: none; 
+  cursor: pointer;
+}
+
+.sidebar-menu li.active a, .sidebar-menu li a:hover { 
+    background: #1f80ea; 
+}
+
+.sidebar-logout:hover {
+    background: #dc2626;
+}
+
+.main-content { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.topbar { 
+    background: #fff; 
+    padding: 2rem 2.2rem 1.2rem; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+}
+
+.page-content { 
+    padding: 2.2rem; 
+}
+
+.page-title { 
+    font-size: 2rem; 
+    font-weight: 700; 
+    color: #223f6b; 
+}
+
+.page-subtitle { 
+    margin-top: 0.3rem; 
+    font-size: 0.9rem; 
+    color: #6b7280; 
+}
+
+@media (max-width: 64rem) {
+  .dashboard-layout { 
+    flex-direction: column; 
+}
+  .sidebar { 
+    width: 100%; 
+}
+  .topbar { 
+    flex-direction: column; 
+    gap: 1rem; 
+}
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Event</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../../assets/css/shared.css" />
+  <link rel="stylesheet" href="../../assets/css/layout.css"/>
+  <link rel="stylesheet" href="create-event.css" />
+
+</head>
+
+<body>
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+   <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="../../assets/Images/Logo.png" alt="AIDLoop Logo" />
+      </div>
+
+      <ul class="sidebar-menu">
+        <li>
+          <a href="../dashboard/organizer-dashboard.html">
+            <i class="fa-regular fa-house"></i><span>Dashboard</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="create-event.html">
+            <i class="fa-regular fa-square-plus"></i><span>Create Events</span>
+          </a>
+        </li>
+        <li>
+          <a href="event-listing.html">
+            <i class="fa-regular fa-calendar"></i><span>Events</span>
+          </a>
+        </li>
+        <li>
+          <a href="../volunteers/volunteers.html">
+            <i class="fa-solid fa-users"></i><span>Volunteers</span>
+          </a>
+        </li>
+        <li>
+          <a href="../certificates/organizer-certificates.html">
+            <i class="fa-regular fa-id-card"></i><span>Certificates</span>
+          </a>
+        </li>
+        <li>
+          <a href="../profile/organizer-profile.html">
+            <i class="fa-regular fa-address-card"></i><span>Profile</span>
+          </a>
+        </li>
+        <li>
+          <button type="button" id="logoutBtn" class="sidebar-logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Log out</span>
+          </button>
+        </li>
+      </ul>
+    </aside>
+
+
+   <!-- MAIN  -->
+  <main class="main-content">
+
+    <header class="topbar">
+        <div>
+          <h1 class="page-title">Create Event</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="create-event.html" class="create-event-btn">Create Event</a>
+          <button class="icon-btn" type="button"><i class="fa-regular fa-bell"></i></button>
+          <div class="profile-mini">
+            <img id="organizerAvatar" src="https://i.pravatar.cc/100?img=12" alt="Organizer Avatar" />
+          </div>
+        </div>
+      </header>
+    <section class="form-section"> 
+
+      <!-- IMAGE -->
+       <div class="image-upload" id="imageBox">
+        <input type="file" id="imageInput" hidden />
+        <i class="fa-solid fa-camera"></i>
+        <p>Upload Event Image</p>
+      </div> 
+
+      <!-- FORM -->
+       <form id="eventForm">
+
+        <label>Event Name</label>
+        <input type="text" id="name" required />
+
+        <label>Category</label>
+        <input type="text" id="category" placeholder="Community Service" />
+
+        <label>Volunteer Roles</label>
+        <div class="tags-input">
+          <input type="text" id="roleInput" placeholder="Enter role" />
+          <button type="button" id="addRole">+</button>
+        </div>
+        <div id="rolesList"></div>
+
+        <label>Description</label>
+        <textarea id="description"></textarea>
+
+        <label>Requirements</label>
+        <textarea id="requirements"></textarea>
+
+        <div class="grid-2">
+          <div>
+            <label>Date</label>
+            <input type="date" id="date" />
+          </div>
+
+          <div>
+            <label>Start Time</label>
+            <input type="time" id="startTime" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <label>End Time</label>
+            <input type="time" id="endTime" />
+          </div>
+
+          <div>
+            <label>City</label>
+            <input type="text" id="city" />
+          </div>
+        </div>
+
+        <label>Venue</label>
+        <input type="text" id="venue" />
+
+        <label>Number of Volunteers</label>
+        <input type="number" id="slots" value="10" />
+
+        <label>
+          Certificates
+          <input type="checkbox" id="certificateEnabled" />
+        </label>
+
+        <div class="actions">
+          <button type="button" id="saveDraft">Save Draft</button>
+          <button type="submit">Publish Event</button>
+        </div>
+
+        <p id="formMsg"></p>
+
+      </form>
+
+    </section>
+
+  </main>
+</div>
+
+<script type="module" src="create-event.js"></script>
+</body>
+</html> 
+
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Details</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="event-details.css" />
+</head>
+<body>
+  <div class="overlay" id="overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h1 id="eventTitle">Loading...</h1>
+        <span class="status-badge published" id="statusBadge">Loading...</span>
+      </div>
+
+      <div class="details-grid">
+        <div class="label">Org. Name:</div>
+        <div class="value" id="orgName">—</div>
+
+        <div class="label">Social Links:</div>
+        <div class="value" id="socialLinks">—</div>
+
+        <div class="label">Email:</div>
+        <div class="value" id="email">—</div>
+
+        <div class="label">Phone No:</div>
+        <div class="value" id="phoneNumber">—</div>
+
+        <div class="label">Date / Time:</div>
+        <div class="value" id="dateTime">—</div>
+
+        <div class="label">Slots Filled</div>
+        <div class="value" id="slotsFilled">—</div>
+      </div>
+
+      <div class="description-section">
+        <h2>Description</h2>
+        <div class="description-box" id="description">
+          Loading event description...
+        </div>
+      </div>
+
+      <p id="feedback" class="feedback"></p>
+
+      <div class="action-row">
+        <button class="action-btn close-btn" id="closeBtn" type="button">Close</button>
+        <button class="action-btn flag-btn" id="flagBtn" type="button">Flag Event</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="event-details.js"></script>
+</body>
+</html>

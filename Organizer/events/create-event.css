@@ -1,0 +1,111 @@
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #223f6b;
+}
+
+.page-subtitle {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.create-event-btn {
+  background: #223f6b;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.95rem 1.4rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.icon-btn {
+  width: 2.6rem;
+  height: 2.6rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #223f6b;
+  font-size: 1.35rem;
+  cursor: pointer;
+}
+
+.profile-mini img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+.form-section {
+  padding: 2rem;
+  max-width: 600px;
+}
+
+.image-upload {
+  border: 2px dashed #1f80ea;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 0.7rem;
+  margin: 0.5rem 0 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.tags-input {
+  display: flex;
+  gap: 5px;
+}
+
+#rolesList span {
+  background: #1f80ea;
+  color: white;
+  padding: 5px 10px;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.actions button:first-child {
+  background: transparent;
+  border: 1px solid #1f80ea;
+}
+
+.actions button:last-child {
+  background: #1f3b63;
+  color: white;
+}

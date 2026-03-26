@@ -1,0 +1,140 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cancel Event</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../../assets/css/shared.css" />
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="cancel-event.css" />
+
+</head>
+
+<body>
+  <div class="dashboard-layout">
+
+    <!-- Sidebar -->
+     <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="../../assets/Images/Logo.png" alt="AIDLoop Logo" />
+      </div>
+
+      <ul class="sidebar-menu">
+        <li>
+          <a href="../dashboard/organizer-dashboard.html">
+            <i class="fa-regular fa-house"></i><span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="create-event.html">
+            <i class="fa-regular fa-square-plus"></i><span>Create Events</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="event-listing.html">
+            <i class="fa-regular fa-calendar"></i><span>Events</span>
+          </a>
+        </li>
+        <li>
+          <a href="../volunteers/volunteers.html">
+            <i class="fa-solid fa-users"></i><span>Volunteers</span>
+          </a>
+        </li>
+        <li>
+          <a href="../certificates/organizer-certificates.html">
+            <i class="fa-regular fa-id-card"></i><span>Certificates</span>
+          </a>
+        </li>
+        <li>
+          <a href="../profile/organizer-profile.html">
+            <i class="fa-regular fa-address-card"></i><span>Profile</span>
+          </a>
+        </li>
+        <li>
+          <button type="button" id="logoutBtn" class="sidebar-logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Log out</span>
+          </button>
+        </li>
+      </ul>
+    </aside>
+ 
+
+    <!-- Main -->
+     <main class="main-content">
+      <header class="topbar">
+        <h1 class="page-title">Cancel Event</h1>
+      </header>
+
+      <section class="cancel-section">
+
+        <div class="warning">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <p>
+            Cancelling this event will notify all registered volunteers and cannot be undone
+          </p>
+        </div>
+
+        <!-- Reasons -->
+         <div class="reasons">
+          <h3>Reasons for cancellation</h3>
+
+          <div class="checkbox-grid">
+            <label><input type="checkbox" value="Low Registration"> Low Registration</label>
+            <label><input type="checkbox" value="Scheduling Conflict"> Scheduling Conflict</label>
+            <label><input type="checkbox" value="Venue Issues"> Venue Issues</label>
+            <label><input type="checkbox" value="Weather Conditions"> Weather Conditions</label>
+            <label><input type="checkbox" value="Organizers Unavailable"> Organizers Unavailable</label>
+            <label><input type="checkbox" value="Others"> Others</label>
+          </div>
+        </div> 
+
+        <!-- Description -->
+         <div class="reason-text">
+          <label>Why are you cancelling this event?</label>
+          <textarea id="reasonText" placeholder="Provide more details..."></textarea>
+        </div> 
+
+        <!-- Actions -->
+         <div class="actions">
+          <button id="cancelEventBtn" class="btn danger">Cancel Event</button>
+          <button id="goBackBtn" class="btn secondary">Go Back</button>
+        </div> 
+
+      </section>
+    </main>
+  </div> 
+
+  <!-- CONFIRM MODAL -->
+ <div class="modal-overlay hidden" id="confirmModal">
+  <div class="modal-card">
+
+    <button class="close-btn" id="closeModal">&times;</button>
+
+    <div class="modal-content">
+      <i class="fa-solid fa-triangle-exclamation warning-icon"></i>
+
+      <p>
+        Are you sure you want to cancel this event?<br />
+        This cannot be undone and all volunteers will be notified.
+      </p>
+
+      <button id="confirmCancel" class="btn danger full">
+        Yes, Cancel event
+      </button>
+
+      <button id="cancelModal" class="btn outline full">
+        No, Go back
+      </button>
+    </div>
+  </div>
+</div>
+
+  <script type="module" src="cancel-event.js"></script>
+</body>
+</html> 
+ 

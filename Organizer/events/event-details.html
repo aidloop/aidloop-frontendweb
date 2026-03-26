@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Details</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../../assets/css/shared.css" />
+  <link rel="stylesheet" href="../../assets/css/layout.css"/>
+  <link rel="stylesheet" href="event-details.css" />
+</head>
+
+<body>
+  <div class="dashboard-layout">
+
+     <!-- Sidebar -->
+     <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="../../assets/Images/Logo.png" alt="AIDLoop Logo" />
+      </div>
+
+      <ul class="sidebar-menu">
+        <li>
+          <a href="../dashboard/organizer-dashboard.html">
+            <i class="fa-regular fa-house"></i><span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="create-event.html">
+            <i class="fa-regular fa-square-plus"></i><span>Create Events</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="event-listing.html">
+            <i class="fa-regular fa-calendar"></i><span>Events</span>
+          </a>
+        </li>
+        <li>
+          <a href="../volunteers/volunteers.html">
+            <i class="fa-solid fa-users"></i><span>Volunteers</span>
+          </a>
+        </li>
+        <li>
+          <a href="../certificates/organizer-certificates.html">
+            <i class="fa-regular fa-id-card"></i><span>Certificates</span>
+          </a>
+        </li>
+        <li>
+          <a href="../profile/organizer-profile.html">
+            <i class="fa-regular fa-address-card"></i><span>Profile</span>
+          </a>
+        </li>
+        <li>
+          <button type="button" id="logoutBtn" class="sidebar-logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Log out</span>
+          </button>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main -->
+     <main class="main-content"> 
+
+      <!-- Topbar -->
+      <header class="topbar">
+        <h1>Events</h1>
+
+        <div class="top-actions">
+          <button id="editBtn" class="btn-primary">Edit Event</button>
+          <a href="cancel-event.html"><button id="cancelBtn" class="btn-danger">Cancel Event</button></a>
+          <button class="icon-btn" type="button"><i class="fa-regular fa-bell"></i></button>
+
+          <div class="profile-mini">
+            <img id="organizerAvatar" src="https://i.pravatar.cc/100?img=12" alt="Organizer Avatar" />
+          </div>
+        </div>
+
+      </header> 
+
+      <!-- Content -->
+       <section class="event-details">
+
+        <h2 id="eventName">Loading...</h2>
+
+        <div class="event-image">
+          <img id="eventImage" src="../../assets/Images/volunteer.png" alt="Event Image" />
+          <span id="statusBadge" class="status-badge">Status</span>
+        </div>
+
+        <h3>Events Description</h3>
+        <div id="eventDescription" class="description-box"></div> 
+
+        <!-- Info Row -->
+         <div class="event-meta">
+          <span id="eventTime"></span>
+          <span id="eventDate"></span>
+          <span id="eventLocation"></span>
+        </div> 
+
+        <!-- Requirements -->
+         <div class="requirements">
+          <h3>Volunteer Requirements</h3>
+          <ul id="requirementsList"></ul>
+        </div> 
+
+        <!-- Stats -->
+         <div class="stats">
+          <div class="stat">
+            <h2 id="totalSlots">0</h2>
+            <p>Total Slots</p>
+          </div>
+          <div class="stat">
+            <h2 id="registered">0</h2>
+            <p>Registered</p>
+          </div>
+          <div class="stat">
+            <h2 id="remaining">0</h2>
+            <p>Remaining</p>
+          </div>
+        </div> 
+
+        <!-- Volunteers Table -->
+         <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody id="volunteerTable">
+              <tr><td colspan="4">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+   <script type="module" src="event-details.js"></script>
+</body>
+</html> 
+

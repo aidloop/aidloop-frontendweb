@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIDLoop - Recruit Verified Volunteers</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="./assets/css/shared.css" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">
+          <img src="./assets/Images/AIDLoopLogo.jpeg" alt="AIDLoop logo" />
+        </a>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#how-it-works">How it Works</a></li>
+        <li><a href="#contact">Contact</a></li>
+
+        <li class="nav-dropdown">
+          <button id="loginMenuBtn" class="nav-link-btn" type="button">
+            Login <i class="fa-solid fa-chevron-down"></i>
+          </button>
+
+          <div class="dropdown-menu" id="loginDropdown">
+            <a id="organizerLoginLink" href="./Organizer/login/organizer-login.html">Organizer Login</a>
+            <a id="adminLoginLink" href="./Admin/login/admin-login.html">Admin Login</a>
+          </div>
+        </li>
+      </ul>
+
+      <div class="nav-buttons">
+        <a
+          id="signupBtnTop"
+          class="primary-btn nav-signup-btn"
+          href="./Organizer/signup/organizer-signup.html">
+          Sign Up
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="about">
+      <div class="hero-text">
+        <h1 class="title">Recruit Verified</h1>
+
+        <h1 class="title-large">
+          <span class="orange">Volun</span>-<span class="green">teers</span>
+        </h1>
+
+        <h1 class="title">for Your Events</h1>
+
+        <p class="description">
+          Create and manage volunteer events, connect with verified volunteers,
+          track attendance, and reward efforts with certificates — all in one
+          platform to maximize your community impact.
+        </p>
+
+        <div class="hero-buttons">
+          <a
+            id="signupBtnHero"
+            class="primary-btn"
+            href="./Organizer/signup/organizer-signup.html"
+          >
+            Sign Up
+          </a>
+
+          <a class="secondary-btn" href="#how-it-works">
+            Learn More
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="./assets/Images/LandingPageImage.jpeg" alt="Volunteer event preview" />
+      </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+      <div class="section-title">
+        <h2>How it Works</h2>
+      </div>
+
+      <div class="how-it-works-card-container">
+        <div class="how-it-works-card">
+          <span class="card-icon1">
+            <img src="./assets/Images/Sign_Up.png" alt="Sign up" />
+          </span>
+          <h4>Sign Up</h4>
+          <p>
+            Sign up your organization to start hosting volunteer events. Submit
+            your details and get verified.
+          </p>
+        </div>
+
+        <div class="how-it-works-card">
+          <span class="card-icon1">
+            <img src="./assets/Images/event.png" alt="Create event" />
+          </span>
+          <h4>Create Volunteer Event</h4>
+          <p>
+            Create volunteer opportunities using a simple event template. Add
+            the event details, roles, and number of volunteers needed.
+          </p>
+        </div>
+
+        <div class="how-it-works-card">
+          <span class="card-icon1">
+            <img src="./assets/Images/user.png" alt="Manage volunteers" />
+          </span>
+          <h4>Manage Volunteers</h4>
+          <p>
+            Track registrations, mark attendance, rate volunteers, and issue
+            certificates from your organizer dashboard.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits" id="benefits">
+      <div class="section-title benefits-title">
+        <h2>Benefits</h2>
+      </div>
+
+      <div class="benefits-card-container">
+        <div class="benefits-card">
+          <div class="benefit-text">
+            <h5>Verified Volunteers</h5>
+            <p>
+              Connect with volunteers who are registered and tracked through the platform.
+            </p>
+            <hr class="line" />
+          </div>
+          <span class="card-icon">
+            <img src="./assets/Images/shield_check.png" alt="Verified volunteers" />
+          </span>
+        </div>
+
+        <div class="benefits-card">
+          <div class="benefit-text">
+            <h5>Easy Event Creation</h5>
+            <p>
+              Create events quickly using a structured template designed for volunteer activities.
+            </p>
+            <hr class="line" />
+          </div>
+          <span class="card-icon">
+            <img src="./assets/Images/clipboard.png" alt="Easy event creation" />
+          </span>
+        </div>
+
+        <div class="benefits-card">
+          <div class="benefit-text">
+            <h5>Attendance Tracking</h5>
+            <p>
+              Monitor volunteer participation and keep records for each event.
+            </p>
+            <hr class="line" />
+          </div>
+          <span class="card-icon">
+            <img src="./assets/Images/check_circle.png" alt="Attendance tracking" />
+          </span>
+        </div>
+
+        <div class="benefits-card">
+          <div class="benefit-text">
+            <h5>Volunteer Certificates</h5>
+            <p>
+              Recognize volunteers by issuing certificates after successful event participation.
+            </p>
+          </div>
+          <span class="card-icon">
+            <img src="./assets/Images/certificate.png" alt="Volunteer certificates" />
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="start-event" id="contact">
+      <div class="start-event-content">
+        <div class="start-event-title">
+          <h3>Start Organizing Volunteer Events Today</h3>
+        </div>
+
+        <p>
+          Join organizations already using AidLoop to manage volunteer events
+          and create meaningful community impact.
+        </p>
+
+        <a
+          id="signupBtnBottom"
+          class="primary-btn cta-btn"
+          href="./Organizer/signup/organizer-signup.html">
+          Sign Up
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h2 class="footer-logo-text">AIDLoop</h2>
+        <p class="tagline">Connect. Volunteer. Impact</p>
+        <p class="copyright">
+          Copyright &copy; AidLoop. All rights reserved
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Links</h3>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#how-it-works">Support</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Legals</h3>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Social Media</h3>
+
+        <div class="social-icons">
+          <a href="#" aria-label="LinkedIn"><img src="./assets/Images/linkedin.png" alt="LinkedIn" /></a>
+          <a href="#" aria-label="Instagram"><img src="./assets/Images/instagram.png" alt="Instagram" /></a>
+          <a href="#" aria-label="X"><img src="./assets/Images/x.png" alt="X" /></a>
+        </div>
+
+        <p class="help-text">We're happy to help</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="index.js"></script>
+</body>
+</html> 
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIDLoop - Recruit Verified Volunteers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="./assets/css/shared.css" />
+  <link rel="stylesheet" href="./LandingPageStyle.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="logo"><a href="./index.html"><img src="Images/AIDLoopLogo.jpeg" alt="AIDLoop logo" /></a></div>
+      <div class="nav-container">
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#how-it-works">How it Works</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li class="nav-dropdown">
+            <button id="loginMenuBtn" class="nav-link-btn" type="button">Login <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="dropdown-menu" id="loginDropdown">
+              <a href="./Organizer/login/organizer-login.html">Organizer Login</a>
+              <a href="./Admin/login/admin-login.html">Admin Login</a>
+            </div>
+          </li>
+        </ul>
+        <div class="nav-buttons">
+          <a id="signupBtnTop" class="primary-btn nav-signup-btn" href="./Organizer/signup/organizer-signup.html">Sign Up</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="about">
+      <div class="hero-text">
+        <h1 class="title">Recruit Verified</h1>
+        <h1 class="title-large"><span class="orange">Volun</span>-<span class="green">teers</span></h1>
+        <h1 class="title">for Your Events</h1>
+        <p class="description">Create and manage volunteer events, connect with verified volunteers, track attendance, and reward efforts with certificates — all in one platform to maximize your community impact.</p>
+        <div class="hero-buttons">
+          <a id="signupBtnHero" class="primary-btn" href="./Organizer/signup/organizer-signup.html">Sign Up</a>
+          <a class="secondary-btn" href="#how-it-works">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-image"><img src="Images/LandingPageImage.jpeg" alt="Volunteer event preview" /></div>
+    </section>
+  </main>
+
+  <script type="module" src="./landing-page.js"></script>
+</body>
+</html> -->
