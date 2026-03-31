@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="Event Creation-Style.css">
+</head>
+<body>
+    <div class="container">
+
+        <!-- Sidebar -->
+        <div class="side-bar">
+            <img src="Frame 501.png" alt="Logo">
+            <ul>
+                <li><i class="fa-solid fa-house"></i><a href="#">Dashboard</a></li>
+                <li class="active"><i class="fa-solid fa-circle-plus"></i><a href="Event-crreation.html">Create Events</a></li>
+                <li><i class="fa-regular fa-calendar"></i><a href="#">Events</a></li>
+                <li><i class="fa-solid fa-user-group"></i><a href="#">Volunteers</a></li>
+                <li><i class="fa-solid fa-certificate"></i><a href="#">Certificates</a></li>
+                <li><i class="fa-regular fa-building"></i><a href="#">Profile</a></li>
+                <li><i class="fa-solid fa-right-from-bracket"></i><a href="#">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-container">
+            <!-- Navbar -->
+            <div class="nav">
+                <h3>Create Event</h3>
+                <div class="nav-actions">
+                    <a href="#" class="create-btn">Create Event</a>
+                    <i class="fas fa-bell"></i>
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+
+            <!-- Event Form -->
+            <div class="container2">
+
+                <!-- Upload Image -->
+                <div class="upload-img">
+                    <label for="file-upload"><i class="fa-solid fa-camera"></i></label>
+                    <input type="file" id="file-upload">
+                    <h3>Upload Event Image</h3>
+                </div>
+
+                <!-- Event Name -->
+                <div class="field field-1">
+                    <label>Event Name</label>
+                    <input type="text" placeholder="Enter event name">
+                </div>
+
+                <!-- Category -->
+                <div class="field field-2">
+                    <label>Category</label>
+                    <select>
+                        <option>Select your category</option>
+                        <option>Community Service</option>
+                        <option>Environmental</option>
+                        <option>Health/Medical Support</option>
+                        <option>Education</option>
+                        <option>Event Support</option>
+                    </select>
+                </div>
+
+                <!-- Volunteer Roles -->
+                <div class="field field-3">
+                    <label>Volunteer Role</label>
+                    <p class="roles-sub">Add one or more role</p>
+                    <div class="input-volunteer">
+                        <input type="text" placeholder="Enter your role... (e.g. clean-up volunteer)" id="input-box">
+                        <button class="plus-icon">+</button>
+                    </div>
+                    <ul id="roleList"></ul>
+                </div>
+
+                <!-- Event Description -->
+                <div class="field field-4">
+                    <label>Description</label>
+                    <textarea placeholder="Describe the event"></textarea>
+                </div>
+
+                <!-- Requirements -->
+                <div class="field field-5">
+                    <label>Requirements</label>
+                    <textarea placeholder="Requirement 1; Requirement 2; Requirement 3"></textarea>
+                </div>
+
+                <!-- Date & Time -->
+                <div class="field field-6">
+                    <div>
+                        <label>Start Date</label>
+                        <input type="date">
+                    </div>
+                    <div>
+                        <label>End Date</label>
+                        <input type="date">
+                    </div>
+                    <div>
+                        <label>Time</label>
+                        <input type="time">
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="field field-7">
+                    <label>Location</label>
+                    <input type="text" placeholder="Enter location">
+                </div>
+
+                <!-- Number of Volunteers -->
+                <div class="field field-8">
+                    <label>No of Volunteers</label>
+                    <div class="no-of-volunteer">
+                        <span class="count">40</span>
+                        <button class="increment">+</button>
+                        <button class="decrement">-</button>
+                    </div>
+                </div>
+
+                <!-- Certificate -->
+                <div class="field field-9">
+                    <label>Certificate</label>
+                    <input type="checkbox">
+                </div>
+
+                <!-- Buttons -->
+                <div class="field field-10">
+                    <a href="#" class="save">Save Draft</a>
+                    <a href="#" id="publish">Publish Event</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script>
+        // Add volunteer role
+        const input = document.getElementById("input-box");
+        const button = document.querySelector(".plus-icon");
+        const list = document.getElementById("roleList");
+
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
+            const value = input.value.trim();
+            if (value !== "") {
+                const li = document.createElement("li");
+                li.textContent = value;
+                list.appendChild(li);
+                input.value = "";
+            }
+        });
+
+        // Increment/Decrement volunteers
+        const countEl = document.querySelector(".count");
+        const incrementBtn = document.querySelector(".increment");
+        const decrementBtn = document.querySelector(".decrement");
+
+        incrementBtn.addEventListener("click", () => {
+            countEl.textContent = Number(countEl.textContent) + 1;
+        });
+        decrementBtn.addEventListener("click", () => {
+            let current = Number(countEl.textContent);
+            if (current > 0) countEl.textContent = current - 1;
+        });
+    </script>
+</body>
+</html>

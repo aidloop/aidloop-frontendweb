@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="event-cancellation.css">
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+
+    <div class="container">
+        <div class="side-bar">
+            <img src="Frame 501.png">
+            
+            <ul>
+                <li>
+                    <i class="fa-solid fa-house"></i>
+                    <a href="#">Dashboard</a>
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <a href="#">Create Events</a>
+                </li>
+
+                <li class="active">
+                    <i class="fa-regular fa-calendar"></i>
+                    <a href="#" >Events</a>
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-user-group"></i>
+                    <a href="#">Volunteers</a>
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-certificate"></i>
+                    <a href="#">Certificates</a>
+                </li>
+
+                <li>
+                    <i class="fa-regular fa-building"></i>
+                    <a href="#">Profile</a>
+                </li>
+
+                <li>    
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <a href="#">Logout</a>
+                </li>
+             </ul>
+        </div>
+
+
+        <div class="main-container">
+            <div class="nav">
+                <h3 id="nav-h3">Cancel Event</h3> 
+                
+                
+            </div>
+
+            <div class="container2">
+                <div class="warning-box">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="2">
+                        <path d="M12 3L2 21h20L12 3z"></path>
+                        <line x1="12" y1="9" x2="12" y2="14" stroke="#F5A623" stroke-width="2"/>
+                        <circle cx="12" cy="17" r="1" fill="#F5A623"/>
+                    </svg>
+                    <p class="warning-text">
+                        Canceling this event will notify all registered volunteers and cannot be undone
+                    </p>
+                </div>
+
+                <h3 class="heading-1" >Reason for cancellation <span>(Please select a reason)</span></h3>
+
+                <div class="options">
+                    <div class="option">
+                        <input type="checkbox">
+                        <label for="">Low Registration</label>
+                    </div>
+
+                    <div class="option">
+                        <input type="checkbox">
+                        <label for="">Scheduling Conflict</label>
+                    </div>
+
+                    <div class="option">
+                        <input type="checkbox">
+                        <label for="">Venue Issues</label>
+                    </div>
+
+                    <div class="option">
+                        <input type="checkbox">
+                        <label for="">Weather Conditioins</label>
+                    </div>
+
+                    <div class="option">
+                        <input type="checkbox">
+                        <label for="">Organisers Available</label>
+                    </div>
+
+                    <div class="option">
+                        <input type="checkbox">
+                        <label for="">Others</label>
+                    </div>
+                </div>
+
+                <div class="why-box">
+
+                    <label class="why-ques">Why are you cancelling this event?</label>
+
+                    <textarea placeholder="Provide more details about the cancellation"> </textarea>
+                </div>
+
+                <div class="buttons">
+                    <a href="#" class="cancel">Cancel Event</a>
+                    <a href="#" class="go-back">Go Back</a>
+                </div>
+
+            </div>
+
+            
+        </div>
+    </div>
+
+    </div>
+    
+</body>
+</html>

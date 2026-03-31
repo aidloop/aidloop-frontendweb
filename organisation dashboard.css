@@ -1,0 +1,316 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: white;
+}
+
+/* ACTION MENU */
+.action-menu p {
+    padding: 5px 10px;
+    margin: 0;
+}
+
+.action-menu p:hover {
+    background: #f1f3f5;
+}
+
+/* LAYOUT */
+.container {
+    display: flex;
+}
+
+/* SIDEBAR */
+.side-bar {
+    width: 220px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #24364f;
+    color: white;
+    padding-top: 20px;
+}
+
+.side-bar img {
+    display: block;
+    margin: 0 auto 20px;
+    width: 120px;
+    height: 120px;
+}
+
+.side-bar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.side-bar li {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    gap: 5px;
+}
+
+.side-bar li:hover, .side-bar .active {
+    background-color: #057DF2;
+}
+
+.side-bar li i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.side-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+
+/* MAIN */
+.main-container {
+    margin-left: 220px;
+    padding: 0;
+    width: 100%;
+}
+
+/* NAV */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f7f8f9;
+    padding: 40px 20px;
+}
+
+.nav h2 {
+    color: #1F3A5F;
+}
+
+.nav p {
+    font-size: 14px;
+    color: gray;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-actions i {
+    font-size: 25px;
+    color: #1F3A5F;
+}
+
+
+.create-btn {
+    background-color: #1F3A5F;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+
+
+/* DASHBOARD */
+
+.dashboard-title{
+    color: #24364f;
+    margin-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.dashboard{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    border-bottom: solid 1px #24364f;
+    padding-bottom: 70px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.dashboard p{
+    display: flex;
+    gap: 8px;
+    align-content: center;
+}
+
+.dashboard h2{
+    font-size: 30px;
+    width: 100%;
+    border-bottom: solid 1px #6B7C93;
+    padding: 10px;
+}
+
+.dashboard p{
+    padding: 10px;
+}
+
+.board{
+    width: 20%;
+    text-align: center;
+    background-color: #F7F8F9;
+    border: solid 1px #6B7C93;
+    border-radius: 5px;
+    padding: 0px;
+}
+
+.board i{
+    color: #057DF2;
+    font-size: 20px;
+}
+
+/* TABLE */
+.table-container {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    overflow-x: auto;
+    margin-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.table-container h2{
+    color: #24364f;
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+tbody tr{
+    padding: 60px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 10px;
+    background: #f1f3f5;
+    font-size: 14px;
+}
+
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+/* STATUS */
+.status {
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    width: 50px;
+    height: 20px;
+    color: white;
+}
+
+.upcoming {
+    background: orange;
+}
+
+.published {
+    background: green;
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.draft {
+    background: gray;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.completed {
+    background: #057DF2;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .main-container {
+        padding: 20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    .side-bar img {
+        width: 50px;
+        height: 50px;
+    }
+    .dashboard{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 20px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .dashboard p, .dashboard i{
+        font-size: 10px;
+    }
+
+    .board{
+        width: 50%;
+    }
+
+
+
+    
+
+    .side-bar {
+        width: 60px;
+    }
+    .side-bar a {
+        display: none;
+    }
+
+    .main-container {
+        margin-left: 70px;
+    }
+
+    .nav {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .tabs {
+        flex-wrap: wrap;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    th, td {
+        font-size: 12px;
+    }
+
+    .create-btn {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}
