@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="event-details.css">
+    <script src="https://kit.fontawesome.com/241f3a0b37.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Dark overlay behind sidebar on mobile -->
+    <div class="sidebar-overlay" id="overlay"></div>
+
+    <div class="main-container">
+        <aside class="sidebar" id="sidebar">
+            <img class="logo" src="images/aidloop logo with dark background.png" alt="logo">
+            <nav class="sidebar-nav">
+                <ul>
+                    <a href="">
+                        <li><i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-circle-plus fa-lg"></i> Create Events</li>
+                    </a>
+                    <a class="active" href="">
+                        <li><i class="fa-regular fa-calendar fa-lg"></i> Events</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-user-group fa-lg"></i> Volunteers</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-user-graduate fa-lg"></i> Certificates</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-building-user fa-lg"></i> Profile</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> Logout</li>
+                    </a>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="header">
+                <!-- Hamburger: only visible on mobile -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div>
+                    <h1>Events</h1>
+                    <h6>Browse and manage all your events</h6>
+                </div>
+
+                <div class="header-btn">
+                    <button class="create-btn">Edit event</button>
+                    <button class="create-btn cancel-btn">Cancel Events</button>
+                    <a href=""><i class="fa-regular fa-bell fa-2xl"></i></a>
+                    <a href=""><i class="fa-regular fa-circle-user fa-2xl"></i></a>
+                </div>
+            </header>
+
+            <!-- Page body -->
+            <div class="page-body">
+
+                <!-- Event name + status badge -->
+                <div class="event-title-row">
+                    <h1>Coastal Clean-Up Exercise</h1>
+                    <span class="status-badge">Published</span>
+                </div>
+
+                <!-- Event photo with overlay badge -->
+                <div class="event-image-wrapper">
+                    <img src="images/volunteers bending down.png" alt="">
+                    <span class="image-status-badge">Published</span>
+                </div>
+
+            </div>
+
+            <!-- Description heading -->
+            <div class="event-description">
+                <h2>Events Description</h2>
+            </div>
+
+            <!-- Description body -->
+            <section class="second-section">
+                <div>
+                    <p>
+                        Join us for a community coastal clean-up exercise aimed at reducing plastic waste and protecting
+                        marine life along the Lekki Waterfront. This initiative brings together passionate volunteers
+                        who are committed to keeping our beaches and waterways clean.
+                    </p>
+                    <p>
+                        During this event, volunteers will work in small groups to collect plastic waste, sort
+                        recyclable materials, and safely dispose of debris found along the shoreline. All necessary
+                        clean-up materials such as gloves, waste bags, and safety gear will be provided by the
+                        organizers.
+                    </p>
+                    <p>
+                        Beyond the clean-up activity, the event will also include a short environmental awareness
+                        session where participants will learn about the impact of plastic pollution on marine ecosystems
+                        and how small everyday actions can contribute to a healthier environment.
+                    </p>
+                    <p>
+                        Whether you are passionate about environmental sustainability, looking to give back to the
+                        community, or simply want to spend a meaningful morning outdoors, this event is a great
+                        opportunity to make a positive impact while connecting with like-minded individuals.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Event meta info -->
+            <div class="list-under-upcoming">
+                <p><i class="fa-regular fa-clock"></i> 8:00am - 12:00Noon</p>
+                <p><i class="fa-regular fa-calendar fa-lg"></i> June 12, 2026</p>
+                <p><i class="fa-solid fa-location-dot fa-lg"></i> Lekki waterfront, Lagos</p>
+            </div>
+
+            <!-- Requirements -->
+            <div class="Requirements-container">
+                <div class="Requirements-header">
+                    <h2>Volunteers Requirements</h2>
+                </div>
+                <div class="Requirements-list">
+                    <ul>
+                        <li>Must be 16+</li>
+                        <li>Wear comfortable clothes</li>
+                        <li>Bring water bottle</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Stat cards -->
+            <section class="third-section">
+                <div class="card">
+                    <h3>40</h3>
+                    <p class="under-card"><i id="fontawesome" class="fa-regular fa-calendar fa-lg"></i> total events</p>
+                </div>
+                <div class="card">
+                    <h3>59</h3>
+                    <p class="under-card"><i id="fontawesome" class="fa-regular fa-clock fa-lg"></i> upcoming events</p>
+                </div>
+                <div class="card">
+                    <h3>324</h3>
+                    <p class="under-card"><i id="fontawesome" class="fa-regular fa-circle-check fa-lg"></i> total
+                        volunteers</p>
+                </div>
+            </section>
+
+            <!-- Volunteers table -->
+            <section class="final-section">
+                <table>
+                    <thead class="table-head">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Date</th>
+                            <th>Registration</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>johndoe@email.com</td>
+                            <td>March 10, 2026</td>
+                            <td><span class="status upcoming">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>John Smith</td>
+                            <td>johnsmith@email.com</td>
+                            <td>June 23, 2026</td>
+                            <td><span class="status published">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mary Johnson</td>
+                            <td>maryjohnson@email.com</td>
+                            <td>June 23, 2026</td>
+                            <td><span class="status draft">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Chinyere Okafor</td>
+                            <td>ahmedbello@email.com</td>
+                            <td>June 23, 2026</td>
+                            <td><span class="status completed">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Emeka Nwosu</td>
+                            <td>emekanwosu@email.com</td>
+                            <td>June 23, 2026</td>
+                            <td><span class="status completed">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+
+
+
+        </main>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+    </script>
+
+</body>
+
+</html>
