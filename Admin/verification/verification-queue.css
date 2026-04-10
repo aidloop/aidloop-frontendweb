@@ -245,6 +245,10 @@ td {
   background: #16a34a;
 }
 
+.badge.approved {
+  background: #16a34a;
+}
+
 .badge.rejected {
   background: #dc2626;
 }
