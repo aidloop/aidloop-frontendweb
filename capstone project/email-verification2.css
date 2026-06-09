@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300px;
+    font-size: 14px;
+}
+
+
+main {
+    width: 100%;
+    max-width: 800px; /* controls how wide the content stretches */
+    padding: 40px 24px;
+    text-align: center;
+}
+
+
+.image img {
+    width: 180px;
+    height: 180px;
+    border-radius: 18px;
+    margin-bottom: 50px;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f3a5f;
+    margin-bottom: 15px;
+}
+.first-p{
+    margin-bottom: 50px;
+}
+
+/* Full-width grey divider line */
+.divider {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.main-text {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.80);
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+.hour-glass-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+.hour-glass{
+    height:24px ;
+    width:24px ;
+}
+span{
+    color:#057df2;
+    font-size: 11px;
+    margin-left: 5px;
+
+}
+.question {
+    margin-bottom: 20px;
+    color: #1f3a5f;
+}
+.points{
+    margin-bottom: 60px;
+}
+
+.points p {
+    display: flex;
+    
+    align-items: center;   /* vertically centers the icon with the text */
+    gap: 10px; 
+    margin-left: 210px;            /* space between icon and text */
+    margin-bottom: 15px;   /* space between each line */
+}
+@media(max-width:600px)
+
+{
+    .points p{
+        margin-left: 100px;
+        font-size: 12px;
+        gap: 5px;
+        text-align: center;
+    }
+}
+
+.points img {
+    width: 10px;          
+    height: 10px;
+    flex-shrink: 0;        /* prevents the icon from shrinking */
+}
+.final-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+@media (max-width:780px) {
+    .final-div{
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+}
+
+
+button {
+    width: 30%;
+    padding: 16px;
+    background-color: #1f3a5f;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+@media(max-width:800px) {
+    button{
+        width: 70%;
+    }
+    
+}
+
+button:hover {
+    background-color: #2a4f82;
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="certificates.css">
+    <script src="https://kit.fontawesome.com/241f3a0b37.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Dark overlay behind sidebar on mobile -->
+    <div class="sidebar-overlay" id="overlay"></div>
+
+    <div class="main-container">
+        <aside class="sidebar" id="sidebar">
+            <img class="logo" src="images/aidloop logo with dark background.png" alt="logo">
+            <nav class="sidebar-nav">
+                <ul>
+                    <a href="">
+                        <li><i class="fa-regular fa-house fa-lg"></i> Dashboard</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-circle-plus fa-lg"></i> Create Events</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-regular fa-calendar fa-lg"></i> Events</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-user-group fa-lg"></i> Volunteers</li>
+                    </a>
+                    <a class="active" href="">
+                        <li><i class="fa-solid fa-user-graduate fa-lg"></i> Certificates</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-building-user fa-lg"></i> Profile</li>
+                    </a>
+                    <a href="">
+                        <li><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i> Logout</li>
+                    </a>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="header">
+                <!-- Hamburger: only visible on mobile -->
+                <button class="hamburger" id="hamburger" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div>
+                    <h1>Certificates</h1>
+                    <h6>Manage Volunteers Certificates</h6>
+                </div>
+
+                <div class="header-btn">
+                    <button class="create-btn">Generate Certificate</button>
+                    <a href=""><i class="fa-regular fa-bell fa-2xl"></i></a>
+                    <a href=""><i class="fa-regular fa-circle-user fa-2xl"></i></a>
+                </div>
+            </header>
+
+            <!-- Stat cards -->
+            <section class="first-section">
+                <div class="card">
+                    <div class="card-image first">
+                        <img src="images/noto_trophy.png" alt="">
+                    </div>
+                    <div class="card-text">
+                        TOTAL <br> CERTIFICATES
+                        <p>6</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image second">
+                        <img src="images/fluent-color_checkmark-circle-32 (1).png" alt="">
+                    </div>
+                    <div class="card-text">
+                        ISSUED
+                        <p>4</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image third">
+                        <img src="images/ph_anchor-simple-fill.png" alt="">
+                    </div>
+                    <div class="card-text">
+                        PENDING
+                        <p>4</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Table -->
+            <section class="second-section">
+                <table>
+                    <thead class="table-head">
+                        <tr>
+                            <th>Name</th>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="name-cell">
+                                    <img class="table-image" src="images/Ellipse 35.png" alt="">
+                                    <span>John Doe</span>
+                                </div>
+                            </td>
+                            <td>Coastal Clean-up</td>
+                            <td>June 12, 2025</td>
+                            <td><span class="status Issued">Issued</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="name-cell">
+                                    <img class="table-image" src="images/Ellipse 36.png" alt="">
+                                    <span>Mary Musa</span>
+                                </div>
+                            </td>
+                            <td>Tree Planting Drive</td>
+                            <td>June 15, 2025</td>
+                            <td><span class="status Issued">Issued</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="name-cell">
+                                    <img class="table-image" src="images/Ellipse 37.png" alt="">
+                                    <span>David James</span>
+                                </div>
+                            </td>
+                            <td>Beach Cleanup</td>
+                            <td>June 18, 2025</td>
+                            <td><span class="status Pending">Pending</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="name-cell">
+                                    <img class="table-image" src="images/Ellipse 38.png" alt="">
+                                    <span>Emeka Obi</span>
+                                </div>
+                            </td>
+                            <td>Coastal Cleanup</td>
+                            <td>June 19, 2025</td>
+                            <td><span class="status Confirmed">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="name-cell">
+                                    <img class="table-image" src="images/Ellipse 39.png" alt="">
+                                    <span>Aisha Bello</span>
+                                </div>
+                            </td>
+                            <td>Food Distribution Drive</td>
+                            <td>June 20, 2025</td>
+                            <td><span class="status Pending">Pending</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="name-cell">
+                                    <img class="table-image" src="images/Ellipse 34.png" alt="">
+                                    <span>Fatima Ahmed</span>
+                                </div>
+                            </td>
+                            <td>Community Health Outreach</td>
+                            <td>June 22, 2025</td>
+                            <td><span class="status Confirmed">Confirmed</span></td>
+                            <td>
+                                <h2>...</h2>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Pagination -->
+            <div class="next-prev">
+                <span class="info">Showing 6 of 6 certificates</span>
+                <div class="controls">
+                    <button class="page-btn nav-btn">
+                        <span>&#171;</span> Prev
+                    </button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn nav-btn">
+                        Next <span>&#187;</span>
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+    </script>
+
+</body>
+
+</html>
