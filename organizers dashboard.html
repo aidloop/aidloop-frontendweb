@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events</title>
+<!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="organisation dashboard.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+        <div class="side-bar">
+        <img src="Frame 501.png" alt="Logo">
+
+        <ul>
+            <li><i class="fa-solid fa-house"></i><a href="#">Dashboard</a></li>
+            <li><i class="fa-solid fa-circle-plus"></i><a href="#">Create Events</a></li>
+            <li class="active"><i class="fa-regular fa-calendar"></i><a href="#">Events</a></li>
+            <li><i class="fa-solid fa-user-group"></i><a href="#">Volunteers</a></li>
+            <li><i class="fa-solid fa-certificate"></i><a href="#">Certificates</a></li>
+            <li><i class="fa-regular fa-building"></i><a href="#">Profile</a></li>
+            <li><i class="fa-solid fa-right-from-bracket"></i><a href="#">Log out</a></li>
+        </ul>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main-container">
+
+        <!-- NAV -->
+        <div class="nav">
+            <div>
+                <h2>Welcome Back</h2>
+            </div>
+
+            <div class="nav-actions">
+                <button class="create-btn">Create Event</button>
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+
+        <!-- DASHBOARD -->
+         <h2 class="dashboard-title">Dashboard</h2>
+        <div class="dashboard">
+            <div class="board">
+                <h2>40</h2>
+                <p><i class="fa-solid fa-calendar-days"></i>Total Event created</p>
+            </div>
+
+            <div class="board">
+                <h2>18</h2>
+                <p> <i class="fa-regular fa-clock"></i>Upcoming Event</p>
+            </div>
+
+            <div class="board">
+                <h2>22</h2>
+                <p> <i class="fa-solid fa-check-circle"></i>Completed Events</p>
+            </div>
+
+            <div class="board">
+                <h2>22</h2>
+                <p><i class="fa-solid fa-check-circle"></i>Completed Events</p>
+            </div>
+        </div>
+
+
+        <!-- TABLE -->
+        <div class="table-container">
+
+            <h2>Recent Events</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Events Name</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>Volunteers</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Beach Cleanup Drive</td>
+                        <td>Lekki Waterfront</td>
+                        <td>June 15, 2025</td>
+                        <td>15/35</td>
+                        <td><span class="status upcoming">Upcoming</span></td>
+                        <td>⋯</td>
+                    </tr>
+
+                    <tr>
+                        <td>Food Distribution</td>
+                        <td>Coastal Road</td>
+                        <td>June 21, 2025</td>
+                        <td>10/25</td>
+                        <td><span class="status published">Published</span></td>
+                        <td>⋯</td>
+                    </tr>
+
+                    <tr>
+                        <td>Food Distribution</td>
+                        <td>Coastal Road</td>
+                        <td>June 23, 2025</td>
+                        <td>16/25</td>
+                        <td><span class="status draft">Draft</span></td>
+                        <td>⋯</td>
+                    </tr>
+
+                    <tr>
+                        <td>Food Distribution</td>
+                        <td>Coastal Road</td>
+                        <td>June 25, 2025</td>
+                        <td>19/35</td>
+                        <td><span class="status completed">Completed</span></td>
+                        <td>⋯</td>
+                    </tr>
+
+                    <tr>
+                        <td>Food Distribution</td>
+                        <td>Coastal Road</td>
+                        <td>June 21, 2025</td>
+                        <td>10/25</td>
+                        <td><span class="status completed">Completed</span></td>
+                        <td>⋯</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script>
+/* =========================
+   TAB FILTERING
+========================= */
+
+const tabs = document.querySelectorAll(".tabs span");
+const rows = document.querySelectorAll("tbody tr");
+
+tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+
+        // remove active class
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        const filter = tab.textContent.toLowerCase();
+
+        rows.forEach(row => {
+            const status = row.querySelector(".status").textContent.toLowerCase();
+
+            if (filter === "all") {
+                row.style.display = "";
+            } else {
+                row.style.display = status.includes(filter) ? "" : "none";
+            }
+        });
+    });
+});
+
+
+/* =========================
+   ACTION MENU (⋯)
+========================= */
+
+document.querySelectorAll("tbody tr").forEach(row => {
+    const actionCell = row.lastElementChild;
+
+    actionCell.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        // remove existing menu
+        document.querySelectorAll(".action-menu").forEach(menu => menu.remove());
+
+        const menu = document.createElement("div");
+        menu.classList.add("action-menu");
+
+        menu.innerHTML = `
+            <p class="edit">Edit</p>
+            <p class="delete">Delete</p>
+        `;
+
+        // style (quick inline for now)
+        menu.style.position = "absolute";
+        menu.style.background = "white";
+        menu.style.border = "1px solid #ccc";
+        menu.style.padding = "10px";
+        menu.style.borderRadius = "8px";
+        menu.style.boxShadow = "0 5px 15px rgba(0,0,0,0.1)";
+        menu.style.cursor = "pointer";
+
+        document.body.appendChild(menu);
+
+        const rect = actionCell.getBoundingClientRect();
+        menu.style.top = rect.bottom + "px";
+        menu.style.left = rect.left + "px";
+
+        /* DELETE FUNCTION */
+        menu.querySelector(".delete").addEventListener("click", () => {
+            row.remove();
+            menu.remove();
+        });
+
+        /* EDIT FUNCTION (placeholder) */
+        menu.querySelector(".edit").addEventListener("click", () => {
+            alert("Edit feature coming soon");
+        });
+    });
+});
+
+
+/* =========================
+   CLOSE MENU WHEN CLICK OUTSIDE
+========================= */
+
+document.addEventListener("click", () => {
+    document.querySelectorAll(".action-menu").forEach(menu => menu.remove());
+});
+
+</script>
+</body>
+</html>
